@@ -1,0 +1,58 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Hotel;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Traits\myHelper;
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Hotel>
+ */
+class HotelFactory extends Factory
+{
+    use myHelper;
+    protected $model = Hotel::class;
+
+    public function definition(): array
+    {
+        $hotelNames = [
+            'Khách sạn Hương Sen',
+            'Khách sạn Mường Thanh',
+            'Khách sạn Grand',
+            'Khách sạn Rex',
+            'Khách sạn Intercontinental',
+            'Khách sạn Sheraton',
+            'Khách sạn Novotel',
+            'Khách sạn Hilton',
+            'Khách sạn Sofitel',
+            'Khách sạn JW Marriott',
+        ];
+        // Tạo một mảng chứa các ID danh mục từ 1 đến 5, mỗi số được gán 5 lần
+        // Tạo mảng chứa các giá trị cho ct_id
+        $top5tp = [2, 15, 24, 29, 57];
+        // Trộn mảng để ngẫu nhiên
+        shuffle($top5lap5);
+        // Tạo mảng với mỗi giá trị xuất hiện 5 lần
+        $top5lap5 = [];
+        foreach ($top5tp as $tp) {
+            for($i = 0; $i < 5; $i++){
+                $top5lap5[] = $tp;
+            }
+        }
+
+
+            return [
+                'h_name' => $this->faker->randomElement($hotelNames), // Tạo tên khách sạn ngẫu nhiên
+                'h_dchi' => $this->faker->address, // Địa chỉ
+                'h_sdt' => $this->vnPhone(), // Số điện thoại
+                'h_mota' => $this->faker->sentence, // Mô tả
+                'h_isclose' => 0, // Trạng thái đóng mở
+                'o_id' => rand(1, 10), // Tạo owner giả nếu có liên kết
+                'lh_id' => 1, // ID loại hình giả
+                'ct_id' => array_pop($top5lap5), // ID danh mục giả
+                'pm_id' => rand(1, 5), // ID phương thức giả
+            ];
+
+    }
+
+}

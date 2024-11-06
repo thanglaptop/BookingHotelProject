@@ -1,0 +1,1 @@
+<h1>Xin chào {{ $owner->o_name }}</h1>

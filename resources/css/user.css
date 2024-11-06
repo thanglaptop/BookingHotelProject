@@ -1,0 +1,234 @@
+
+/* --------INDEXXXXXXXXXXXXXXXXXXXXXXXXX----------- */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    background-color: #ffd700;
+    border-radius: 50%;
+}
+.nav-items {
+    display: flex;
+    gap: 20px;
+}
+.nav-items a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.nav-items a:hover {
+    background-color: #f0f0f0;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+.search-bar input {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.search-bar button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.search-container {
+    background-color: #f0f0e0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+}
+.search-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+.search-tab {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search-tab:hover {
+    background-color: #f0f0f0;
+}
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.date-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+.date-input, .guest-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.destinations {
+    padding: 20px;
+}
+.destination-grid {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; */
+    display: flex;
+    gap:16px;
+}
+.destination-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    width: 400px;
+}
+.destination-card:hover {
+    transform: translateY(-5px);
+}
+.destination-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+.destination-info {
+    padding: 10px;
+}
+.guest-dropdown, .location-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+.guest-dropdown button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.location-dropdown div {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.location-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+.footer {
+    background-color: #88905cf0;
+    color: white;
+    padding: 20px 0; /* Loại bỏ padding trái và phải */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.footer-section {
+    margin: 10px;
+}
+.footer-section h4 {
+    margin-bottom: 10px;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-section ul li a:hover {
+    color: #ffd700;
+}
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+.social-icons img {
+    width: 24px;
+    height: 24px;
+}
+@media (max-width: 768px) {
+    .nav-items {
+        display: none;
+    }
+    .header {
+        flex-wrap: wrap;
+    }
+    .search-bar {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .search-bar input {
+        flex-grow: 1;
+    }
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    div {
+        display: flex;
+        justify-content: space-between; /* Căn đều khoảng cách giữa các icon */
+        align-items: center; /* Căn giữa theo trục dọc */
+        width: 100px; /* Đặt chiều rộng phù hợp với khoảng cách giữa các icon */
+    }
+    
+}
+
+.scroll-1 {
+    overflow-x: scroll;
+    overflow-y: hidden; /* Hide vertical scroll */
+    white-space: nowrap;
+    text-align: center;
+  }
+  
+  .scroll-1::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .scroll-1::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #888;
+  }
