@@ -13,11 +13,11 @@
                     <div class="card-body">
                         <h4 class="card-title scroll-1">{{ $hotel->h_name }}</h4>
                         <div class="nhom-button">
-                            <a href="managehotel.html"> <button type="button" class="btn btn-primary btn-sm">Quản
+                            <a href="{{ route('managehotel', ['id' => $hotel->h_id]) }}"> <button type="button" class="btn btn-primary btn-sm">Quản
                                     Lý</button>
                             </a>
 
-                            <a href="{{ route('editHotel', ['id' => $hotel->h_id]) }}"><button type="button"
+                            <a href="{{ route('edithotel', ['id' => $hotel->h_id]) }}"><button type="button"
                                     class="btn btn-secondary btn-sm">Sửa</button></a>
                             <button type="button" class="btn btn-danger btn-sm">Đóng Cửa</button>
                         </div>

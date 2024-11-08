@@ -8,6 +8,8 @@ use App\Models\Hotel;
 use App\Models\Loaihinh;
 use App\Models\Owner;
 use App\Models\Paymnet_Info;
+use App\Models\Room;
+use App\Models\Room_Img;
 use App\Models\Tiennghi;
 use Illuminate\Http\Request;
 
@@ -40,7 +42,7 @@ class OwnerLoginController extends Controller
         $tiennghihotel = Tiennghi::all()->where('tn_ofhotel', 1);
         $hotelpminfo = Paymnet_Info::all()->where('o_id', $id);
         // Truyền dữ liệu owner sang view 'welcome'
-        return view('mainowner', ['owner' => $owner, 'tiennghihotel' => $tiennghihotel,'cities' => $cities, 
+        return view('owner/mainowner', ['owner' => $owner, 'tiennghihotel' => $tiennghihotel,'cities' => $cities, 
         'loaihinhs' => $loaihinhs, 'hotelpminfo' => $hotelpminfo]);
     }
 
@@ -51,7 +53,7 @@ class OwnerLoginController extends Controller
         $cityHasHotels = City::has('hotels')->withCount('hotels')->get();
         $loaihinhs = Loaihinh::all();
         // Truyền dữ liệu owner sang view 'welcome'
-        return view('maincustomer', ['customer' => $customer,'cityHasHotels' => $cityHasHotels, 
+        return view('customer/maincustomer', ['customer' => $customer,'cityHasHotels' => $cityHasHotels, 
         'loaihinhs' => $loaihinhs]);
     }
 
@@ -64,17 +66,32 @@ class OwnerLoginController extends Controller
         $tiennghihotel = Tiennghi::all()->where('tn_ofhotel', 1);
         $hotelpminfo = Paymnet_Info::all()->where('o_id', $hotel->o_id);
         // Truyền dữ liệu owner sang view 'welcome'
-        return view('owner/editHotel', ['hotel' => $hotel, 'cities' => $cities, 'loaihinhs' => $loaihinhs,
+        return view('owner/edithotel', ['hotel' => $hotel, 'cities' => $cities, 'loaihinhs' => $loaihinhs,
                                         'tiennghihotel' => $tiennghihotel, 'hotelpminfo' => $hotelpminfo]);
+    }
+
+    public function showManageHotel($hotelId){
+        $hotel = Hotel::findOrFail($hotelId);
+        $listtiennghi = Tiennghi::all()->where('tn_ofhotel', 0);
+        return view('owner/managehotel', ['hotel' => $hotel, 'listtiennghi' => $listtiennghi]);
+    }
+
+    public function showEditRoom($Rid)
+    {
+        // Lấy thông tin owner dựa trên ID
+        $room = Room::findOrFail($Rid);
+        $tiennghiroom = Tiennghi::all()->where('tn_ofhotel', 0);
+        // Truyền dữ liệu owner sang view 'welcome'
+        return view('owner/managehotelcontent/editroom', ['room' => $room, 'tiennghiroom' => $tiennghiroom]);
     }
 
     public function showHotelOfCity($ctId){
         $hotels = Hotel::all()->where('ct_id', $ctId);
-        return view('listhotel', ['hotels' => $hotels]);
+        return view('customer/listhotel', ['hotels' => $hotels]);
     }
 
     public function showInfoHotel($htId){
         $hotel = Hotel::findOrFail($htId);
-        return view('infohotel', ['hotel' => $hotel]);
+        return view('customer/infohotel', ['hotel' => $hotel]);
     }
 }

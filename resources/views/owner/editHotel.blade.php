@@ -20,19 +20,8 @@
 </head>
 
 <body>
-    <section class="header">
-        <div class="container-fluid">
-            <nav class="navbar">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/owner/mainowner.html">
-                        <img src="/images/other/Logo.png" alt="">
-                        AGOBEE
-                    </a>
-                    <h4 class="mx-auto">{{ $hotel->h_name }}</h4>
-                </div>
-            </nav>
-        </div>
-    </section>
+    
+    @include('owner/header')
 
     <section class="noidung">
         <div class="container p-4">

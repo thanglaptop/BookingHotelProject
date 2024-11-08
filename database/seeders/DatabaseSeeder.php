@@ -10,6 +10,8 @@ use App\Models\Hotel_Img;
 use App\Models\Paymnet_Info;
 use App\Models\Tiennghi;
 use App\Models\Customer;
+use App\Models\Room;
+use App\Models\Room_Img;
 use Illuminate\Database\Seeder;
 use App\Traits\myHelper;
 use Pest\ArchPresets\Custom;
@@ -130,6 +132,7 @@ class DatabaseSeeder extends Seeder
             'Phương thức 2',
             'TTTT chỉ cho Quận 5'
         ];
+        $pm_mota = "Nếu bạn thanh toán qua momo hoặc chuyển khoản, hãy ghi nội dung chuyển khoản theo mẫu sau <họ và tên, ngày đặt đơn, số điện thoại, số tiền thanh toán>, Ví dụ: NGUYEN VAN A, 30/01/2025, 0123456789, 500000. Chúng tôi sẽ kiểm tra và xác nhận đơn đặt cho bạn sớm nhất có thể, nếu có bất kỳ thắc mắc gì bạn hãy liên hệ với chúng tôi qua số điện thoại sau của khách sạn 0123456789.";
         $oId = 1;
         for ($i = 0; $i < 15; $i++) {
             Paymnet_Info::create([
@@ -139,7 +142,7 @@ class DatabaseSeeder extends Seeder
                 'pm_bank' => $this->vnPhone(),
                 'pm_QRmomo' => $this->vnPhone(),
                 'pm_QRbank' => $this->vnPhone(),
-                'pm_mota' => substr(fake()->sentence, 0, 255),
+                'pm_mota' => $pm_mota,
                 'o_id' => $oId,
             ]);
             $oId++;
@@ -148,12 +151,13 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        $hotel_mota = "Hãy để chuyến đi của quý khách có một khởi đầu tuyệt vời khi ở lại khách sạn này, nơi có Wi-Fi miễn phí trong tất cả các phòng. Nằm ở vị trí chiến lược, cho phép quý khách lui tới và gần với các điểm thu hút và tham quan địa phương. Được xếp hạng cao, chỗ nghỉ chất lượng cao này cho phép khách nghỉ sử dụng bể bơi ngoài trời, phòng tập và nhà hàng ngay trong khuôn viên.";
         $admin_pm_id = Paymnet_Info::where('o_id', 1)->inRandomOrder()->value('pm_id');
         Hotel::create([
             'h_name' => "Nhà Bà Tư Boutique Hotel",
             'h_dchi' => "Hẻm 139 Phan Chu Trinh, Phường 2, Vũng Tàu",
             'h_sdt' => $this->vnPhone(),
-            'h_mota' => substr(fake()->sentence, 0, 255),
+            'h_mota' => $hotel_mota,
             'h_isclose' => 0,
             'o_id' => 1,
             'lh_id' => 1,
@@ -164,7 +168,7 @@ class DatabaseSeeder extends Seeder
             'h_name' => "Shin&Sam Hotel",
             'h_dchi' => "17/5 Hồ Quý Ly, Phường Thắng Tam, Vũng Tàu",
             'h_sdt' => $this->vnPhone(),
-            'h_mota' => substr(fake()->sentence, 0, 255),
+            'h_mota' => $hotel_mota,
             'h_isclose' => 0,
             'o_id' => 1,
             'lh_id' => 1,
@@ -173,11 +177,31 @@ class DatabaseSeeder extends Seeder
         ]);
         //khách sạn
         $hotelNames = [
-           'Green Hotel Vũng Tàu', 'Khách sạn Bãi biển Annata', 'Khách sạn La Casa', 'The Sóng Apartment Vũng Tàu', 'Vung Tau RiVa Hotel', 
-           'Golden Lotus Grand Da Nang', 'Khách sạn Radisson Đà Nẵng', 'La Belle Vie Boutique Hotel', 'RHM HOTEL', 'Wyndham Đà Nẵng Golden Bay',  
-           'Hotel Royal', 'Khách sạn Bel Ami Hà Nội', 'Khách sạn Chariot', 'Khách sạn Sunrise Hà Nội', 'Libre Homestay',
-           'Cozrum Homes - Sonata Residence', 'Hotel Continental Saigon', 'Huazhu Hotel', 'Khách sạn La Memoria - Trung tâm thành phố', 'KHÁCH SẠN LA VELA SÀI GÒN', 
-           'Boom Casa Homestay', 'Huong Giang Hotel Resort & Spa', 'Khách sạn The Sunriver Boutique Huế', 'LA VELA HUE HOTEL', 'Park View Hotel'
+            'Green Hotel Vũng Tàu',
+            'Khách sạn Bãi biển Annata',
+            'Khách sạn La Casa',
+            'The Sóng Apartment Vũng Tàu',
+            'Vung Tau RiVa Hotel',
+            'Golden Lotus Grand Da Nang',
+            'Khách sạn Radisson Đà Nẵng',
+            'La Belle Vie Boutique Hotel',
+            'RHM HOTEL',
+            'Wyndham Đà Nẵng Golden Bay',
+            'Hotel Royal',
+            'Khách sạn Bel Ami Hà Nội',
+            'Khách sạn Chariot',
+            'Khách sạn Sunrise Hà Nội',
+            'Libre Homestay',
+            'Cozrum Homes - Sonata Residence',
+            'Hotel Continental Saigon',
+            'Huazhu Hotel',
+            'Khách sạn La Memoria - Trung tâm thành phố',
+            'KHÁCH SẠN LA VELA SÀI GÒN',
+            'Boom Casa Homestay',
+            'Huong Giang Hotel Resort & Spa',
+            'Khách sạn The Sunriver Boutique Huế',
+            'LA VELA HUE HOTEL',
+            'Park View Hotel'
         ];
 
         // Tạo mảng chứa các giá trị cho ct_id
@@ -199,15 +223,15 @@ class DatabaseSeeder extends Seeder
                 'h_name' => array_shift($hotelNames),
                 'h_dchi' => fake()->address,
                 'h_sdt' => $this->vnPhone(),
-                'h_mota' => substr(fake()->sentence, 0, 255),
+                'h_mota' => $hotel_mota,
                 'h_isclose' => 0,
                 'o_id' => $increaseID,
-                'lh_id' => rand(1,5),
+                'lh_id' => rand(1, 5),
                 'ct_id' => $city,
                 'pm_id' => $pmId,
             ]);
             $dem++;
-            if($dem > 5){
+            if ($dem > 5) {
                 $increaseID++;
                 $dem = 1;
             }
@@ -244,7 +268,7 @@ class DatabaseSeeder extends Seeder
             'gương',
             'sofa',
             'ban công',
-            'bữa sáng',
+            'đồ dùng cá nhân',
             'giá treo',
             'vòi nóng lạnh',
             'hút thuốc',
@@ -252,16 +276,20 @@ class DatabaseSeeder extends Seeder
             'nước miễn phí',
             'bếp',
             'dép trong nhà',
+
             'hồ bơi',
             'bãi để xe',
-            'tiếp tân 24h',
-            'phòng gym',
-            'cho phép thú cưng',
-            'đưa đón sân bay',
-            'spa',
             'internet',
+            'phòng gym',
+            'sân chơi',
+            'spa/xông hơi',
+            'tiếp tân 24h',
+            'đưa đón sân bay',
             'câu lạc bộ đêm',
-            'sân chơi'
+            'cho phép thú cưng',
+            'có bữa sáng',
+            'giữ hành lý',
+            'TT tại khách sạn',
         ];
         $demtiennghi = 0;
         foreach ($dstiennghi as $tn) {
@@ -276,6 +304,53 @@ class DatabaseSeeder extends Seeder
                     'tn_name' => $tn,
                 ]);
             }
+        }
+        $room_name = [
+            'Phòng Tiêu Chuẩn Hướng Núi (Standard)',
+            'Phòng Giường Đôi (Standard Double)',
+            'Phòng Superior Hướng Biển (Superior)',
+            'Studio Có Ban Công (Studio With Balcony)',
+            'Phòng Loại Sang (Deluxe)'
+        ];
+        $room_price = [600000, 850000, 1100000, 1300000, 1500000];
+        //phòng
+        $room_mota = "Phòng phù hợp để nghỉ dưỡng kèm vui chơi, ban công hướng biển thoáng mát, phòng có đầy đủ tiện nghi cho bạn sử dụng như bồn tắm, tv, giường lớn,... phòng sẽ phục vụ cho bạn bữa sáng mỗi ngày, còn chần chờ gì nữa hãy đặt phòng ngay thôi nào!";
+        for ($ks = 1; $ks < 28; $ks++) {
+            for ($room = 0; $room < 5; $room++) {
+                Room::create([
+                    'r_name' => $room_name[$room],
+                    'r_price' => $room_price[$room],
+                    'r_soluong' => 10,
+                    'r_mota' => $room_mota,
+                    'h_id' => $ks
+                ]);
+            }
+        }
+
+        //ảnh phòng, chỉ demo 5 phòng, mỗi phòng 5 ảnh
+        // for ($ks = 1; $ks < 28; $ks++) {
+        //     for ($room = 1; $room < 6; $room++) {
+        //         for ($img = 1; $img < 6; $img++) {
+        //             Room_Img::create([
+        //                 'r_id' => $ks,
+        //                 'ri_name' => "r" . $room . "img" . $img,
+        //                 'ri_vitri' => $img
+        //             ]);
+        //         }
+        //     }
+        // }
+        $dem = 1;
+        for ($room = 1; $room < 136; $room++) {
+            for ($img = 1; $img < 6; $img++) {
+                Room_Img::create([
+                    'r_id' => $room,
+                    'ri_name' => "r" . $dem . "img" . $img . ".png",
+                    'ri_vitri' => $img
+                ]);
+            }
+            $dem++;
+            if ($dem > 5)
+                $dem = 1;
         }
     }
 }

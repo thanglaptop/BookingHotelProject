@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('danhgia', function (Blueprint $table) {
             $table->tinyInteger('dg_id', true, true);
             $table->enum('dg_star', ['1sao', '2sao', '3sao', '4sao', '5sao']);
-            $table->string('dg_nhanxet', 255);
+            $table->string('dg_nhanxet', 400);
             $table->date('dg_ngaydg');
             $table->tinyInteger('c_id')->unsigned();
             $table->tinyInteger('detail_id')->unsigned();

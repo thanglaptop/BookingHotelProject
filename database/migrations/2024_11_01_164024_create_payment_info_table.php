@@ -19,7 +19,7 @@ return new class extends Migration
             $table->char('pm_bank', 15);
             $table->char('pm_QRmomo', 15);
             $table->char('pm_QRbank', 15);
-            $table->string('pm_mota', 255);
+            $table->string('pm_mota', 400);
             $table->tinyInteger('o_id')->unsigned();
             $table->foreign('o_id')->references('o_id')->on('owner')->onUpdate('cascade')->onDelete('cascade');
         });

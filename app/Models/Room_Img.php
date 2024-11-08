@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Room_Img extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'room_img';
 
     protected $fillable = [

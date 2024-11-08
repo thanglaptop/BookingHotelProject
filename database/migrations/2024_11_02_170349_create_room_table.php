@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('r_name', 50);
             $table->float('r_price')->unsigned();
             $table->tinyInteger('r_soluong', false, true);
-            $table->string('r_mota', 255);
+            $table->string('r_mota', 400);
             $table->tinyInteger('h_id')->unsigned();
             $table->foreign('h_id')->references('h_id')->on('hotel')->onUpdate('cascade')->onDelete('cascade');
         });

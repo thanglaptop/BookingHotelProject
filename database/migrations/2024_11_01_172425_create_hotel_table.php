@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('h_name', 50);
             $table->string('h_dchi', 100);
             $table->char('h_sdt', 10);
-            $table->string('h_mota', 255);
+            $table->string('h_mota', 400);
             $table->boolean('h_isclose')->default(false);
             $table->date('h_dateclose')->nullable();
             $table->date('h_dateopen')->nullable();
