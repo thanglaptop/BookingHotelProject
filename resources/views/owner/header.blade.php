@@ -7,7 +7,7 @@
                     AGOBEE
                 </div>
                 @if (Route::currentRouteName() == 'mainowner')
-                    <h6 class="">Chào {{ $owner->o_name }}</h6>
+                    <h6 class="mx-auto">Chào {{ $owner->o_name }}</h6>
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
                         aria-label="Toggle navigation">
@@ -60,7 +60,9 @@
                             </ul>
                         </div>
                     </div>
-                @else
+                    @elseif(Route::currentRouteName() == 'index')
+                        <button class="btn btn-primary">Đăng nhập/Đăng ký</button>
+                @else 
                     @php
                         $hotelname = isset($hotel) ? $hotel->h_name : $room->hotel->h_name;
                     @endphp

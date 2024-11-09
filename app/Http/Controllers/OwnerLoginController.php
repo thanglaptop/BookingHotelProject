@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 
 class OwnerLoginController extends Controller
 {
+    public function showCity(){
+        $cities =  City::has('hotels')->withCount('hotels')->get();
+        return view('index',['cities'=> $cities]);
+    }
     public function checkLogin(Request $request){
         $owner_username = $request->input('txtOUsername');
         $owner_pass = $request->input('txtOPass');

@@ -148,17 +148,17 @@ body, html {
 .location-dropdown div:hover {
     background-color: #f0f0f0;
 }
-.footer {
+/* .footer {
     background-color: #88905cf0;
     color: white;
     padding: 20px 0; /* Loại bỏ padding trái và phải */
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-top: 50px;
     box-sizing: border-box;
-    width: 100%;
-}
+    width: 100%; */
+/* }  */
 .footer-section {
     margin: 10px;
 }
