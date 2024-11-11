@@ -313,6 +313,9 @@ class DatabaseSeeder extends Seeder
             'Phòng Loại Sang (Deluxe)'
         ];
         $room_price = [600000, 850000, 1100000, 1300000, 1500000];
+        $maxadult = [2,2,4,6,0];
+        $maxkid = [0,1,2,3,0];
+        $maxperson = [0,0,0,0,15];
         //phòng
         $room_mota = "Phòng phù hợp để nghỉ dưỡng kèm vui chơi, ban công hướng biển thoáng mát, phòng có đầy đủ tiện nghi cho bạn sử dụng như bồn tắm, tv, giường lớn,... phòng sẽ phục vụ cho bạn bữa sáng mỗi ngày, còn chần chờ gì nữa hãy đặt phòng ngay thôi nào!";
         for ($ks = 1; $ks < 28; $ks++) {
@@ -322,23 +325,14 @@ class DatabaseSeeder extends Seeder
                     'r_price' => $room_price[$room],
                     'r_soluong' => 10,
                     'r_mota' => $room_mota,
+                    'r_maxadult' => $maxadult[$room],
+                    'r_maxkid' => $maxkid[$room],
+                    'r_maxperson' => $maxperson[$room],
                     'h_id' => $ks
                 ]);
             }
         }
 
-        //ảnh phòng, chỉ demo 5 phòng, mỗi phòng 5 ảnh
-        // for ($ks = 1; $ks < 28; $ks++) {
-        //     for ($room = 1; $room < 6; $room++) {
-        //         for ($img = 1; $img < 6; $img++) {
-        //             Room_Img::create([
-        //                 'r_id' => $ks,
-        //                 'ri_name' => "r" . $room . "img" . $img,
-        //                 'ri_vitri' => $img
-        //             ]);
-        //         }
-        //     }
-        // }
         $dem = 1;
         for ($room = 1; $room < 136; $room++) {
             for ($img = 1; $img < 6; $img++) {

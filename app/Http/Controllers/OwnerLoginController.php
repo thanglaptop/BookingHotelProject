@@ -17,7 +17,8 @@ class OwnerLoginController extends Controller
 {
     public function showCity(){
         $cities =  City::has('hotels')->withCount('hotels')->get();
-        return view('index',['cities'=> $cities]);
+        $room = Room::all();
+        return view('index',['cities'=> $cities, 'room' => $room]);
     }
     public function checkLogin(Request $request){
         $owner_username = $request->input('txtOUsername');
@@ -50,15 +51,13 @@ class OwnerLoginController extends Controller
         'loaihinhs' => $loaihinhs, 'hotelpminfo' => $hotelpminfo]);
     }
 
-    public function showKHWelcome($id)
+    public function showKHWelcome($cid)
     {
         // Lấy thông tin owner dựa trên ID
-        $customer = Customer::findOrFail($id);
-        $cityHasHotels = City::has('hotels')->withCount('hotels')->get();
-        $loaihinhs = Loaihinh::all();
-        // Truyền dữ liệu owner sang view 'welcome'
-        return view('customer/maincustomer', ['customer' => $customer,'cityHasHotels' => $cityHasHotels, 
-        'loaihinhs' => $loaihinhs]);
+        $customer = Customer::findOrFail($cid);
+        $cities =  City::has('hotels')->withCount('hotels')->get();
+        $room = Room::all();
+        return view('index',['customer' => $customer,'cities'=> $cities, 'room' => $room]);
     }
 
     public function showEditHotel($id)

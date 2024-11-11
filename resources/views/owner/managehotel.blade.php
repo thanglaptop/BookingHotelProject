@@ -23,7 +23,7 @@
 
 <body>
 
-    @include('owner/header')
+    @include('header')
     
     <section class="noidung">
         <div class="container p-4">

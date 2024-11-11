@@ -19,6 +19,9 @@ class Room extends Model
         'r_price',
         'h_soluong',
         'r_mota',
+        'r_maxadult',
+        'r_maxkid',
+        'r_maxperson',
         'h_id'
     ]; 
 

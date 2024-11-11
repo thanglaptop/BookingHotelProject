@@ -15,8 +15,11 @@ class Dondatphong extends Model
 
     protected $fillable = [
         'ddp_ngaydat',
+        'ddp_customername',
+        'ddp_sdt',
         'ddp_total',
         'ddp_pttt',
+        'ddp_status',
         'c_id'
     ];
 

@@ -194,4 +194,3 @@ dropdownItems.forEach(item => {
     }
   });
 });
-

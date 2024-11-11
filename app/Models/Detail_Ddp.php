@@ -17,7 +17,6 @@ class Detail_Ddp extends Model
         'detail_checkin',
         'detail_checkout',
         'detail_soluong',
-        'detail_status',
         'detail_thanhtien',
         'r_id',
         'ddp_id'

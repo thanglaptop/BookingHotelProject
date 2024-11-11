@@ -1,0 +1,172 @@
+.header {
+    width: 100%;
+    background-image: linear-gradient(to right, rgb(253, 211, 72), rgb(247, 177, 46));
+}
+
+.navbar-brand {
+    font-weight: 800;
+}
+
+.navbar-brand img {
+    width: 80px;
+}
+
+.navbar-toggler {
+    width: 64px;
+    height: 56px;
+}
+
+.offcanvas-header {
+    background-image: linear-gradient(to right, rgb(253, 211, 72), rgb(247, 177, 46));
+}
+
+
+.navbar-nav .nav-item button:hover {
+    color: orangered;
+}
+
+.cart {
+    width: 60px;
+    height: 56px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart i {
+    font-size: 24px;
+}
+
+.background {
+    position: relative;
+    padding-bottom: 6rem;
+}
+
+.background img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.blur-background {
+    position: absolute;
+    top: 0;
+    height: 300px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.overlay-content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.search-form {
+    border-radius: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 1px 1px 16px 1px #404146;
+}
+
+.title-search {
+    text-align: center;
+    color: #404146;
+}
+
+.city-card {
+    width: 280px;
+    height: 280px;
+    box-shadow: 0px 0px 8px 0px #404146;
+}
+
+footer {
+    background-image: linear-gradient(to right, rgb(253, 211, 72), rgb(247, 177, 46));
+    padding: 20px 0;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: orangered;
+}
+
+.social-icons i {
+    color: black;
+}
+
+.scroll-1 {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.scroll-1::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scroll-1::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #888;
+}
+
+.card-img-top {
+    max-height: 261px;
+    object-fit: cover;
+    object-fit: cover;
+}
+
+.nav-tabs .nav-link {
+    color: #404146;
+}
+
+.nav-tabs .nav-link.active {
+    color: black;
+}
+
+.price {
+    color: orangered;
+}
+
+.card-body {
+    cursor: pointer;
+}
+
+.btn-songuoi {
+    background-color: white;
+}
+
+.btn-cc{
+    /* display: flex !important;
+    justify-content: center !important;
+    align-items: center !important; */
+    width: 32px !important;
+    height: 32px !important;
+    /* padding: 0 !important;
+    margin: 0 !important; */
+}
+
+.custom-popover {
+    max-width: 400px; /* Hoặc dùng width cố định nếu muốn */
+    width: 400px; /* Điều chỉnh độ rộng theo ý muốn */
+}

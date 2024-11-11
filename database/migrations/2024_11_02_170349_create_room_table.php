@@ -17,6 +17,9 @@ return new class extends Migration
             $table->float('r_price')->unsigned();
             $table->tinyInteger('r_soluong', false, true);
             $table->string('r_mota', 400);
+            $table->tinyInteger('r_maxadult')->unsigned();
+            $table->tinyInteger('r_maxkid')->unsigned();
+            $table->tinyInteger('r_maxperson')->unsigned();
             $table->tinyInteger('h_id')->unsigned();
             $table->foreign('h_id')->references('h_id')->on('hotel')->onUpdate('cascade')->onDelete('cascade');
         });

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    @include('owner/header')
+    @include('header')
 
 
     <section class="noidung">

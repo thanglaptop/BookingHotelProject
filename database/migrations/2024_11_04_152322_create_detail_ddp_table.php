@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_ddp', function (Blueprint $table) {
+        Schema::create('detail_ddp', function (Blueprint $table) { 
             $table->tinyInteger('detail_id', true, true);
             $table->date('detail_checkin');
             $table->date('detail_checkout');
             $table->tinyInteger('detail_soluong')->unsigned();
-            $table->enum('detail_status', ['pending', 'confirmed', 'checkedin', 'canceled'])->default('pending');
             $table->float('detail_thanhtien')->unsigned();
             $table->tinyInteger('r_id')->unsigned();
             $table->tinyInteger('ddp_id')->unsigned();

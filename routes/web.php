@@ -5,7 +5,11 @@ use App\Http\Controllers\OwnerLoginController;
 // Route::get('/', function () {
 //     return view('login');
 // })->name('loginpage');
-Route::get('/', [OwnerLoginController::class, 'showCity'])->name('index'); 
+Route::get('/', [OwnerLoginController::class, 'showCity'])->name('index');
+
+Route::get('/loginpage',function(){
+    return view('login');
+})->name('loginpage');
 
 Route::post('/check-owner', [OwnerLoginController::class, 'checkLogin'])->name('checklogin');
 Route::post('/check-customer', [OwnerLoginController::class, 'checkKHLogin'])->name('checkKHlogin');
