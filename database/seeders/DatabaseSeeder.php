@@ -14,6 +14,7 @@ use App\Models\Room;
 use App\Models\Room_Img;
 use Illuminate\Database\Seeder;
 use App\Traits\myHelper;
+use Illuminate\Support\Facades\Hash;
 use Pest\ArchPresets\Custom;
 
 class DatabaseSeeder extends Seeder
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
         //chủ khách sạn
         Owner::factory()->create([
             'o_username' => 'admin',
-            'o_pass' => 'admin',
+            'o_pass' => Hash::make('admin'),
             'o_name'  => 'ADMIN',
             'o_sdt' => '0123456789',
             'o_dchi' => 'Địa chỉ mẫu',
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Customer::create([
             'c_username' => 'customer',
-            'c_pass' => 'customer',
+            'c_pass' => Hash::make('customer'),
             'c_name'  => 'KHÁCH HÀNG TEST',
             'c_sdt' => '0123456789',
             'c_nsinh' => '2000-01-01',

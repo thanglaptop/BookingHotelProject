@@ -1,6 +1,9 @@
 <div class="row">
-    @if ($owner->hotels != null)
-        @foreach ($owner->hotels as $hotel)
+    @php
+        $hotels = Auth::guard('owner')->user()->hotels;
+    @endphp
+    @if ($hotels != null) 
+        @foreach ($hotels as $hotel)
             @php
                 $firstImage = $hotel->hotel_imgs->firstWhere('hi_vitri', 1);
                 $imgpath = $firstImage

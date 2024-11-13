@@ -25,7 +25,7 @@
 
     <section class="noidung">
         <div class="container p-4">
-            <a href="{{ route('mainowner', ['id' => $hotel->owner]) }}"><button type="button" class="btn btn-danger"><i
+            <a href="{{ route('mainowner')}}"><button type="button" class="btn btn-danger"><i
                         class="bi bi-caret-left-fill"></i> trở về</button></a>
             <div class="row">
                 <h1 class="text-center">Sửa Thông Tin Khách Sạn</h1>

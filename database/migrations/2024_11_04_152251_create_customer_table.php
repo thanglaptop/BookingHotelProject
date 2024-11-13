@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer', function (Blueprint $table) {
             $table->tinyInteger('c_id', true, true);
             $table->char('c_username',30)->unique();
-            $table->char('c_pass',20);
+            $table->char('c_pass',60);
             $table->string('c_name', 30);
             $table->char('c_sdt', 10);
             $table->date('c_nsinh');

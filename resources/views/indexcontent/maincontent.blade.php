@@ -8,7 +8,7 @@
                     <form action="">
                         <div class="row g-3">
                             <div class="col-12">
-                                <h4 class="title-search">Bạn muốn đi đâu, AGOBEE đưa bạn đến!</h4>
+                                <h4 class="title-search">Connecting You To Your Perfect Stay!</h4>
                             </div>
                             <div class="col-12">
                                 <input type="text" class="form-control form-control-lg"
@@ -37,29 +37,26 @@
             </div>
     </div>
 </div>
+
+<div class="spacer"></div>
 <div class="container">
     <h3>Chương trình khuyến mãi chỗ ở</h3>
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/images/other/km1.png" class="d-block w-100" alt="...">
-            </div>
             @php
-                $array_km = ['km2.png', 'km3.png', 'km4.png', 'km5.png'];
+                $array_km = ['km1.png', 'km2.png', 'km3.png', 'km4.png', 'km5.png'];
             @endphp
             @foreach ($array_km as $km)
-                <div class="carousel-item">
+                <div class="carousel-item {{ $km == 'km1.png' ? 'active' : '' }}">
                     <img src="/images/other/{{ $km }}" class="d-block w-100" alt="...">
                 </div>
             @endforeach
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-            data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-            data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -69,10 +66,11 @@
     <div class="d-flex scroll-1">
         @foreach ($cities as $city)
             <div class="card flex-shrink-0 m-3 city-card">
-                <img src="/images/cities/{{ $city->ct_img }}" class="card-img-top h-100"
-                    alt="ảnh không tồn tại">
+                <img src="/images/cities/{{ $city->ct_img }}" class="card-img-top h-100" alt="ảnh không tồn tại">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $city->ct_name }}</h5>
+                    <a style="text-decoration:none;" href="{{ route('showlisthotel', ['id' => $city->ct_id]) }}">
+                        <h5 class="card-title">{{ $city->ct_name }}</h5>
+                    </a>
                     <h6 class="card-subtitle mb-2 text-body-secondary">Có {{ $city->hotels_count }} chỗ
                         ở</h6>
                 </div>
@@ -85,10 +83,9 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             @foreach ($cities as $city)
                 @php $active = $loop->first ? "active" : "" @endphp
-                <button class="nav-link {{ $active }}" id="CT{{ $city->ct_id }}-tab"
-                    data-bs-toggle="tab" data-bs-target="#CT{{ $city->ct_id }}" type="button"
-                    role="tab" aria-controls="CT{{ $city->ct_id }}"
-                    aria-selected="true">{{ $city->ct_name }}</button>
+                <button class="nav-link {{ $active }}" id="CT{{ $city->ct_id }}-tab" data-bs-toggle="tab"
+                    data-bs-target="#CT{{ $city->ct_id }}" type="button" role="tab"
+                    aria-controls="CT{{ $city->ct_id }}" aria-selected="true">{{ $city->ct_name }}</button>
             @endforeach
         </div>
     </nav>
@@ -109,8 +106,7 @@
                             $maxprice = $room->where('h_id', $hotel->h_id)->max('r_price');
                         @endphp
                         <div class="card flex-shrink-0 m-3 city-card">
-                            <img src="{{ $imgpath }}" class="card-img-top h-100"
-                                alt="ảnh không tồn tại">
+                            <img src="{{ $imgpath }}" class="card-img-top h-100" alt="ảnh không tồn tại">
                             <div class="card-body">
                                 <h5 class="card-title scroll-1">{{ $hotel->h_name }}</h5>
                                 <p style="font-size: 12px;">Giá mỗi đếm chưa bao gồm thuế và phí</p>

@@ -41,13 +41,9 @@ body {
   white-space: nowrap;
 }
 
-.a {
-  background-color: #007bff;
-  border: 1px solid black;
-}
-
 .card {
-  background-image: linear-gradient(to bottom, rgb(243, 243, 169), rgb(250, 203, 116));
+  /* background-image: linear-gradient(to bottom, rgb(243, 243, 169), rgb(250, 203, 116)); */
+  background-color: rgb(252, 198, 99) !important;
   border: none;
 }
 
@@ -171,3 +167,8 @@ body {
   max-height: 261px;
 }
 
+.btn-orange{
+  background: rgb(255, 166, 0) !important;
+  border: none !important;
+  color: white !important;
+}

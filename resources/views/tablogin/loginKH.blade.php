@@ -1,5 +1,5 @@
 <div id="KhachHang" class="choLogin p-3 active">
-    <form id="loginUser" class="row g-3 needs-validation" action="{{ route('checkKHlogin') }}" method="POST" novalidate>
+    <form id="loginUser" class="row g-3 needs-validation" action="{{ route('customerlogin') }}" method="POST" novalidate>
         <div class="col-12">
             @csrf
             <label for="loginCusUsername" class="form-label">tên đăng nhập</label>

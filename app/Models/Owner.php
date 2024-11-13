@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Owner extends Model
+// use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; 
+class Owner extends Authenticatable
 {
     use HasFactory;
     
@@ -26,9 +26,22 @@ class Owner extends Model
         'o_pass', // Ẩn mật khẩu khi chuyển đổi sang mảng hoặc JSON
     ]; 
 
-    public function paymentInfos()
+     // Đặt trường mật khẩu
+     public function getAuthPassword()
+     {
+        //  return $this->o_pass;
+        return 'o_pass';
+     }
+ 
+     // Đặt trường tên đăng nhập
+     public function getAuthIdentifierName()
+     {
+         return 'o_username';
+     }
+
+    public function paymentInfos() 
     {
-        return $this->hasMany(Paymnet_Info::class, 'pm_id', 'pm_id'); //class, foreignkey, localkey
+        return $this->hasMany(Paymnet_Info::class, 'o_id', 'o_id'); //class, foreignkey, localkey
     }
     // Quan hệ với model Hotel
     public function hotels()

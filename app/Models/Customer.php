@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
     use HasFactory;
     public $timestamps = false;
@@ -26,6 +27,19 @@ class Customer extends Model
     protected $hidden = [
         'c_pass', // Ẩn mật khẩu khi chuyển đổi sang mảng hoặc JSON
     ];
+
+    // Đặt trường mật khẩu
+    public function getAuthPassword()
+    {
+       //  return $this->o_pass;
+       return 'c_pass';
+    }
+
+    // Đặt trường tên đăng nhập
+    public function getAuthIdentifierName()
+    {
+        return 'c_username';
+    }
 
     public function dondatphongs()
     {

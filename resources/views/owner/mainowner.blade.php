@@ -23,37 +23,11 @@
     @include('header')
 
 
-    <section class="noidung">
+    <section class="noidung"> 
         <div class="container p-4">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="QLKS" role="tabpanel" aria-labelledby="QLKS-tab"
-                    tabindex="0">
+            @include('owner/mainownercontent/displayhotel')
 
-                    @include('owner/mainownercontent/displayhotel')
-
-                    @include('owner/mainownercontent/addhotel')
-                </div>
-
-
-                <div class="tab-pane fade" id="TTTT" role="tabpanel" aria-labelledby="TTTT-tab" tabindex="0">
-                    @include('owner/mainownercontent/pminfo')
-                </div>
-
-                <div class="tab-pane fade" id="TTCN" role="tabpanel" aria-labelledby="TTCN-tab" tabindex="0">
-                    <h1>Thông tin cá nhân sẽ ở đây</h1>
-                </div>
-
-                <div class="tab-pane fade" id="DT" role="tabpanel" aria-labelledby="DT-tab" tabindex="0">
-                    <h1>Doanh thu sẽ ở đây</h1>
-                </div>
-
-
-
-
-                <div class="tab-pane fade" id="DG" role="tabpanel" aria-labelledby="DG-tab" tabindex="0">
-                    <h1>Đánh giá sẽ ở đây</h1>
-                </div>
-            </div>
+            @include('owner/mainownercontent/addhotel')
         </div>
     </section>
 

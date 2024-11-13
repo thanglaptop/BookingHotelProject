@@ -27,9 +27,10 @@
     
     <section class="noidung">
         <div class="container p-4">
-            <a href="{{ route('mainowner', ['id' => $hotel->owner]) }}"><button type="button" class="btn btn-danger"><i
+            <a href="{{ route('mainowner') }}"><button type="button" class="btn btn-danger"><i
                         class="bi bi-caret-left-fill"></i> trở về</button></a>
-            <nav class="mt-2">
+                        <h1 class="text-center">{{$hotel->h_name}}</h1>
+            <nav class="mt-5">
                 <div class="nav nav-tabs h3" id="nav-tab" role="tablist">
                     <button class="nav-link w-50 active" id="tab-manage-phong" data-bs-toggle="tab"
                         data-bs-target="#manage-phong" type="button" role="tab" aria-controls="manage-phong"
