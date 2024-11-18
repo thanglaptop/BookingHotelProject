@@ -23,7 +23,9 @@ class OwnerFactory extends Factory
             'o_name'  => $this->faker->name,
             'o_sdt' => $this->vnPhone(),
             'o_dchi' => $this->faker->address,
-            'o_nsinh' => $this->faker->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d')
+            'o_nsinh' => $this->faker->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
+            'o_email' => $this->faker->email,
+            'o_cccd' => $this->cccd()
         ];
     }
 

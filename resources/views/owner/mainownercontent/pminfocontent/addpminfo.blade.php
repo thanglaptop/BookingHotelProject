@@ -8,7 +8,7 @@
                 <form id="formDatPhong" class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                         <label for="add-pm_name" class="form-label">Tên thông tin thanh toán</label>
-                        <input type="text" class="form-control" id="add-pm_name" value="{{-- $hotel->paymentinfo->pm_momo --}}"
+                        <input type="text" class="form-control border-secondary" id="add-pm_name" value="{{-- $hotel->paymentinfo->pm_momo --}}"
                             required>
                         <div class="invalid-feedback">
                             hãy nhập tên thông tin thanh toán
@@ -17,7 +17,7 @@
                     <div class="col-12">
                         {{-- <label for="add-hotel-pm1" class="form-label">Phương thức thanh toán</label> --}}
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="add-pm-athotel"
+                            <input class="form-check-input border-secondary" type="checkbox" role="switch" id="add-pm-athotel"
                                 {{-- @if ($hotel->paymentinfo->pm_athotel == 1) checked @endif --}}>
                             <label class="form-check-label" for="add-pm-athotel">Cho phép thanh toán
                                 tại khách sạn</label>
@@ -29,7 +29,7 @@
 
                             <div class="col-md-7 col-12">
                                 <label for="add-pm-momo" class="form-label">Số momo</label>
-                                <input type="text" class="form-control" id="add-pm-momo"
+                                <input type="text" class="form-control border-secondary" id="add-pm-momo"
                                     value="{{-- $hotel->paymentinfo->pm_momo --}}" required>
                                 <div class="invalid-feedback">
                                     hãy nhập số momo
@@ -57,7 +57,7 @@
                         <div class="row d-flex align-items-center">
                             <div class="col-md-7 col-12">
                                 <label for="add-pm-bank" class="form-label">Số ngân hàng</label>
-                                <input type="text" class="form-control" id="add-pm-bank"
+                                <input type="text" class="form-control border-secondary" id="add-pm-bank"
                                     value="{{-- $hotel->paymentinfo->pm_bank --}}" required>
                                 <div class="invalid-feedback">
                                     hãy nhập số momo

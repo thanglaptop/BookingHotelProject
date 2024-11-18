@@ -14,6 +14,8 @@ Route::get('/loginpage', function () {
 
 Route::get('/listhotel/city{id}', [DisplayContentController::class, 'showHotelOfCity'])->name('showlisthotel');
 
+Route::get('/detailhotel{id}', [DisplayContentController::class, 'showDetailHotel'])->name('showdetailhotel');
+
 Route::post('/loginowner', [OwnerController::class, 'checkOwnerLogin'])->name('ownerlogin');
 Route::get('/logoutowner', [OwnerController::class, 'ownerLogout'])->name('ownerlogout');
 
@@ -29,6 +31,15 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/managehotel{id}', [OwnerController::class, 'showManageHotel'])->name('managehotel');
     Route::get('/edithotel{id}', [OwnerController::class, 'showEditHotel'])->name('edithotel');
     Route::get('/editroom{rid}/{hid}', [OwnerController::class, 'showEditRoom'])->name('editroom');
+    Route::get('managepersonalinfo', function(){
+        return view('owner/mainownercontent/personalinfo');
+    })->name('personalinfo');
+    Route::get('doanhthu', function(){
+        return view('owner/mainownercontent/doanhthu');
+    })->name('doanhthu');
+    Route::get('danhgia', function(){
+        return view('owner/mainownercontent/danhgia');
+    })->name('danhgia');
 });
 
 Route::middleware([CustomerMiddleware::class])->group(function () {

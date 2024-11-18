@@ -20,6 +20,8 @@ class Owner extends Authenticatable
         'o_sdt',
         'o_dchi', 
         'o_nsinh',
+        'o_email',
+        'o_cccd'
     ];
 
     protected $hidden = [
@@ -32,7 +34,7 @@ class Owner extends Authenticatable
         //  return $this->o_pass;
         return 'o_pass';
      }
- 
+  
      // Đặt trường tên đăng nhập
      public function getAuthIdentifierName()
      {

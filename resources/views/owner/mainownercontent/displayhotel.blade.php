@@ -14,7 +14,7 @@
                 <div class="card h-100">
                     <img src="{{ $imgpath }}" class="card-img-top h-100" alt="ảnh không tồn tại">
                     <div class="card-body">
-                        <h4 class="card-title scroll-1">{{ $hotel->h_name }}</h4>
+                        <h4 class="title">{{ $hotel->h_name }}</h4>
                         <div class="nhom-button">
                             <a href="{{ route('managehotel', ['id' => $hotel->h_id]) }}"> <button type="button" class="btn btn-primary btn-sm">Quản
                                     Lý</button>

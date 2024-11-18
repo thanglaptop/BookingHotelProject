@@ -29,12 +29,12 @@
             <div class="container">
                 <div class="row d-flex g-2">
                     <div class="col-lg-4 col-12"><input type="text" class="form-control form-control-lg h-100"
-                            placeholder="Nhập địa điểm tên du lịch hoặc tên khách sạn">
+                            placeholder="Nhập địa điểm tên du lịch hoặc tên khách sạn" value="{{$city->ct_name}}">
                     </div>
                     <div class="col-lg-4 col-12">
                         <div class="input-group h-100">
-                            <input type="date" class="form-control form-control-lg ">
-                            <input type="date" class="form-control form-control-lg">
+                            <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d') }}">
+                            <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d', strtotime('+1 day')) }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-12">
@@ -77,7 +77,7 @@
                                             <option value="">sao (5 đến 0)</option>
                                         </select>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,8 @@
                                     <div class="col-12"><i class="bi bi-check-lg"></i> list tiện nghi</div>
                                     <h4 class="col-lg-6 price">{{ number_format($minprice, 0, ',', '.') }} -
                                         {{ number_format($maxprice, 0, ',', '.') }} VNĐ</h4>
-                                    <button class="btn btn-primary col-lg-5">xem chi tiết</button>
+                                    <a class="col-lg-5" href="{{ route('showdetailhotel', ['id' => $hotel->h_id]) }}"><button
+                                            class="btn btn-primary w-100">xem chi tiết</button></a>
                                     <div class="col-1"></div>
                                 </div>
                             </div>

@@ -16,8 +16,8 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="input-group">
-                                    <input type="date" class="form-control form-control-lg">
-                                    <input type="date" class="form-control form-control-lg">
+                                    <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d') }}">
+                                    <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d', strtotime('+1 day')) }}">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12" id="RoomAndPerson">

@@ -172,3 +172,13 @@ body {
   border: none !important;
   color: white !important;
 }
+
+.star i{
+  color: goldenrod;
+}
+
+.title{
+  height: 60px;
+  text-align: center;
+  /* border: 1px solid black; */
+}

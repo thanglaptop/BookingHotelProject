@@ -32,7 +32,7 @@
                 <form id="formAddHotel" class="row g-3 needs-validation" novalidate>
                     <div style="font-weight: 600;">Ảnh khách sạn</div>
                     <div class="col-12" id="add-hotel-image">
-                        <div class="zone-display-image scroll-1 border" id="displayHotelImage">
+                        <div class="zone-display-image scroll-1 border border-secondary" id="displayHotelImage">
                             @foreach ($hotel->hotel_imgs as $himg)
                                 <div class="image-container draggable" draggable="true">
                                     <button type="button" class="btn-close" aria-label="Close"
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-4">
                         <label for="add-hotel-type" class="form-label">Loại Hình</label>
-                        <select class="form-select" id="add-hotel-type" required>
+                        <select class="form-select border-secondary" id="add-hotel-type" required>
                             @foreach ($loaihinhs as $lh)
                                 <option value="{{ $lh->lh_id }}" @if ($lh->lh_id == $hotel->lh_id) selected @endif>
                                     {{ $lh->lh_name }}</option>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-4">
                         <label for="add-hotel-city" class="form-label">Thành Phố</label>
-                        <select class="form-select" id="add-hotel-city" required>
+                        <select class="form-select border-secondary" id="add-hotel-city" required>
                             @foreach ($cities as $city)
                                 <option value="{{ $city->ct_id }}" @if ($city->ct_id == $hotel->ct_id) selected @endif>
                                     {{ $city->ct_name }}</option>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-4">
                         <label for="add-hotel-phone" class="form-label">Số Điện Thoại</label>
-                        <input type="text" class="form-control" id="add-hotel-phone" value="{{ $hotel->h_sdt }}"
+                        <input type="text" class="form-control border-secondary" id="add-hotel-phone" value="{{ $hotel->h_sdt }}"
                             required>
                         <div class="invalid-feedback">
                             hãy nhập số điện thoại
@@ -85,7 +85,7 @@
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-name" class="form-label">Tên Khách Sạn</label>
-                        <input type="text" class="form-control" id="add-hotel-name" value="{{ $hotel->h_name }}"
+                        <input type="text" class="form-control border-secondary" id="add-hotel-name" value="{{ $hotel->h_name }}"
                             required>
                         <div class="invalid-feedback">
                             hãy nhập tên khách sạn
@@ -93,7 +93,7 @@
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="add-hotel-address" value="{{ $hotel->h_dchi }}"
+                        <input type="text" class="form-control border-secondary" id="add-hotel-address" value="{{ $hotel->h_dchi }}"
                             required>
                         <div class="invalid-feedback">
                             hãy nhập địa chỉ
@@ -101,7 +101,7 @@
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-describe" class="form-label">Mô tả khách sạn</label>
-                        <textarea name="" class="form-control" id="add-hotel-describe" style="height: 120px;" required>{{ $hotel->h_mota }}</textarea>
+                        <textarea name="" class="form-control border-secondary" id="add-hotel-describe" style="height: 120px;" required>{{ $hotel->h_mota }}</textarea>
                         <div class="invalid-feedback">
                             hãy nhập mô tả khách sạn
                         </div>
@@ -109,7 +109,7 @@
 
                     <div class="col-4">
                         <label for="edit-hotel-pm" class="form-label">Thông tin thanh toán</label>
-                        <select class="form-select" id="edit-hotel-pm" required>
+                        <select class="form-select border-secondary" id="edit-hotel-pm" required>
                             @foreach ($hotelpminfo as $pm)
                                 <option value="{{ $pm->pm_id }}" @if ($pm->pm_id == $hotel->pm_id) selected @endif>
                                     {{ $pm->pm_name }}</option>
@@ -125,7 +125,7 @@
                         <div class="row g-2 mt-1">
                             @foreach($tiennghihotel as $tn)
                             <div class="form-check col-3 col-md-2">
-                                <input class="form-check-input" type="checkbox" value="" id="add-room-utilities">
+                                <input class="form-check-input border-secondary" type="checkbox" value="" id="add-room-utilities">
                                 <label class="form-check-label" for="add-room-utilities">
                                     {{$tn->tn_name}}
                                 </label>

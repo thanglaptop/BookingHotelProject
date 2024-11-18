@@ -19,6 +19,8 @@ return new class extends Migration
             $table->char('o_sdt', 10);
             $table->string('o_dchi', 100);
             $table->date('o_nsinh');
+            $table->string('o_email', 30);
+            $table->char('o_cccd', 12);
         });
     }
 

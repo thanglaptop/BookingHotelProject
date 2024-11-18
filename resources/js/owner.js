@@ -138,14 +138,14 @@ window.addEventListener('load', () => {
   })
 })()
 
-// Lấy ngày hôm nay
-const today = new Date();
-// Định dạng ngày dưới dạng yyyy-mm-dd cho input date
-const formattedDate = today.toISOString().split('T')[0];
-// Gán giá trị cho input date
-const inputNgay = document.getElementsByClassName('form-control');
-inputNgay[0].value = formattedDate;
-inputNgay[1].value = formattedDate;
+// // Lấy ngày hôm nay
+// const today = new Date();
+// // Định dạng ngày dưới dạng yyyy-mm-dd cho input date
+// const formattedDate = today.toISOString().split('T')[0];
+// // Gán giá trị cho input date
+// const inputNgay = document.getElementsByClassName('form-control');
+// inputNgay[0].value = formattedDate;
+// inputNgay[1].value = formattedDate;
 
 
 

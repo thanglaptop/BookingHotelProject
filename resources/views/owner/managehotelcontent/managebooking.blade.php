@@ -2,21 +2,20 @@
     <div class="row">
         <div class="col-md-7 col-12 d-flex align-items-end gap-2">
             <div class="flex-fill"><label for="ngayBD">ngày bắt đầu</label>
-                <input type="date" class="form-control w-100" id="todayDate">
+                <input type="date" class="form-control border-secondary w-100" value="{{date('Y-m-d')}}" id="todayDate">
             </div>
             <div class="flex-fill"><label for="ngayKT">ngày kết thúc</label>
-                <input type="date" class="form-control w-100" id="todayDate">
+                <input type="date" class="form-control border-secondary w-100" value="{{date('Y-m-d')}}" id="todayDate">
             </div>
             <div class="">
                 <button type="button" class=" btn btn-primary">Tìm</button>
             </div>
-
         </div>
 
         <div class="col-md-5 col-12 d-flex align-items-end gap-2">
             <div class="flex-fill">
-                <label for="maDP">mã đặt phòng</label>
-                <input type="text" class="form-control w-100" id="maDP">
+                <label for="maDP">mã đặt phòng</label> 
+                <input type="text" class="form-control border-secondary w-100" id="maDP">
             </div>
             <div class="w-10"><button type="button" class=" btn btn-primary">Tìm</button></div>
             <div class="w-10"><button type="button" class=" btn btn-success" style="white-space: nowrap;"
