@@ -4,6 +4,7 @@ use App\Http\Controllers\DisplayContentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CustomerController;
+
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\OwnerMiddleware;
 
@@ -20,6 +21,12 @@ Route::get('/logoutowner', [OwnerController::class, 'ownerLogout'])->name('owner
 Route::post('/logincustomer', [CustomerController::class, 'checkCustomerLogin'])->name('customerlogin');
 Route::get('/logoutcustomer', [CustomerController::class, 'customerLogout'])->name('customerlogout');
 
+
+
+
+
+
+
 // Route này sẽ yêu cầu người dùng đã đăng nhập trước khi truy cập
 Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/mainowner', [OwnerController::class, 'showMainOwner'])->name('mainowner');
@@ -32,7 +39,7 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
 });
 
 Route::middleware([CustomerMiddleware::class])->group(function () {
-
+    Route::get('/giohang', [CartController::class, 'index'])->name('giohang');
 });
 
 // Route::post('/check-customer', [OwnerLoginController::class, 'checkKHLogin'])->name('checkKHlogin');

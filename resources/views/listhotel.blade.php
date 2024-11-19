@@ -102,11 +102,18 @@
                                             class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></p>
                                     <p class="col-10 address"><i class="bi bi-geo-alt-fill"></i> {{ $hotel->h_dchi }}
                                     </p>
-                                    <div class="col-12"><i class="bi bi-check-lg"></i> list tiện nghi</div>
-                                    <h4 class="col-lg-6 price">{{ number_format($minprice, 0, ',', '.') }} -
-                                        {{ number_format($maxprice, 0, ',', '.') }} VNĐ</h4>
-                                    <button class="btn btn-primary col-lg-5">xem chi tiết</button>
-                                    <div class="col-1"></div>
+                                    <div class="col-12">
+    <div class="d-flex align-items-center justify-content-between col-12">
+    <h4 class="price col-lg-6 mb-0">
+        {{ number_format($minprice, 0, ',', '.') }} - {{ number_format($maxprice, 0, ',', '.') }} VNĐ
+    </h4>
+    <div class="d-flex gap-3"> <!-- Flexbox cho các nút -->
+        <button class="btn btn-primary">Xem chi tiết</button>
+        <button class="btn btn-primary">Đặt phòng</button>
+    </div>
+</div>
+
+
                                 </div>
                             </div>
                         @endforeach
@@ -116,6 +123,7 @@
         </div>
     </section>
 
+   
     @include('footer')
 
     @vite('resources/js/customer.js')

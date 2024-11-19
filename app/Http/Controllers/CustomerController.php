@@ -28,4 +28,5 @@ class CustomerController
         session()->flush();  // Clear the session
         return redirect()->route('index');
     }
+    
 }

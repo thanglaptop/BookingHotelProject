@@ -75,7 +75,7 @@
                                         href="{{ route('index') }}" aria-current="page">Trang Chủ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Giỏ Hàng</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'giohang' ? 'active' : '' }}" href="{{ route('giohang') }}">Giỏ Hàng</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Đơn Đặt Phòng</a>
