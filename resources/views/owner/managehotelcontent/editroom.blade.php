@@ -31,7 +31,7 @@
                     <form id="formAddHotel" class="row g-3 needs-validation" novalidate>
                         <div style="font-weight: 600;">Ảnh phòng</div>
                         <div class="col-12" id="add-room-image">
-                            <div class="zone-display-image scroll-1 border" id="displayRoomImage">
+                            <div class="zone-display-image scroll-1 border border-secondary" id="displayRoomImage">
 
                                 @php
                                     $phandu = $room->r_id % 5;
@@ -62,39 +62,61 @@
                         </div>
                         <div class="col-12">
                             <label for="add-room-name" class="form-label">Tên phòng</label>
-                            <input type="text" class="form-control" id="add-room-name" value="{{$room->r_name}}" required>
+                            <input type="text" class="form-control border-secondary" id="add-room-name" value="{{$room->r_name}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập tên phòng
                             </div>
                         </div>
                         <div class="col-8">
                             <label for="add-room-price" class="form-label">Giá phòng</label>
-                            <input type="text" class="form-control" id="add-room-price" value="{{$room->r_price}}" required>
+                            <input type="text" class="form-control border-secondary" id="add-room-price" value="{{$room->r_price}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập giá phòng
                             </div>
                         </div>
                         <div class="col-4">
                             <label for="add-room-quantity" class="form-label">Số lượng phòng</label>
-                            <input type="number" class="form-control" id="add-room-quantity" value="{{$room->r_soluong}}" required>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_soluong}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập số lượng phòng
                             </div>
                         </div>
                         <div class="col-12">
                             <label for="add-room-describe" class="form-label">Mô tả phòng</label>
-                            <textarea name="" class="form-control" id="add-room-describe" style="height: 120px;"
+                            <textarea name="" class="form-control border-secondary" id="add-room-describe" style="height: 120px;"
                                 required>{{$room->r_mota}}</textarea>
                             <div class="invalid-feedback">
                                 hãy nhập mô tả phòng
                             </div>
                         </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">người lớn</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxadult}}" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số người lớn tối đa
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxkid}}" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số trẻ em tối đa
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">cả người lớn và trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxperson}}" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số người lớn và trẻ em tối đa
+                            </div>
+                        </div>
+                        <div class="text-primary">Nếu đã nhập người lớn, trẻ em thì không cần phải nhập cả người lớn và trẻ em</div>
                         <div class="col-12">
                             <div class="form-label">Tiện ích phòng</div>
                             <div class="row g-2 mt-1">
                                 @foreach($tiennghiroom as $tn)
                                 <div class="form-check col-3">
-                                    <input class="form-check-input" type="checkbox" name="tiennghi[]" id="add-room-utilities">
+                                    <input class="form-check-input border-secondary" type="checkbox" name="tiennghi[]" id="add-room-utilities">
                                     <label class="form-check-label" for="add-room-utilities">
                                         {{$tn->tn_name}}
                                     </label>

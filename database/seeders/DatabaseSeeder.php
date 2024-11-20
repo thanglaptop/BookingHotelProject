@@ -29,7 +29,9 @@ class DatabaseSeeder extends Seeder
             'o_name'  => 'ADMIN',
             'o_sdt' => '0123456789',
             'o_dchi' => 'Địa chỉ mẫu',
-            'o_nsinh' => '2000-01-01'
+            'o_nsinh' => '2000-01-01',
+            'o_email' => 'admin@gmail.com',
+            'o_cccd' => '079203001856'
         ]);
         Customer::create([
             'c_username' => 'customer',

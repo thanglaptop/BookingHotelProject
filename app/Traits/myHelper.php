@@ -13,6 +13,12 @@ trait myHelper
         return '0' . rand(100000000, 999999999);
     }
 
+    public function cccd()
+    {
+        // Số điện thoại Việt Nam bắt đầu bằng 0 và có 10 ký tự
+        return '0' . rand(10000000000, 99999999999);
+    }
+
     public function ownerId(){
         $owner =  Auth::guard('owner')->user();
         return $owner->o_id;

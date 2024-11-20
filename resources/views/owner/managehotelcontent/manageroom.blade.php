@@ -13,7 +13,7 @@
                     <form id="formAddHotel" class="row g-3 needs-validation" novalidate>
                         <div style="font-weight: 600;">Ảnh phòng</div>
                         <div class="col-12" id="add-room-image">
-                            <div class="zone-display-image scroll-1 border" id="displayRoomImage">
+                            <div class="zone-display-image scroll-1 border border-secondary" id="displayRoomImage">
                                 <div class="m-1" id="btnAddImage">
                                     <label for="nutThemAnh"><i class="bi bi-plus-square icon-add-room"></i></label>
                                 </div>
@@ -26,38 +26,60 @@
                         </div>
                         <div class="col-12">
                             <label for="add-room-name" class="form-label">Tên phòng</label>
-                            <input type="text" class="form-control" id="add-room-name" required>
+                            <input type="text" class="form-control border-secondary" id="add-room-name" required>
                             <div class="invalid-feedback">
                                 hãy nhập tên phòng
                             </div>
                         </div>
                         <div class="col-8">
                             <label for="add-room-price" class="form-label">Giá phòng</label>
-                            <input type="text" class="form-control" id="add-room-price" required>
+                            <input type="text" class="form-control border-secondary" id="add-room-price" required>
                             <div class="invalid-feedback">
                                 hãy nhập giá phòng
                             </div>
                         </div>
                         <div class="col-4">
                             <label for="add-room-quantity" class="form-label">Số lượng phòng</label>
-                            <input type="number" class="form-control" id="add-room-quantity" required>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" required>
                             <div class="invalid-feedback">
                                 hãy nhập số lượng phòng
                             </div>
                         </div>
                         <div class="col-12">
                             <label for="add-room-describe" class="form-label">Mô tả phòng</label>
-                            <textarea name="" class="form-control" id="add-room-describe" style="height: 120px;" required></textarea>
+                            <textarea name="" class="form-control border-secondary" id="add-room-describe" style="height: 120px;" required></textarea>
                             <div class="invalid-feedback">
                                 hãy nhập mô tả phòng
                             </div>
                         </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">người lớn</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="0" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số người lớn tối đa
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="0" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số trẻ em tối đa
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="add-room-quantity" class="form-label">cả người lớn và trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="0" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số người lớn và trẻ em tối đa
+                            </div>
+                        </div>
+                        <div class="text-primary">Nếu đã nhập người lớn, trẻ em thì không cần phải nhập cả người lớn và trẻ em</div>
                         <div class="col-12">
                             <div class="form-label">Tiện nghi phòng</div>
                             <div class="row g-2 mt-1">
                                 @foreach ($listtiennghi as $tiennghi)
                                     <div class="form-check col-3">
-                                        <input class="form-check-input" type="checkbox" name="tiennghi[]"
+                                        <input class="form-check-input border-secondary" type="checkbox" name="tiennghi[]"
                                             value="{{ $tiennghi->tn_id }}" id="add-room-utilities">
                                         <label class="form-check-label" for="add-room-utilities">
                                             {{ $tiennghi->tn_name }}
@@ -94,6 +116,15 @@
                                 break;
                             }
                             $dem++;
+
+                            $allow = "";
+                            if($room->r_maxadult != 0 && $room->r_maxkid !=0){
+                                $allow = $room->r_maxadult." người lớn, ".$room->r_maxkid." trẻ em";
+                            }elseif($room->r_maxadult != 0 && $room->r_maxkid == 0){
+                                $allow = $room->r_maxadult." người lớn";
+                            }else{
+                                $allow = $room->r_maxperson." người lớn và trẻ em";
+                            }
                         @endphp
                         <img src="{{ $roompath }}" class="img-fluid rounded-start h-100" alt="ảnh không tồn tại">
                     </div>
@@ -101,18 +132,19 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $room->r_name }}</h5>
                             <div class="row">
-                                <div class="col-md-6 d-flex justify-content-between">
+                                <div class="col-md-8 d-flex justify-content-between">
                                     <div class="card-text">Mã phòng:
                                         R{{ $room->r_id }}{{ $hotel->h_id }}H</div>
                                     <div class="card-text">Số lượng: {{ $room->r_soluong }}</div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 d-flex justify-content-between">
+                                <div class="col-md-8 d-flex justify-content-between">
                                     <div class="card-text">Giá: {{ $room->r_price }}đ/ngày</div>
                                     <div class="card-text">Còn lại: 10</div>
                                 </div>
                             </div>
+                            <div class="card-text">Tối đa: {{$allow}}</div>
                             <div class="card-text">Mô tả: {{ $room->r_mota }}</div>
                             <div class="d-flex align-items-center">
                                 <span class="card-text" style="white-space: nowrap;">cơ sở vật chất:
