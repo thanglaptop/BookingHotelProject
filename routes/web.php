@@ -6,6 +6,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\OwnerMiddleware;
+use App\Models\Customer;
 
 Route::get('/', [DisplayContentController::class, 'displayContent'])->name('index');
 Route::get('/loginpage', function () {
@@ -31,18 +32,24 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/managehotel{id}', [OwnerController::class, 'showManageHotel'])->name('managehotel');
     Route::get('/edithotel{id}', [OwnerController::class, 'showEditHotel'])->name('edithotel');
     Route::get('/editroom{rid}/{hid}', [OwnerController::class, 'showEditRoom'])->name('editroom');
-    Route::get('managepersonalinfo', function(){
+    Route::get('/managepersonalinfo', function(){
         return view('owner/mainownercontent/personalinfo');
     })->name('personalinfo');
-    Route::get('doanhthu', function(){
+    Route::get('/doanhthu', function(){
         return view('owner/mainownercontent/doanhthu');
     })->name('doanhthu');
-    Route::get('danhgia', function(){
+    Route::get('/danhgia', function(){
         return view('owner/mainownercontent/danhgia');
     })->name('danhgia');
+    Route::get('/createddp{hid}', [OwnerController::class, 'showPageCreateDDP'])->name('taoddp');
 });
 
 Route::middleware([CustomerMiddleware::class])->group(function () {
+    Route::get('cart', function(){
+        return view('customer/cart');
+    })->name('cart');
+    Route::post('/addtocart', [CustomerController::class, 'addToCart'])->name('addtocart');
+    Route::get('/header', [CustomerController::class, 'refreshHeader'])->name('refreshheader');
 
 });
 

@@ -89,23 +89,30 @@
                                 hãy nhập mô tả phòng
                             </div>
                         </div>
-                        <div class="col-4">
-                            <label for="add-room-quantity" class="form-label">người lớn</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxadult}}" required>
+                        <div class="col-3">
+                            <label for="add-room-dientich" class="form-label">Diện tích</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-dientich" value="{{$room->r_dientich}}" required>
+                            <div class="invalid-feedback">
+                                hãy nhập số diện tích phòng
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <label for="add-room-adult" class="form-label">người lớn</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-adult" value="{{$room->r_maxadult}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập số người lớn tối đa
                             </div>
                         </div>
-                        <div class="col-4">
-                            <label for="add-room-quantity" class="form-label">trẻ em</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxkid}}" required>
+                        <div class="col-3">
+                            <label for="add-room-kid" class="form-label">trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-kid" value="{{$room->r_maxkid}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập số trẻ em tối đa
                             </div>
                         </div>
-                        <div class="col-4">
-                            <label for="add-room-quantity" class="form-label">cả người lớn và trẻ em</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-quantity" value="{{$room->r_maxperson}}" required>
+                        <div class="col-3">
+                            <label for="add-room-maxperson" class="form-label">cả người lớn và trẻ em</label>
+                            <input type="number" class="form-control border-secondary" id="add-room-maxperson" value="{{$room->r_maxperson}}" required>
                             <div class="invalid-feedback">
                                 hãy nhập số người lớn và trẻ em tối đa
                             </div>

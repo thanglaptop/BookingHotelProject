@@ -319,6 +319,7 @@ class DatabaseSeeder extends Seeder
         $maxadult = [2,2,4,6,0];
         $maxkid = [0,1,2,3,0];
         $maxperson = [0,0,0,0,15];
+        $dientich = [15, 20, 30, 45, 60];
         //phòng
         $room_mota = "Phòng phù hợp để nghỉ dưỡng kèm vui chơi, ban công hướng biển thoáng mát, phòng có đầy đủ tiện nghi cho bạn sử dụng như bồn tắm, tv, giường lớn,... phòng sẽ phục vụ cho bạn bữa sáng mỗi ngày, còn chần chờ gì nữa hãy đặt phòng ngay thôi nào!";
         for ($ks = 1; $ks < 28; $ks++) {
@@ -331,6 +332,7 @@ class DatabaseSeeder extends Seeder
                     'r_maxadult' => $maxadult[$room],
                     'r_maxkid' => $maxkid[$room],
                     'r_maxperson' => $maxperson[$room],
+                    'r_dientich' => $dientich[$room],
                     'h_id' => $ks
                 ]);
             }

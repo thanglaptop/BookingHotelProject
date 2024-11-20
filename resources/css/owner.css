@@ -70,7 +70,22 @@ body {
   border-radius: 8px;
   margin-top: 12px;
 }
+.scroll-2{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* white-space: nowrap;
+  text-align: center; */
+}
 
+.scroll-2::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scroll-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #888;
+}
 .scroll-1 {
   overflow-x: scroll;
   overflow-y: hidden;
@@ -181,4 +196,8 @@ body {
   height: 60px;
   text-align: center;
   /* border: 1px solid black; */
+}
+
+.dgvDDP{
+  height: 240px;
 }

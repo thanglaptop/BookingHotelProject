@@ -93,8 +93,10 @@ class OwnerController
         return view('owner/managehotelcontent/editroom', ['room' => $room, 'tiennghiroom' => $tiennghiroom]);
     }
 
-    public function showPaymentInfo(){
-        
+    public function showPageCreateDDP($hid){
+        $hotel = Hotel::where('h_id', $hid)->firstOrFail();
+        $listroom = Room::all()->where('h_id', $this->hotelOfOwner($hid));
+        return view('owner/managehotelcontent/createddp', ['hotel' => $hotel,'listroom' => $listroom]);
     }
 
 

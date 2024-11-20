@@ -57,10 +57,16 @@
                 @elseif(Auth::guard('customer')->check())
                     @php
                         $customer = Auth::guard('customer')->user();
+                        $soluongphong = count($customer->hasManyRoomInGiohang);
                     @endphp
-                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    <button class="navbar-toggler position-relative" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
-                        aria-label="Toggle navigation">
+                        aria-label="Toggle navigation" id="btn-nav">
+                        @if ($soluongphong != null)
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle">
+                            </span>
+                        @endif
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
@@ -77,7 +83,13 @@
                                         href="{{ route('index') }}" aria-current="page">Trang Chủ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Giỏ Hàng</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'cart' ? 'active' : '' }}"
+                                        href="{{ route('cart') }}" id="cart-count"> Giỏ hàng
+                                        @if ($soluongphong != null)
+                                            <span class="badge text-bg-danger">{{ $soluongphong }}</span>
+                                        @endif
+                                    </a>
+
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Đơn Đặt Phòng</a>
