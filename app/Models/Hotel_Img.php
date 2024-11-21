@@ -16,7 +16,7 @@ class Hotel_Img extends Model
         'h_id',
         'hi_name',
         'hi_vitri'
-    ]; 
+    ];
 
     public function hotel()
     {

@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController
-{  
+{
     public function checkCustomerLogin(Request $req)
     {
         $logininfo = $req->only('txtCUsername', 'txtCPass');
         $customer = Customer::where('c_username',  $logininfo['txtCUsername'])->first();
         if ($customer && Hash::check($logininfo['txtCPass'], $customer->c_pass)) {
-            
+
             // Đăng nhập thành công, chuyển hướng tới trang chủ
             Auth::guard('customer')->login($customer);
             return redirect()->route('index');
@@ -28,5 +28,11 @@ class CustomerController
         session()->flush();  // Clear the session
         return redirect()->route('index');
     }
-    
+
+//Hàm lấy thông tin khách hàng
+    public function edit()
+    {
+        $customer = Auth::guard('customer')->user(); // Lấy thông tin khách hàng đang đăng nhập
+        return view('customer.updatecustomerinfo', compact('customer'));
+    }
 }

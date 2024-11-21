@@ -11,7 +11,7 @@ use App\Http\Middleware\OwnerMiddleware;
 Route::get('/', [DisplayContentController::class, 'displayContent'])->name('index');
 Route::get('/loginpage', function () {
     return view('login');
-})->name('loginpage'); 
+})->name('loginpage');
 
 Route::get('/listhotel/city{id}', [DisplayContentController::class, 'showHotelOfCity'])->name('showlisthotel');
 
@@ -54,7 +54,13 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
     Route::get('/customerinfo', function(){
         return view("customer/customerinfo");
     })->name('customerinfo');
-    
+
+
+
+
+    Route::get('/updatecustomerinfo', [CustomerController::class, 'edit'])->name('updatecustomerinfo');
+
+
 
 });
 

@@ -203,7 +203,7 @@ footer {
 .weather-forecast{
     position: sticky;
     top: 20px;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .searchbar{

@@ -10,7 +10,7 @@
                     <img src="/images/other/Logo.png">
                     </a>
                     AGOBEE
-                    
+
 
                 </div>
                 @if (Auth::guard('owner')->check())
@@ -51,7 +51,7 @@
                             </ul>
                         </div>
                     </div>
-                
+
                 @elseif(Auth::guard('customer')->check())
                     @php
                         $customer = Auth::guard('customer')->user();

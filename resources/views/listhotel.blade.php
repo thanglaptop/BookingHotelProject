@@ -117,7 +117,7 @@
         </div>
     </section>
 
-   
+
     @include('footer')
 
     @vite('resources/js/customer.js')
