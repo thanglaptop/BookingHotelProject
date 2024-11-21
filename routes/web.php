@@ -50,7 +50,12 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
 });
 
 Route::middleware([CustomerMiddleware::class])->group(function () {
-    Route::get('/giohang', [CartController::class, 'index'])->name('giohang');
+    // Route::get('/giohang', [CartController::class, 'index'])->name('giohang');
+    Route::get('/customerinfo', function(){
+        return view("customer/customerinfo");
+    })->name('customerinfo');
+    
+
 });
 
 // Route::post('/check-customer', [OwnerLoginController::class, 'checkKHLogin'])->name('checkKHlogin');

@@ -3,19 +3,19 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-brand">
-                    <a style="text-decoration:none;"
-                        @if (Auth::guard('owner')->check()) href="{{ route('mainowner') }}"
-                        @else href="{{ route('index') }}" @endif>
-                        <img src="/images/other/Logo.png">
+                    <a style="text-decoration:none;" @if(Auth::guard('owner')->check())
+                        href="{{ route('mainowner') }}"
+                        @else href="{{ route('index') }}"
+                        @endif>
+                    <img src="/images/other/Logo.png">
                     </a>
                     AGOBEE
-
+                    
 
                 </div>
                 @if (Auth::guard('owner')->check())
-                    <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
-                        aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
@@ -37,16 +37,13 @@
                                         href="{{ route('paymentinfo') }}">Thông Tin Thanh Toán</a></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'personalinfo' ? 'active' : '' }}"
-                                        href="{{ route('personalinfo') }}">Thông Tin Cá Nhân</a>
+                                    <a class="nav-link" href="#">Thông Tin Cá Nhân</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'doanhthu' ? 'active' : '' }}"
-                                        href="{{ route('doanhthu') }}">Doanh Thu</a>
+                                    <a class="nav-link" href="#">Doanh Thu</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'danhgia' ? 'active' : '' }}"
-                                        href="{{ route('danhgia') }}">Đánh Giá</a>
+                                    <a class="nav-link" href="#">Đánh Giá</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('customerlogout') }}">Đăng Xuất</a>
@@ -54,6 +51,7 @@
                             </ul>
                         </div>
                     </div>
+                
                 @elseif(Auth::guard('customer')->check())
                     @php
                         $customer = Auth::guard('customer')->user();
@@ -77,13 +75,14 @@
                                         href="{{ route('index') }}" aria-current="page">Trang Chủ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'giohang' ? 'active' : '' }}" href="{{ route('giohang') }}">Giỏ Hàng</a>
+                                    <a class="nav-link" href="#">Giỏ Hàng</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Đơn Đặt Phòng</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Thông Tin Cá Nhân</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'customerinfo' ? 'active' : '' }}
+                                    " href="{{ route('customerinfo') }}">Thông Tin Cá Nhân</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('customerlogout') }}">Đăng Xuất</a>
@@ -91,7 +90,7 @@
                             </ul>
                         </div>
                     </div>
-                @else
+                    @else
                     <a href="{{ route('loginpage') }}"><button class="btn btn-primary">Đăng nhập/Đăng ký</button></a>
                 @endif
             </div>
