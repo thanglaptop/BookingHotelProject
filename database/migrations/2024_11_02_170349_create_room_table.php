@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('r_maxadult')->unsigned();
             $table->tinyInteger('r_maxkid')->unsigned();
             $table->tinyInteger('r_maxperson')->unsigned();
+            $table->tinyInteger('r_dientich')->unsigned();
             $table->tinyInteger('h_id')->unsigned();
             $table->foreign('h_id')->references('h_id')->on('hotel')->onUpdate('cascade')->onDelete('cascade');
         });

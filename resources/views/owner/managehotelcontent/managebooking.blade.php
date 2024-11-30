@@ -18,13 +18,16 @@
                 <input type="text" class="form-control border-secondary w-100" id="maDP">
             </div>
             <div class="w-10"><button type="button" class=" btn btn-primary">Tìm</button></div>
-            <div class="w-10"><button type="button" class=" btn btn-success" style="white-space: nowrap;"
+            {{-- <div class="w-10"><button type="button" class=" btn btn-success" style="white-space: nowrap;"
                     data-bs-toggle="modal" data-bs-target="#add-detail-ddp"><i class="bi bi-plus-circle"></i>
                     Tạo</button>
-            </div>
+            </div> --}}
+            <a href="{{route('taoddp', ['hid' => $hotel->h_id])}}" class="w-10"><button type="button" class=" btn btn-success" style="white-space: nowrap;"><i class="bi bi-plus-circle"></i>
+                Tạo</button>
+        </a>
         </div>
 
-        <div class="modal fade" id="add-detail-ddp" tabindex="-1" aria-labelledby="add-detail-ddp" aria-hidden="true">
+        {{-- <div class="modal fade" id="add-detail-ddp" tabindex="-1" aria-labelledby="add-detail-ddp" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -104,7 +107,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
     <div class="border-table scroll-1 p-2">

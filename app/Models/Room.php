@@ -11,7 +11,7 @@ class Room extends Model
     use HasFactory;
 
     protected $table = 'room';
-    
+
     protected $primaryKey = 'r_id';
 
     protected $fillable = [
@@ -22,8 +22,9 @@ class Room extends Model
         'r_maxadult',
         'r_maxkid',
         'r_maxperson',
+        'r_dientich',
         'h_id'
-    ]; 
+    ];
 
     public function hotel()
     {
@@ -36,17 +37,17 @@ class Room extends Model
     }
 
     public function dsTienNghi()
-     {
-         return $this->belongsToMany(Tiennghi::class, 'room_tiennghi', 'TN_ID', 'R_ID'); //class, foreignkey, localkey
-     }
+    {
+        return $this->belongsToMany(Tiennghi::class, 'room_tiennghi', 'TN_ID', 'R_ID'); //class, foreignkey, localkey
+    }
 
-     public function detail_ddps()
+    public function detail_ddps()
     {
         return $this->hasMany(Detail_Ddp::class, 'r_id', 'r_id'); //class, foreignkey, localkey
     }
 
-     public function hasManyInGioHangCustomer()
-     {
-         return $this->belongsToMany(Customer::class, 'giohang', 'C_ID', 'R_ID')->withPivot('g_checkin','g_checkout','g_soluong'); //class, foreignkey, localkey
-     }
+    public function hasManyInGioHangCustomer()
+    {
+        return $this->belongsToMany(Customer::class, 'giohang', 'R_ID', 'C_ID')->withPivot('g_checkin', 'g_checkout', 'g_soluong'); //class, foreignkey, localkey
+    }
 }

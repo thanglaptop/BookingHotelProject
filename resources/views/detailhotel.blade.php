@@ -17,6 +17,8 @@
     <!-- icon bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
         rel="stylesheet">
+    {{-- script ajax --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>AGOBEE</title>
 </head>
@@ -117,12 +119,12 @@
                             </div>
                             <h4 class="col-md-3 col-12 price" style="white-space: nowrap;">Giá:
                                 {{ number_format($room->r_price, 0, ',', '.') }} VNĐ</h4>
-                            <div class="col-12 row text-center">
-                                <div class="btn-group col-6">
-                                    <input type="number" class="form-control w-25" value="1">
-                                    <button class="btn btn-primary">Đặt ngay</button>
+                            <div class="col-12 row">
+                                <div class="col-6 p-1">
+                                    <button class="btn btn-primary w-100">Đặt ngay</button>
                                 </div>
-                                <button class="btn btn-outline-primary col-6">Thêm vào giỏ hàng</button>
+                                <div class="col-6 p-1"><button id="add-to-cart" data-room-id="{{ $room->r_id }}"
+                                        class="btn btn-outline-primary col-6 w-100">Thêm vào giỏ hàng</button></div>
                             </div>
                         </div>
                     </div>
@@ -133,7 +135,53 @@
     </section>
 
     @include('footer')
+    <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 1050;">
+        <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+            aria-atomic="true" id="successToast">
+            <div class="d-flex">
+                <h4 class="toast-body text-center d-flex">
+                    <!-- Nơi sẽ cập nhật thông báo từ AJAX -->
+                </h4>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 
+
+    <script>
+        $(document).on('click', '#add-to-cart', function() {
+            let roomID = $(this).data('room-id');
+
+            $.ajax({
+                url: '{{ route('addtocart') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    room_id: roomID
+                },
+                success: function(response) {
+                    // Hiển thị toast
+                    let toastBody = $('#successToast .toast-body');
+                    toastBody.html(
+                        '<i class="bi bi-check-circle me-1" id="checkIcon" style="font-size: 3rem;"></i>' +
+                        response.message); // Cập nhật thông báo
+                    let toastElement = document.getElementById('successToast');
+                    let toast = new bootstrap.Toast(toastElement, {
+                        delay: 2000
+                    });
+
+                    toast.show();
+                    // Cập nhật số lượng giỏ hàng trong header
+                    $('#btn-nav').html('<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger rounded-circle"></span><span class="navbar-toggler-icon"></span>');
+                    $('#cart-count').html('Giỏ Hàng <span class="badge text-bg-danger">'+ response.cartCount +'</span>'); // #cart-count là ID phần tử hiển thị số lượng
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>
     @vite('resources/js/customer.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

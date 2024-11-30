@@ -53,6 +53,6 @@ class Customer extends Authenticatable
     
     public function hasManyRoomInGiohang()
     {
-        return $this->belongsToMany(Room::class, 'giohang', 'R_ID', 'C_ID')->withPivot('g_checkin','g_checkout','g_soluong'); //class, foreignkey, localkey
+        return $this->belongsToMany(Room::class, 'giohang', 'C_ID', 'R_ID')->withPivot('g_checkin','g_checkout','g_soluong'); //class, foreignkey, localkey
     }
 }
