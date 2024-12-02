@@ -25,8 +25,12 @@
 
     <section class="noidung">
         <div class="container p-4">
-            <a href="{{ route('owner.managehotel', ['id' => $room->h_id]) }}"><button type="button" class="btn btn-danger"><i
-                        class="bi bi-caret-left-fill"></i> trở về</button></a>
+            @if (Auth::guard('owner')->check())
+                <a href="{{ route('owner.managehotel', ['id' => $room->h_id]) }}">
+                @elseif(Auth::guard('employee')->check())
+                    <a href="{{ route('employee.managehotel', ['id' => $room->h_id]) }}">
+            @endif
+            <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
             <div class="row">
                 <h1 class="text-center">Sửa Thông Tin Phòng</h1>
                 <form id="formAddHotel" class="row g-3 needs-validation" novalidate
@@ -64,7 +68,7 @@
                                     <button type="button" class="btn-close" aria-label="Close"
                                         onclick="removeImage(this)"></button>
                                     <img src="{{ $roompath }}" class="add-image m-1" alt="ảnh không tồn tại">
-                                    <input type="hidden" name="newhinh[]" value="{{$img->ri_name}}">
+                                    <input type="hidden" name="newhinh[]" value="{{ $img->ri_name }}">
                                 </div>
                             @endforeach
                             <div class="m-1" id="btnAddImage">
@@ -137,7 +141,7 @@
                         <input type="number" class="form-control border-secondary" id="add-room-maxperson"
                             value="{{ $room->r_maxperson }}" name="rmaxperson" required>
                         <div class="invalid-feedback">
-                            hãy nhập số người lớn và trẻ em tối đa 
+                            hãy nhập số người lớn và trẻ em tối đa
                         </div>
                     </div>
                     <div class="text-primary">Nếu đã nhập người lớn, trẻ em thì không cần phải nhập cả người lớn và trẻ

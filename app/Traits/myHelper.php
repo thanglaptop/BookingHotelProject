@@ -35,11 +35,22 @@ trait myHelper
     public function hotelOfOwner($id)
     {
         if($this->ownerId()){
-            $hotel = Hotel::where('h_id', $id)->where('o_id', $this->ownerId())->firstOrFail();
+            $hotel = Hotel::where('h_id', $id)->where('o_id', $this->ownerId())->first();
         }
         if($this->Employee()){
             $employee = $this->Employee();
-            $hotel = Hotel::where('h_id', $id)->where('o_id', $employee->o_id)->firstOrFail();
+            $hotel = Hotel::where('h_id', $id)->where('o_id', $employee->o_id)->first();
+        }
+        if($hotel){
+            return $hotel->h_id;
+        }
+        return null;
+    }
+
+    public function hotelOfEmployee($id){
+        if($this->Employee()){
+            $employee = $this->Employee();
+            $hotel = Hotel::where('h_id', $employee->h_id)->firstOrFail();
         }
         return $hotel->h_id;
     }

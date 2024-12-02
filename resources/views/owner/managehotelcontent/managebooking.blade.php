@@ -7,7 +7,7 @@
                     id="todayDate">
             </div>
             <div class="flex-fill"><label for="ngayKT">ngày kết thúc</label>
-                <input type="date" class="form-control border-secondary w-100" value="{{ date('Y-m-d') }}"
+                <input type="date" class="form-control border-secondary w-100" value="{{ date('Y-m-d', strtotime('+1 day')) }}"
                     id="todayDate">
             </div>
         </div>
@@ -30,7 +30,10 @@
                             <h1 class="modal-title fs-5" id="modal-ddp-label">Tạo Đơn Đặt Phòng</h1>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('owner.taoddp', ['hid' => $hotel->h_id]) }}"
+                            <form
+                                @if (Auth::guard('owner')->check()) action="{{ route('owner.taoddp', ['hid' => $hotel->h_id]) }}"
+                            @elseif(Auth::guard('employee')->check())
+                            action="{{ route('employee.taoddp', ['hid' => $hotel->h_id]) }}" @endif
                                 class="needs-validation row g-3" method="GET" novalidate>
                                 @csrf
                                 <h5 class="col-12">Thông tin đơn đặt:</h5>
@@ -109,61 +112,43 @@
                         }
                         switch ($ddp->ddp_status) {
                             case 'confirmed':
-                                $status = 'Xác nhận';
+                                $status = '<td class="text-primary">Xác nhận</td>';
                                 break;
                             case 'checkedin':
-                                $status = 'Checkin';
+                                $status = '<td class="text-warning">Đã checkin</td>';
+                                break;
+                            case 'completed':
+                                $status = '<td class="text-success">Hoàn thành</td>';
                                 break;
                             case 'canceled':
-                                $status = 'Đã hủy';
+                                $status = '<td class="text-danger">Đã hủy</td>';
                                 break;
                             default:
-                                $status = 'Chờ duyệt';
+                                $status = '<td class="text-info">Chờ duyệt</td>';
                                 break;
                         }
                         $detail = $ddp->detail_ddps->first();
 
                     @endphp
                     <tr>
-                        <th scope="row">{{ $stt }}</th>
+                        <th scope="row">{{ $stt++ }}</th>
                         <td>{{ $ddp->ddp_customername }}</td>
                         <td>{{ $ddp->ddp_sdt }}</td>
                         <td>{{ date('d/m/Y', strtotime($ddp->ddp_ngaydat)) }}</td>
                         <td>{{ $pttt }}</td>
                         <td>{{ date('d/m/Y', strtotime($detail->detail_checkin)) }}</td>
                         <td>{{ date('d/m/Y', strtotime($detail->detail_checkout)) }}</td>
-                        <td>{{ $status }}</td>
+                        {!! $status !!}
                         <td>{{ number_format($ddp->ddp_total, 0, ',', '.') }} VNĐ</td>
-                        <td><a href="#">Xem chi tiết</a></td>
+                        <td>
+                            @if(Auth::guard('owner')->check())
+                            <a href="{{ route('owner.detailddp', ['ddpid' => $ddp->ddp_id, 'hid' =>$ddp->h_id]) }}">Xem chi tiết</a>
+                            @elseif(Auth::guard('employee')->check())
+                            <a href="{{ route('employee.detailddp', ['ddpid' => $ddp->ddp_id, 'hid' =>$ddp->h_id]) }}">Xem chi tiết</a>
+                            @endif
+                        </td>
                     </tr>
-                    @php $stt++; @endphp
                 @endforeach
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Hứa Vinh Thắng</td>
-                    <td>0707879832</td>
-                    <td>23/10/2024</td>
-                    <td>Momo</td>
-                    <td>23/10/2024</td>
-                    <td>25/10/2024</td>
-                    <td>Chờ duyệt</td>
-                    <td>600.000 VNĐ</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-danger dropdown-toggle btn-sm" type="button"
-                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Chờ Duyệt
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Chờ Duyệt </a></li>
-                                <li><a class="dropdown-item" href="#">Confirmed </a></li>
-                                <li><a class="dropdown-item" href="#">Đã Nhận </a></li>
-                                <li><a class="dropdown-item" href="#">Hoàn Thành </a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-
             </tbody>
         </table>
 

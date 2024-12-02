@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\myHelper;
+use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -153,12 +154,12 @@ class OwnerController
         ]);
     }
 
-    public function showManageHotel($id)
+    public function showManageHotel($id, $daystart, $dayend)
     {
         $ownerId = $this->ownerId(); // Lấy ID của chủ sở hữu
         $employee = $this->Employee(); // Lấy ID của nhân viên
         if ($ownerId) {
-            $hotel = Hotel::where('h_id', $id)->where('o_id', $ownerId)->firstOrFail();
+            $hotel = Hotel::where('h_id', $id)->where('o_id', $ownerId)->first();
         }
 
         if ($employee) {
@@ -166,9 +167,12 @@ class OwnerController
                 ->where('hotel.h_id', $id)
                 ->where('employee.e_id', $employee->e_id)
                 ->select('hotel.*') // Chỉ chọn cột từ bảng hotels (nếu cần)
-                ->firstOrFail();
+                ->first();
         }
-        $listddp = $hotel->dondatphongs;
+        if(!$hotel){
+            return redirect()->back();
+        }
+        $listddp = $hotel->dondatphongs()->whereBetween('ddp_ngaydat', [$daystart, $dayend])->get();
         $listtiennghi = Tiennghi::all()->where('tn_ofhotel', 0);
         return view('owner/managehotel', ['hotel' => $hotel, 'listtiennghi' => $listtiennghi, 'listddp' => $listddp]);
     }
@@ -178,7 +182,10 @@ class OwnerController
     public function showEditHotel($id)
     {
         //owner chỉ có thể truy cập ks của mình không truy cập ks của người khác thông qua url 
-        $hotel = Hotel::where('h_id', $id)->where('o_id', $this->ownerId())->firstOrFail();
+        $hotel = Hotel::where('h_id', $id)->where('o_id', $this->ownerId())->first();
+        if(!$hotel){
+            return redirect()->back();
+        }
         $cities = City::all();
         $loaihinhs = Loaihinh::all();
         $tiennghihotel = Tiennghi::all()->where('tn_ofhotel', 1);
@@ -198,10 +205,12 @@ class OwnerController
     public function showEditRoom($rid, $hid)
     {
         //trả về phòng thuộc khách sạn thuộc owner đang đăng nhập
-        $room = Room::where('r_id', $rid)->where('h_id', $this->hotelOfOwner($hid))->firstOrFail();
+        $room = Room::where('r_id', $rid)->where('h_id', $this->hotelOfOwner($hid))->first();
+        if(!$room){
+            return redirect()->back();
+        }
         $tiennghiroom = Tiennghi::all()->where('tn_ofhotel', 0);
         $listTnOfRoom = $room->dsTienNghi->pluck('tn_id')->toArray();
-        // dd($listTnOfRoom);
         // Truyền dữ liệu owner sang view 'welcome'
         return view('owner/managehotelcontent/editroom', ['room' => $room, 'tiennghiroom' => $tiennghiroom, 'listTnOfRoom' => $listTnOfRoom]);
     }
@@ -210,7 +219,17 @@ class OwnerController
     public function showPageCreateDDP($hid, Request $request)
     {
         // Lấy thông tin khách sạn
-        $hotel = Hotel::where('h_id', $hid)->firstOrFail();
+        $hotel = null;
+        if ($this->ownerId()) {
+            $hotel = Hotel::where('h_id', $this->hotelOfOwner($hid))->first();
+            // dd($hotel);
+        } else if ($this->Employee()) {
+            $hotel = Hotel::where('h_id', $this->Employee()->h_id)->first();
+        }
+        // Kiểm tra nếu không tìm thấy hotel
+        if ($hotel && $hotel->h_id != $hid || !$hotel) {
+            return redirect()->back();
+        }
         $validated = $request->validate([
             'name' => 'required|string||min:3|max:30',
             'sdt' => 'required|string|regex:/^0[0-9]{9}$/',
@@ -218,7 +237,7 @@ class OwnerController
             'checkout' => 'required|date',
         ]);
         // Lấy danh sách phòng của khách sạn
-        $listroom = Room::where('h_id', $hid)->get();
+        $listroom = Room::where('h_id', $hotel->h_id)->get();
         $checkin = $validated['checkin'];
         $checkout = $validated['checkout'];
 

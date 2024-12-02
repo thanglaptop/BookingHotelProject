@@ -39,7 +39,7 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/manageemployee', function(){
         return view('owner/mainownercontent/managenv');
     })->name('managenv');
-    Route::get('/owner/managehotel{id}', [OwnerController::class, 'showManageHotel'])->name('owner.managehotel');
+    Route::get('/owner/managehotel{id}/{daystart}/{dayend}', [OwnerController::class, 'showManageHotel'])->name('owner.managehotel');
     Route::get('/edithotel{id}', [OwnerController::class, 'showEditHotel'])->name('edithotel');
     Route::get('/owner/editroom{rid}/{hid}', [OwnerController::class, 'showEditRoom'])->name('owner.editroom');
     Route::get('/managepersonalinfo', function(){
@@ -67,7 +67,10 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::put('/updateemployee', [ManageEmployeeController::class, 'updateEmployee'])->name('updatenv');
     Route::put('/updatepasswordemployee', [ManageEmployeeController::class, 'updateEmployeePassword'])->name('updatemknv');
     Route::post('createddp', [CreateDDPController::class, 'taoDDP'])->name('taoddp');
-    // Route::get('/test', [OwnerController::class, 'reloadPartOfCreateDDP'])->name('test');
+
+    Route::get('owner/detailddp{ddpid}/{hid}', [CreateDDPController::class, 'showDetailDDP'])->name('owner.detailddp');
+    
+    Route::put('/updateddp', [CreateDDPController::class, 'updateStatusDDP'])->name('updateddp');
 });
 
 Route::middleware([CustomerMiddleware::class])->group(function () {
@@ -80,9 +83,11 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
 });
 
 Route::middleware([EmployeeMiddleware::class])->group(function () {
-    Route::get('/employee/managehotel{id}', [OwnerController::class, 'showManageHotel'])->name('employee.managehotel');
+    Route::get('/employee/managehotel{id}/{daystart}/{dayend}', [OwnerController::class, 'showManageHotel'])->name('employee.managehotel');
     Route::get('/employee/editroom{rid}/{hid}', [OwnerController::class, 'showEditRoom'])->name('employee.editroom');
-    // Route::get('/employee/createddp{hid}', [OwnerController::class, 'showPageCreateDDP'])->name('employee.taoddp');
+    Route::get('/employee/createddp{hid}', [OwnerController::class, 'showPageCreateDDP'])->name('employee.taoddp');
+
+    Route::get('employee/detailddp{ddpid}/{hid}', [CreateDDPController::class, 'showDetailDDP'])->name('employee.detailddp');
 });
 
 // Route::post('/check-customer', [OwnerLoginController::class, 'checkKHLogin'])->name('checkKHlogin');

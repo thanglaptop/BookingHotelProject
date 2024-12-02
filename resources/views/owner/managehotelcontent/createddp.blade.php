@@ -40,7 +40,7 @@
             @csrf
             <input type="hidden" name="hid" value="{{ $hotel->h_id }}">
             <div class="row">
-                <h5 class="col-12">Thông tin đơn đặt:
+                <h5 class="col-12">Thông tin đơn đặt: {{$hotel->h_name}}
                 </h5>
                 <div class="col-lg-3 col-6">
                     <div><strong>Họ và tên: </strong>{{$hoten}}</div>
