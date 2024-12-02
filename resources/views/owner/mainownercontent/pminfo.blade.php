@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-12 col-md-5 p-2">{{ $pm->pm_mota }}</div>
                                 <div class="nhom-button col-12">
-                                    <a href="/owner/editRoom.html"><button type="button"
+                                    <a href="{{route('editpm', ['pmid' => $pm->pm_id])}}"><button type="button"
                                             class="btn btn-primary">Sửa</button></a>
                                     <button type="button" class="btn btn-danger">Xóa</button>
                                 </div>

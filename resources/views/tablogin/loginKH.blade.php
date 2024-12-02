@@ -1,4 +1,16 @@
 <div id="KhachHang" class="choLogin p-3 active">
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <form id="loginUser" class="row g-3 needs-validation" action="{{ route('customerlogin') }}" method="POST" novalidate>
         <div class="col-12">
             @csrf
@@ -12,7 +24,7 @@
             <label for="loginCusPass" class="form-label">mật khẩu</label>
             <input type="password" class="form-control" id="loginCusPass" name="txtCPass" required>
             <div class="invalid-feedback">
-                vui lòng không bỏ trống mật khẩu 
+                vui lòng không bỏ trống mật khẩu
             </div>
         </div>
         <div class="col-12 d-flex justify-content-center">

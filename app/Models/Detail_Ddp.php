@@ -10,7 +10,7 @@ class Detail_Ddp extends Model
     use HasFactory;
 
     protected $table = 'detail_ddp';
-
+    public $timestamps = false;
     protected $primaryKey = 'detail_id';
 
     protected $fillable = [

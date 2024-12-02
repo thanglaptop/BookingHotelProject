@@ -10,6 +10,7 @@ use App\Models\Hotel_Img;
 use App\Models\Paymnet_Info;
 use App\Models\Tiennghi;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Room;
 use App\Models\Room_Img;
 use Illuminate\Database\Seeder;
@@ -30,9 +31,10 @@ class DatabaseSeeder extends Seeder
             'o_sdt' => '0123456789',
             'o_dchi' => 'Địa chỉ mẫu',
             'o_nsinh' => '2000-01-01',
-            'o_email' => 'admin@gmail.com',
+            'o_email' => 'huathang312003@gmail.com',
             'o_cccd' => '079203001856'
         ]);
+
         Customer::create([
             'c_username' => 'customer',
             'c_pass' => Hash::make('customer'),
@@ -40,7 +42,7 @@ class DatabaseSeeder extends Seeder
             'c_sdt' => '0123456789',
             'c_nsinh' => '2000-01-01',
             'c_email' => 'test@gmail.com',
-            'c_avatar' => '0123456789'
+            'c_avatar' => 'admin.jpg'
         ]);
         Owner::factory()->count(4)->create();
 
@@ -220,8 +222,9 @@ class DatabaseSeeder extends Seeder
         $dem = 1;
         $increaseID = 1;
         foreach ($top5lap5 as $city) {
-            $ownerId = rand(1, 5);
-            $pmId = Paymnet_Info::where('o_id', $ownerId)->inRandomOrder()->value('pm_id');
+            // $ownerId = rand(1, 5);
+            $listpmId = Paymnet_Info::where('o_id', $increaseID)->pluck('pm_id');
+            $listpmId->toArray();
             Hotel::create([
                 'h_name' => array_shift($hotelNames),
                 'h_dchi' => fake()->address,
@@ -231,7 +234,7 @@ class DatabaseSeeder extends Seeder
                 'o_id' => $increaseID,
                 'lh_id' => rand(1, 5),
                 'ct_id' => $city,
-                'pm_id' => $pmId,
+                'pm_id' => $listpmId->random(),
             ]);
             $dem++;
             if ($dem > 5) {
@@ -255,6 +258,14 @@ class DatabaseSeeder extends Seeder
             if ($demks > 27)
                 break;
         }
+
+        Employee::create([
+            'e_username' => 'nv1',
+            'e_pass' => Hash::make('nv1'),
+            'e_name' => 'Nhân viên A',
+            'o_id' => 1,
+            'h_id' => 1
+        ]);
 
 
         //tiện nghi

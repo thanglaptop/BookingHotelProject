@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <h4 class="title">{{ $hotel->h_name }}</h4>
                         <div class="nhom-button">
-                            <a href="{{ route('managehotel', ['id' => $hotel->h_id]) }}"> <button type="button" class="btn btn-primary btn-sm">Quản
+                            <a href="{{ route('owner.managehotel', ['id' => $hotel->h_id]) }}"> <button type="button" class="btn btn-primary btn-sm">Quản
                                     Lý</button>
                             </a>
 

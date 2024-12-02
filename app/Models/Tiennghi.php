@@ -21,10 +21,10 @@ class Tiennghi extends Model
 
     public function rooms()
      {
-         return $this->belongsToMany(Room::class, 'room_tiennghi', 'R_ID', 'TN_ID'); //class, foreignkey, localkey
+         return $this->belongsToMany(Room::class, 'room_tiennghi', 'TN_ID', 'R_ID'); //class, foreignkey, localkey
      }
      public function hotels()
      {
-         return $this->belongsToMany(Hotel::class, 'hotel_tiennghi', 'H_ID', 'TN_ID'); //class, foreignkey, localkey
+         return $this->belongsToMany(Hotel::class, 'hotel_tiennghi', 'TN_ID', 'H_ID'); //class, foreignkey, localkey
      }
 }

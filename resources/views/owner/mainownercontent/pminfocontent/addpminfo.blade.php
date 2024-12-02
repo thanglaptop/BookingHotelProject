@@ -1,5 +1,5 @@
 <div class="modal fade" id="add-detail-ddp" tabindex="-1" aria-labelledby="add-detail-ddp" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm thông tin thanh toán</h1>

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->enum('ddp_pttt',['tt','momo', 'bank']);
             $table->enum('ddp_status', ['pending', 'confirmed', 'checkedin', 'canceled'])->default('pending');
             $table->tinyInteger('c_id')->unsigned()->nullable();
+            $table->tinyInteger('h_id')->unsigned()->nullable();
             $table->foreign('c_id')->references('c_id')->on('customer')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('h_id')->references('h_id')->on('hotel')->onUpdate('cascade')->onDelete('cascade');
         }); 
     }
 
@@ -31,8 +33,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('dondatphong');
         Schema::table('dondatphong', function (Blueprint $table) {
-            $table->dropForeign(['dondatphong_c_id_foreign']);
-            $table->dropIndex(['dondatphong_c_id_foreign']);
+            $table->dropForeign(['dondatphong_c_id_foreign', 'dondatphong_h_id_foreign']);
+            $table->dropIndex(['dondatphong_c_id_foreign', 'dondatphong_h_id_foreign']);
         });
     }
 };

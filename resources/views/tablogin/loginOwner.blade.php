@@ -19,4 +19,7 @@
             <button class="btn btn-orange" type="submit">đăng nhập</button>
         </div>
     </form>
+    <div class="bottomLoginForm d-flex flex-end justify-content-end mt-2">
+        <span onclick="bottomLogin('QuenMatKhau','ChuKhachSan')">quên mật khẩu</span>
+    </div>
 </div>

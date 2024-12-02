@@ -27,17 +27,16 @@
     
     <section class="noidung">
         <div class="container p-4">
-            <a href="{{ route('mainowner') }}"><button type="button" class="btn btn-danger"><i
-                        class="bi bi-caret-left-fill"></i> trở về</button></a>
-                        <h1 class="text-center">{{$hotel->h_name}}</h1>
+                        <h1 class="text-center">{{$hotel->h_name}}</h1> 
             <nav class="mt-5">
                 <div class="nav nav-tabs h3" id="nav-tab" role="tablist">
-                    <button class="nav-link w-50 active" id="tab-manage-phong" data-bs-toggle="tab"
+                    <button class="nav-link w-50 active" id="tab-don-dat-phong" data-bs-toggle="tab"
+                    data-bs-target="#don-dat-phong" type="button" role="tab" aria-controls="don-dat-phong"
+                    aria-selected="true">Đơn Đặt Phòng</button>
+                    <button class="nav-link w-50" id="tab-manage-phong" data-bs-toggle="tab"
                         data-bs-target="#manage-phong" type="button" role="tab" aria-controls="manage-phong"
-                        aria-selected="true">Quản Lý Phòng</button>
-                        <button class="nav-link w-50 " id="tab-don-dat-phong" data-bs-toggle="tab"
-                        data-bs-target="#don-dat-phong" type="button" role="tab" aria-controls="don-dat-phong"
-                        aria-selected="false">Đơn Đặt Phòng</button>
+                        aria-selected="false">Quản Lý Phòng</button>
+                       
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">

@@ -9,8 +9,8 @@ class Dondatphong extends Model
 {
     use HasFactory;
 
-    protected $table = 'dondatphong';
-
+    protected $table = 'dondatphong'; 
+    public $timestamps = false;
     protected $primaryKey = 'ddp_id';
 
     protected $fillable = [
@@ -20,12 +20,18 @@ class Dondatphong extends Model
         'ddp_total',
         'ddp_pttt',
         'ddp_status',
-        'c_id'
+        'c_id',
+        'h_id'
     ];
 
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'c_id', 'c_id');
+    }
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'h_id', 'h_id');
     }
 
     public function detail_ddps()

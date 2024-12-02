@@ -17,7 +17,7 @@ class Room extends Model
     protected $fillable = [
         'r_name',
         'r_price',
-        'h_soluong',
+        'r_soluong',
         'r_mota',
         'r_maxadult',
         'r_maxkid',
@@ -35,10 +35,10 @@ class Room extends Model
     {
         return $this->hasMany(Room_Img::class, 'r_id', 'r_id'); //class, foreignkey, localkey
     }
-
+    
     public function dsTienNghi()
     {
-        return $this->belongsToMany(Tiennghi::class, 'room_tiennghi', 'TN_ID', 'R_ID'); //class, foreignkey, localkey
+        return $this->belongsToMany(Tiennghi::class, 'room_tiennghi', 'R_ID', 'TN_ID');  //class, foreignkey, localkey
     }
 
     public function detail_ddps()

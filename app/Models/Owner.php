@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable; 
 class Owner extends Authenticatable
 {
@@ -49,5 +48,9 @@ class Owner extends Authenticatable
     public function hotels()
     {
         return $this->hasMany(Hotel::class, 'o_id', 'o_id'); //class, foreignkey, localkey
+    }
+
+    public function employees(){
+        return $this->hasMany(Employee::class, 'o_id', 'o_id');
     }
 }

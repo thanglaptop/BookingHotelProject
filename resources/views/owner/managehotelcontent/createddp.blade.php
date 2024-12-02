@@ -26,80 +26,73 @@
     @include('header')
 
     <section class="container p-4">
-        <a href="{{ route('managehotel', ['id' => $hotel->h_id]) }}"><button type="button" class="btn btn-danger"><i
-                    class="bi bi-caret-left-fill"></i> trở về</button></a>
-        <h1 class="text-center">Tạo Đơn Đặt Phòng</h1>
+        @if (Auth::guard('owner')->check()) 
+            <a href="{{ route('owner.managehotel', ['id' => $hotel->h_id]) }}">
+            @elseif(Auth::guard('employee')->check())
+                <a href="{{ route('employee.managehotel', ['id' => $hotel->h_id]) }}">
+        @endif
+        <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
+        <h1 class="text-center">Tạo Chi Tiết Đơn Đặt Phòng</h1>
         <hr>
-        <form action="">
+        <form class="needs-validation"
+            action="{{ route('taoddp') }}"
+            method="POST" novalidate>
+            @csrf
+            <input type="hidden" name="hid" value="{{ $hotel->h_id }}">
             <div class="row">
-                <h5 class="col-12">Thông tin đơn đặt:</h5>
-                <div class="col-6">
-                    <label for="inputName" class="form-label">Họ và tên</label>
-                    <input type="text" class="form-control" id="inputName" required>
+                <h5 class="col-12">Thông tin đơn đặt:
+                </h5>
+                <div class="col-lg-3 col-6">
+                    <div><strong>Họ và tên: </strong>{{$hoten}}</div>
+                    <input type="hidden" name="name" value="{{$hoten}}">
                 </div>
-                <div class="col-6">
-                    <label for="inputSdt" class="form-label">Số điện thoại</label>
-                    <input type="text" class="form-control" id="inputSdt" required>
+                <div class="col-lg-3 col-6">
+                    <div><strong>Số điện thoại: </strong>{{$sdt}}</div>
+                    <input type="hidden" name="sdt" value="{{$sdt}}">
                 </div>
-                <div class="col-6 col-lg-4 mt-1">
-                    <label for="inputCin" class="form-label">Check-in</label>
-                    <input type="date" class="form-control" id="inputCin" value="{{ date('Y-m-d') }}" required>
+                <div class="col-lg-3 col-6">
+                    <div><strong>Check-in: </strong>{{ date('d/m/Y', strtotime($checkin)) }}</div>
+                    <input type="hidden" id="inputCin" name="checkin" value="{{$checkin}}">
                 </div>
-                <div class="col-6 col-lg-4 mt-1">
-                    <label for="inputCout" class="form-label">Check-out</label>
-                    <input type="date" class="form-control" id="inputCout" value="{{ date('Y-m-d') }}" required>
+                <div class="col-lg-3 col-6">
+                    <div><strong>Check-out: </strong>{{ date('d/m/Y', strtotime($checkout)) }}</div>
+                    <input type="hidden" id="inputCout" name="checkout" value="{{$checkout}}">
                 </div>
-                <div class="col-lg-4 col-12 mt-1">
-                    <label for="inputPM" class="form-label">Thanh toán</label>
-                    <div class="d-flex align-items-center">
-                    <select name="" id="inputPM" class="form-select">
-                        <option value="1">Tiền mặt</option>
-                        <option value="2">Momo</option>
-                        <option value="3">Ngân hàng</option>
-                    </select>
-                    <button class="btn btn-primary ms-3">Tạo</button>
+                <div class="col-12 mt-2">
+                    <span class="d-flex align-items-center">
+                        <strong style="white-space: nowrap">phương thức thanh toán: </strong>
+                        <select name="thanhtoan" id="inputPM" class="ms-3 form-select">
+                            <option value="tt">Tiền mặt</option>
+                            <option value="momo">Momo</option>
+                            <option value="bank">Ngân hàng</option>
+                        </select>
+                        <button class="btn btn-primary ms-3">Tạo</button>
+                    </span>
                 </div>
-                </div>
-                {{-- <div class="col-lg-4 col-9 d-flex align-items-end mt-1">
-                    <h5>Thành tiền: 1.500.000 VNĐ</h5>
-                    
-                </div> --}}
+
                 <h5 class="mt-3">Chi tiết đơn đặt phòng:</h5>
                 <div class="col-12 dgvDDP w-100 border border-secondary rounded-3 scroll-2">
                     <table class="table table-hover ">
-                        <tr class="sticky-top">
+                        <thead class="sticky-top">
                             <th>STT</th>
                             <th>Tên phòng</th>
                             <th>Số lượng</th>
+                            <th>Số đêm</th>
                             <th>Giá</th>
                             <th>Tổng tiền</th>
                             <th></th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Phòng Tiêu Chuẩn Hướng Núi (Standard)</td>
-                            <td>5</td>
-                            <td>100.000 VNĐ</td>
-                            <td>500.000 VNĐ</td>
-                            <td><i class="bi bi-trash3"></i></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Phòng Loại sang (Deluxe)</td>
-                            <td>2</td>
-                            <td>500.000 VNĐ</td>
-                            <td>1.000.000 VNĐ</td>
-                            <td><i class="bi bi-trash3"></i></td>
-                        </tr>
-
-                        <tr class="sticky-bottom">
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot class="sticky-bottom">
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>Thành tiền:</th>
-                            <th>2.500.000 VNĐ</th>
                             <th></th>
-                        </tr>
+                            <th></th>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -109,25 +102,28 @@
             @foreach ($listroom as $room)
                 @php
                     $allow = '';
-                    if ($room->r_maxadult != 0 && $room->r_maxkid != 0) {
-                        $allow = $room->r_maxadult . ' người lớn, ' . $room->r_maxkid . ' trẻ em';
-                    } elseif ($room->r_maxadult != 0 && $room->r_maxkid == 0) {
-                        $allow = $room->r_maxadult . ' người lớn';
+                    if ($room['r_maxadult'] != 0 && $room['r_maxkid'] != 0) {
+                        $allow = $room['r_maxadult'] . ' người lớn, ' . $room['r_maxkid'] . ' trẻ em';
+                    } elseif ($room['r_maxadult'] != 0 && $room['r_maxkid'] == 0) {
+                        $allow = $room['r_maxadult'] . ' người lớn';
                     } else {
-                        $allow = $room->r_maxperson . ' người lớn và trẻ em';
+                        $allow = $room['r_maxperson'] . ' người lớn và trẻ em';
                     }
                 @endphp
-                <div class="p-1 col-lg-3 col-md-4 col-6"><button class="btn btn-light border border-warning h-100 w-100">
-                        <h6>{{ $room->r_name }}</h6>
-                        <div>diện tích: {{ $room->r_dientich }}m<sup>2</sup></div>
+                <div class="p-1 col-lg-3 col-md-4 col-6"><button @if($room['remaining_quantity'] == 0) disabled @endif
+                        class="btn btn-light border border-warning h-100 w-100 adddetail"
+                        onclick="addRoomToTable('{{ $room['r_id'] }}','{{ $room['r_name'] }}', 1, {{ $room['r_price'] }}, {{ $room['remaining_quantity'] }}, this)">
+                        <h6>{{ $room['r_name'] }}</h6>
+                        <div>diện tích: {{ $room['r_dientich'] }}m<sup>2</sup></div>
                         <div>cho phép: {{ $allow }}</div>
-                        <div>còn lại: {{ $room->r_soluong }}</div>
+                        <div>còn lại: <span class="room-quantity">{{ $room['remaining_quantity'] }}</span></div>
                     </button></div>
             @endforeach
         </div>
     </section>
 
     @vite('resources/js/owner.js')
+    @vite('resources/js/ddp.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
