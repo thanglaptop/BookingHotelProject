@@ -54,8 +54,8 @@ class CustomerController
                 'cartCount' => $cartCount  // Trả về số lượng giỏ hàng sau khi thêm mới
             ]);
         }
+    }
 
-        //Hàm lấy thông tin khách hàng
     public function edit()
     {
         $customer = Auth::guard('customer')->user(); // Lấy thông tin khách hàng đang đăng nhập

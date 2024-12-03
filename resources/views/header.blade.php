@@ -89,9 +89,7 @@
                                     </a>
 
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Đơn Đặt Phòng</a>
-                                </li>
+
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::currentRouteName() == 'customerinfo' ? 'active' : '' }}
                                     " href="{{ route('customerinfo') }}">Thông Tin Cá Nhân</a>

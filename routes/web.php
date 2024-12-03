@@ -62,9 +62,17 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
     })->name('cart');
     Route::post('/addtocart', [CustomerController::class, 'addToCart'])->name('addtocart');
     Route::get('/header', [CustomerController::class, 'refreshHeader'])->name('refreshheader');
+    Route::get('/update-customer-info', [CustomerController::class, 'edit'])->name('updatecustomerinfo');
 
+
+
+
+
+    // Route::middleware('auth:customer')->group(function () {
+    // }
 
 });
+
 
 // Route::post('/check-customer', [OwnerLoginController::class, 'checkKHLogin'])->name('checkKHlogin');
 

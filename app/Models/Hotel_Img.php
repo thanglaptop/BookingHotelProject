@@ -23,3 +23,5 @@ class Hotel_Img extends Model
         return $this->belongsTo(Hotel::class, 'h_id', 'h_id'); //class, foreignkey, ownerkey
     }
 }
+
+
