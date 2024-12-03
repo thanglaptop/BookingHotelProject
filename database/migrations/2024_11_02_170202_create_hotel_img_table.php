@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hotel_img', function (Blueprint $table) {
             $table->tinyInteger('h_id')->unsigned();
             $table->foreign('h_id')->references('h_id')->on('hotel')->onUpdate('cascade')->onDelete('cascade');
-            $table->char('hi_name', 15);
+            $table->char('hi_name', 20);
             $table->tinyInteger('hi_vitri')->unsigned();
         });
     }

@@ -25,7 +25,7 @@ class Hotel extends Model
         'lh_id',
         'ct_id',
         'pm_id'
-    ]; 
+    ];
 
     // Quan hệ với model Owner
     public function owner()
@@ -61,7 +61,16 @@ class Hotel extends Model
     }
 
     public function dsTienNghi()
-     {
-         return $this->belongsToMany(Tiennghi::class, 'hotel_tiennghi', 'TN_ID', 'H_ID'); //class, foreignkey, localkey
-     }
+    {
+        return $this->belongsToMany(Tiennghi::class, 'hotel_tiennghi', 'H_ID', 'TN_ID'); //class, foreignkey, localkey
+    }
+
+    public function employees(){
+        return $this->hasMany(Employee::class, 'h_id', 'h_id');
+    }
+
+    public function dondatphongs()
+    {
+        return $this->hasMany(Dondatphong::class, 'h_id', 'h_id'); //class, foreignkey, localkey
+    }
 }
