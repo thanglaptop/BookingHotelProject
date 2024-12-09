@@ -62,10 +62,12 @@
                                         href="{{ route('personalinfo') }}">Thông Tin Cá Nhân</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Doanh Thu</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'doanhthu' ? 'active' : '' }}"
+                                        href="{{ route('doanhthu') }}">Doanh Thu</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Đánh Giá</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'danhgia' ? 'active' : '' }}"
+                                    href="{{ route('danhgia') }}">Đánh Giá</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('customerlogout') }}">Đăng Xuất</a>

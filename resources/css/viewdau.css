@@ -1,0 +1,445 @@
+        /* Đoạn CSS mẫu để hiển thị đẹp */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo img {
+            width: 75px;
+        }
+
+        .search-bar {
+            flex-grow: 2;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 10px;
+            background-color: #a3de56;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            border-radius: 4px;
+        }
+
+        .icons i {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #d6e84f;
+            padding: 10px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav a.active {
+            font-weight: bold;
+        }
+
+        .content {
+            display: flex;
+            padding: 20px;
+        }
+
+        .sidebar {
+            width: 20%;
+            margin-right: 20px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .hotel-card {
+            display: flex;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .hotel-card img {
+            margin-right: 20px;
+        }
+
+        .details {
+            flex-grow: 1;
+        }
+
+        .price-details {
+            text-align: right;
+        }
+
+        .cta button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .rating {
+            color: #ff9800;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+        }
+
+        .price {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .availability {
+            color: red;
+        }
+
+        .footer {
+    background-color: #88905cf0;
+    color: white;
+    padding: 20px 0; /* Loại bỏ padding trái và phải */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.footer-section {
+    margin: 10px;
+}
+.footer-section h4 {
+    margin-bottom: 10px;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-section ul li a:hover {
+    color: #ffd700;
+}
+.icons i {
+    font-size: 24px; /* Điều chỉnh kích thước icon */
+    margin: 0 10px;  /* Khoảng cách giữa các icon */
+}
+.weather-widget {
+    width: 300px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.weather-widget .temp {
+    font-size: 48px;
+    color: #ff5722;
+    margin-bottom: 15px;
+}
+
+.weather-widget .forecast {
+    display: flex;
+    justify-content: space-between;
+}
+
+.weather-widget .day {
+    text-align: center;
+}
+
+.weather-widget .day i {
+    font-size: 24px;
+    color: #2196f3;
+}
+
+.weather-widget .day div {
+    font-size: 16px;
+    margin-top: 5px;
+}
+.search-bar {
+    position: relative;
+    display: inline-block;
+    margin-left: 300px; /* Cách trái 50px */
+}
+
+#search-input {
+    padding: 8px;
+    width: 250px;
+}
+
+button {
+    padding: 8px 12px;
+}
+
+.suggestions {
+    display: none; /* Ban đầu ẩn menu */
+    position: absolute;
+    top: 100%; /* Đặt menu ngay bên dưới input */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.suggestions div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background-color: #f1f1f1;
+}
+
+
+
+
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff5e6; /* Màu vàng nhạt */
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #666;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+#bookingHistoryModal .modal-content {
+    background-color: #fff5e6;
+    max-width: 800px;
+}
+
+.booking-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.booking-item h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.booking-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.booking-info p {
+    margin: 5px 0;
+}
+
+.booking-status {
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.status-confirmed {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.empty-history {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.fa-shopping-cart {
+    cursor: pointer;
+}
+.booking-item {
+    position: relative;
+    padding-right: 40px; /* Tạo khoảng trống cho nút hủy */
+}
+
+.btn-cancel-booking {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel-booking:hover {
+    background-color: #cc0000;
+}
+
+.status-cancelled {
+    background-color: #ff4444;
+    color: white;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 45%;
+}
+
+.btn-confirm {
+    background-color: #ff4444;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #999;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #cc0000;
+}
+
+.btn-cancel:hover {
+    background-color: #666;
+}
+
+.cancelled-text {
+    color: #ff4444;
+    font-style: italic;
+}
+
+/* Animation cho modal */
+.modal-content {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

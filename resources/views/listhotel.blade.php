@@ -37,7 +37,8 @@
                             <div class="input-group h-100">
                                 <input id="inputCin" type="date" name="checkin" class="form-control form-control-lg"
                                     value="{{ $checkin ?? date('Y-m-d') }}">
-                                <input id="inputCout" type="date" name="checkout" class="form-control form-control-lg"
+                                <input id="inputCout" type="date" name="checkout"
+                                    class="form-control form-control-lg"
                                     value="{{ $checkout ?? date('Y-m-d', strtotime('+1 day')) }}">
                             </div>
                         </div>
@@ -61,9 +62,6 @@
 
         <div class="container p-4">
             <div class="row">
-                @php
-                    $cityname = $hotels->first()->city->ct_name;
-                @endphp
                 @if ($forecast == [])
                     <div class="d-flex flex-column align-items-center col-lg-3">
                         <img src="/images/other/find.png" style="width:100px; height:100px">
