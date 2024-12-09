@@ -1,13 +1,17 @@
-<div class="tab-pane fade mt-4" id="manage-phong" role="tabpanel" aria-labelledby="tab-manage-phong"
-    tabindex="0">
+<div @if ($tab == 'manage-phong') class="tab-pane fade mt-4 active show"
+    @else class="tab-pane fade mt-4" @endif
+    id="manage-phong" role="tabpanel" aria-labelledby="tab-manage-phong" tabindex="0">
     <!-- ADD ROOM HOTEL -->
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-room-modal"> <i
-            class="bi bi-plus-circle"></i> Thêm Phòng</button>
+
+    @if (Auth::guard('owner')->check())
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-room-modal"> <i
+                class="bi bi-plus-circle"></i> Thêm Phòng</button>
+    @endif
     <div class="modal fade" id="add-room-modal" tabindex="-1" aria-labelledby="add-room-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="add-room-modal-label">Thêm Phòng Mới</h1> 
+                    <h1 class="modal-title fs-5" id="add-room-modal-label">Thêm Phòng Mới</h1>
                 </div>
                 <div class="modal-body">
                     <form id="formAddHotel" class="row g-3 needs-validation" action="{{ route('addroom') }}"
@@ -29,64 +33,64 @@
                         </div>
                         <div class="col-12">
                             <label for="add-room-name" class="form-label">Tên phòng</label>
-                            <input type="text" class="form-control border-secondary" id="add-room-name"
+                            <input type="text" class="form-control border-secondary room-name-input" id="add-room-name"
                                 name="rname" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback room-name-feedback">
                                 hãy nhập tên phòng
                             </div>
                         </div>
                         <div class="col-8">
                             <label for="add-room-price" class="form-label">Giá phòng</label>
-                            <input type="text" class="form-control border-secondary" id="add-room-price"
+                            <input type="number" class="form-control border-secondary room-price-input" id="add-room-price"
                                 name="rprice" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback room-price-feedback">
                                 hãy nhập giá phòng
                             </div>
                         </div>
                         <div class="col-4">
                             <label for="add-room-quantity" class="form-label">Số lượng phòng</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-quantity"
-                                name="rsoluong" value="0" required>
-                            <div class="invalid-feedback">
+                            <input type="number" class="form-control border-secondary room-sl-input" id="add-room-quantity"
+                                name="rsoluong" required>
+                            <div class="invalid-feedback room-sl-feedback">
                                 hãy nhập số lượng phòng
                             </div>
                         </div>
                         <div class="col-12">
                             <label for="add-room-describe" class="form-label">Mô tả phòng</label>
-                            <textarea class="form-control border-secondary" id="add-room-describe" name="rmota" style="height: 120px;" required></textarea>
-                            <div class="invalid-feedback">
+                            <textarea class="form-control border-secondary room-mota-input" id="add-room-describe" name="rmota" style="height: 120px;" required></textarea>
+                            <div class="invalid-feedback room-mota-feedback">
                                 hãy nhập mô tả phòng
                             </div>
                         </div>
                         <div class="col-3">
                             <label for="add-room-dientich" class="form-label">Diện tích</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-dientich"
-                                name="rdientich" value="0" required>
-                            <div class="invalid-feedback">
+                            <input type="number" class="form-control border-secondary room-dt-input" id="add-room-dientich"
+                                name="rdientich" required>
+                            <div class="invalid-feedback room-dt-feedback">
                                 hãy nhập số diện tích phòng
                             </div>
                         </div>
                         <div class="col-3">
                             <label for="add-room-adult" class="form-label">người lớn</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-adult"
+                            <input type="number" class="form-control border-secondary adult-input" id="add-room-adult"
                                 name="rmaxadult" value="0" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback adult-feedback">
                                 hãy nhập số người lớn tối đa
                             </div>
                         </div>
                         <div class="col-3">
                             <label for="add-room-kid" class="form-label">trẻ em</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-kid"
+                            <input type="number" class="form-control border-secondary kid-input" id="add-room-kid"
                                 name="rmaxkid" value="0" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback kid-feedback">
                                 hãy nhập số trẻ em tối đa
                             </div>
                         </div>
                         <div class="col-3">
                             <label for="add-room-maxperson" class="form-label">cả người lớn và trẻ em</label>
-                            <input type="number" class="form-control border-secondary" id="add-room-maxperson"
+                            <input type="number" class="form-control border-secondary all-input" id="add-room-maxperson"
                                 name="rmaxperson" value="0" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback all-feedback">
                                 hãy nhập số người lớn và trẻ em tối đa
                             </div>
                         </div>
@@ -153,6 +157,7 @@
                             } else {
                                 $allow = $room->r_maxperson . ' người lớn và trẻ em';
                             }
+                            $conlai = $listroom->firstWhere('r_id', $room->r_id)['r_conlai'] ?? 0;
                         @endphp
                         <img src="{{ $roompath }}" class="img-fluid rounded-start h-100" alt="ảnh không tồn tại">
                     </div>
@@ -170,7 +175,7 @@
                                 <div class="col-md-8 d-flex justify-content-between">
                                     <div class="card-text">Giá: {{ number_format($room->r_price, 0, ',', '.') }}đ/ngày
                                     </div>
-                                    <div class="card-text">Còn lại: 10</div>
+                                    <div class="card-text">Còn lại: {{ $conlai }}</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -192,16 +197,20 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="nhom-button">
-                                @if (Auth::guard('owner')->check())
-                                    <a href="{{ route('owner.editroom', ['rid' => $room->r_id, 'hid' => $hotel->h_id]) }}">
-                                    @elseif(Auth::guard('employee')->check())
-                                        <a
-                                            href="{{ route('employee.editroom', ['rid' => $room->r_id, 'hid' => $hotel->h_id]) }}">
-                                @endif
-                                <button type="button" class="btn btn-primary">Chỉnh Sửa</button></a>
-                                <button type="button" class="btn btn-danger">Đóng Phòng</button>
-                            </div>
+                            @if (Auth::guard('owner')->check())
+                                <div class="nhom-button">
+                                    <a href="{{ route('editroom', ['rid' => $room->r_id, 'hid' => $hotel->h_id]) }}">
+                                        <button type="button" class="btn btn-primary">Chỉnh Sửa</button></a>
+                                    <a
+                                        href="{{ route('showcloseroom', ['rid' => $room->r_id, 'hid' => $hotel->h_id]) }}">
+                                        @if ($room->r_isclose == 1 && date('Y-m-d') >= $room->r_dateclose && date('Y-m-d') < $room->r_dateopen)
+                                            <button type="button" class="btn btn-danger">Phòng Đóng</button>
+                                        @else
+                                            <button type="button" class="btn btn-success">Hoạt Động</button>
+                                        @endif
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

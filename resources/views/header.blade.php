@@ -10,26 +10,26 @@
                     </a>
                     AGOBEE
                 </div>
-                @if (session('successlogin'))
+                @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('successlogin') }}
+                        {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                @if (session('errorddp'))
+                @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('errorddp') }}
+                        {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                @if (session('successddp'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('successddp') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+                @error('sdt')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Số điện thoại không hợp lệ
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @enderror
                 @if (Auth::guard('owner')->check())
-                    <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="offcanvas"
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -112,7 +112,8 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Đơn Đặt Phòng</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'showddp' ? 'active' : '' }}"
+                                        href="{{ route('showddp') }}">Đơn đặt phòng</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Thông Tin Cá Nhân</a>

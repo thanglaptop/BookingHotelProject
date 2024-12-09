@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+  let Alert = document.querySelectorAll('.alert[role="alert"]');
+  Alert.forEach(function (alertElement) {
+    setTimeout(() => {
+      let alert = new bootstrap.Alert(alertElement);
+      alert.close();
+    }, 2000); // 2 giây
+  });
+
   // Khởi tạo giá trị
-  let roomCount = 1, adultsCount = 2, kidsCount = 0;
+  let roomCount = document.getElementById('room').value || 1;
+  let adultsCount = document.getElementById('adult').value || 2;
+  let kidsCount = document.getElementById('kid').value || 0;
   var popoverTrigger = document.getElementById('popover-toggle');
 
   //trả về giá trị luôn cập nhật
@@ -52,6 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateRoomAndPerson() {
     document.getElementById('popover-toggle').innerHTML = `
         ${roomCount} phòng, ${adultsCount} người lớn, ${kidsCount}, trẻ em`;
+    document.getElementById('room').value = roomCount;
+    document.getElementById('adult').value = adultsCount;
+    document.getElementById('kid').value = kidsCount;
   }
 
   // Đảm bảo sự kiện được gắn sau khi popover được kích hoạt
@@ -198,15 +211,6 @@ document.addEventListener('DOMContentLoaded', function () {
     template: '<div class="popover custom-popover" role="tooltip"><div class="popover-arrow"></div><div class="popover-header"></div><div class="popover-body"></div></div>',
     sanitize: false // bỏ kiểm tra bảo mật cho HTML
   });
-  
 
 });
 
-// // Lấy ngày hôm nay
-// const today = new Date();
-// // Định dạng ngày dưới dạng yyyy-mm-dd cho input date
-// const formattedDate = today.toISOString().split('T')[0];
-// // Gán giá trị cho input date
-// const inputNgay = document.getElementsByClassName('form-control');
-// inputNgay[1].value = formattedDate;
-// inputNgay[2].value = formattedDate;

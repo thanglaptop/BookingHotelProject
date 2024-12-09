@@ -5,19 +5,21 @@
             <div class="row">
                 <div class="col-md-2 col-1"></div>
                 <div class="col-md-8 col-10 p-3 search-form">
-                    <form action="">
+                    <form id="searchForm" action="{{ route('searchplace') }}" method="GET">
                         <div class="row g-3">
                             <div class="col-12">
                                 <h4 class="title-search">Connecting You To Your Perfect Stay!</h4>
                             </div>
                             <div class="col-12">
-                                <input type="text" class="form-control form-control-lg"
+                                <input type="text" id="searchinput" name="search" class="form-control form-control-lg"
                                     placeholder="Nhập địa điểm tên du lịch hoặc tên khách sạn">
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="input-group">
-                                    <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d') }}">
-                                    <input type="date" class="form-control form-control-lg" value="{{ date('Y-m-d', strtotime('+1 day')) }}">
+                                    <input id="inputCin" type="date" id="checkininput" name="checkin" class="form-control form-control-lg"
+                                        value="{{ date('Y-m-d') }}">
+                                    <input id="inputCout" type="date" id="checkoutinput" name="checkout" class="form-control form-control-lg"
+                                        value="{{ date('Y-m-d', strtotime('+1 day')) }}">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12" id="RoomAndPerson">
@@ -25,10 +27,26 @@
                                     aria-label="Toggle popover">
                                     1 phòng, 2 người lớn, 0 trẻ em
                                 </div>
-
+                                <input type="hidden" name="room" id="room" value="1">
+                                <input type="hidden" name="adult" id="adult" value="2">
+                                <input type="hidden" name="kid" id="kid" value="0">
+                                <script>
+                                    window.onpageshow = function(event) {
+                                        // Kiểm tra xem người dùng có quay lại trang từ bộ nhớ cache (back button) hay không
+                                        if (event.persisted || window.performance && window.performance.navigation.type === 2) {
+                                            // Xóa giá trị các input khi quay lại trang
+                                            document.getElementById('searchinput').value = "";
+                                            document.getElementById('checkininput').value = '{{date('Y-m-d')}}';
+                                            document.getElementById('checkoutinput').value = '{{date('Y-m-d', strtotime('+1 day'))}}';
+                                            document.getElementById('room').value = 1;
+                                            document.getElementById('adult').value = 2;
+                                            document.getElementById('kid').value = 0;
+                                        }
+                                    };
+                                </script>
                             </div>
                             <div class="col-12 d-flex justify-content-center">
-                                <button class="btn btn-primary btn-lg w-50">Tìm</button>
+                                <button type="submit" class="btn btn-primary btn-lg w-50">Tìm</button>
                             </div>
                         </div>
                     </form>
@@ -96,6 +114,7 @@
                 aria-labelledby="CT{{ $city->ct_id }}-tab" tabindex="0">
                 <div class="d-flex scroll-1">
                     @foreach ($city->hotels as $hotel)
+                    @if(date('Y-m-d') >= $hotel->h_dateopen || date('Y-m-d') < $hotel->dateclose)
                         @php
                             $firstImage = $hotel->hotel_imgs->firstWhere('hi_vitri', 1);
                             $imgpath = $firstImage
@@ -108,15 +127,48 @@
                         <div class="card flex-shrink-0 m-3 city-card">
                             <img src="{{ $imgpath }}" class="card-img-top h-100" alt="ảnh không tồn tại">
                             <div class="card-body">
-                                <h5 class="card-title scroll-1">{{ $hotel->h_name }}</h5>
+                                <h5 class="card-title scroll-1"><a href="{{route('showdetailhotel', ['id' => $hotel->h_id])}}" style="text-decoration:none;">{{ $hotel->h_name }}</a></h5>
+                                <p style="font-size: 14px;" class="star"><i class="bi bi-star-fill"> {{$hotel->average_star}} <a style="color: goldenrod;" href="{{route('seedanhgia', ['hid' => $hotel->h_id])}}">xem đánh giá</a></i></p>
                                 <p style="font-size: 12px;">Giá mỗi đếm chưa bao gồm thuế và phí</p>
                                 <h6 class="price">{{ number_format($minprice, 0, ',', '.') }} -
                                     {{ number_format($maxprice, 0, ',', '.') }} VNĐ</h6>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
         @endforeach
     </div>
 </div>
+
+<script>
+    window.handleDateChange = function() {
+        const checkinInput = document.getElementById("inputCin");
+        const checkoutInput = document.getElementById("inputCout");
+
+        const checkinDateStr = checkinInput.value;
+        const checkoutDateStr = checkoutInput.value;
+
+        const checkinDate = new Date(checkinDateStr);
+        const checkoutDate = new Date(checkoutDateStr);
+
+        // Kiểm tra nếu ngày check-out < ngày check-in
+        if (checkoutDateStr && checkoutDate < checkinDate) {
+            // alert("Ngày check-out không được nhỏ hơn hoặc bằng ngày check-in.");
+            checkoutInput.value = ""; // Reset ngày check-out
+            return;
+        }
+
+        // Nếu ngày check-in > ngày check-out
+        if (checkinDateStr && checkoutDateStr && checkinDate > checkoutDate) {
+            // alert("Ngày check-in không được lớn hơn hoặc bằng ngày check-out.");
+            checkoutInput.value = ""; // Reset ngày check-out
+            return;
+        }
+    };
+
+    // Lắng nghe sự kiện thay đổi ngày check-in và check-out
+    document.getElementById("inputCin").addEventListener('change', handleDateChange);
+    document.getElementById("inputCout").addEventListener('change', handleDateChange);
+</script>

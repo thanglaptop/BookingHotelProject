@@ -24,7 +24,7 @@
         </div>
         <div class="col-12">
             <label for="signUpBirthday" class="form-label">ngày sinh</label>
-            <input type="date" name="birthday" class="form-control" id="signUpBirthday" required>
+            <input type="date" name="birthday" class="form-control" id="signUpBirthday" required> 
             <div class="invalid-feedback">
                 vui lòng không bỏ trống ngày sinh
             </div>
@@ -32,7 +32,7 @@
         <div class="col-12">
             <label for="signUpUsername" class="form-label">tên đăng nhập</label>
             <input type="text" name="username" class="form-control username-input" id="signUpUsername" required>
-            <div class="invalid-feedback username-feedback">
+            <div class="invalid-feedback s">
                 vui lòng không bỏ trống tên đăng nhập
             </div>
         </div>

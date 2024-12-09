@@ -28,53 +28,62 @@
     <section class="container p-4">
         <h1 class="text-center">Đánh Giá</h1>
         <hr>
-        <div class="row mt-3">
-            <div class="col-5">
-                <label for="search-by-month" class="form-label">Khách sạn</label>
-                <select class="form-select border-secondary" id="search-by-month">
-                    <option value="allhotel">Xem tất cả</option>
-                    @foreach($owner->hotels as $hotel)
-                        <option value="{{$hotel->h_id}}">{{$hotel->h_name}}</option>
-                    @endforeach
-                </select>
+        <form action="{{ route('danhgia') }}" method="GET">
+            <div class="row mt-3">
+                <div class="col-5">
+                    <label for="search-by-hotel" class="form-label">Khách sạn</label>
+                    <select name="hotel" class="form-select border-secondary" id="search-by-hotel">
+                        <option value="0">Xem tất cả</option>
+                        @foreach ($owner->hotels as $hotel)
+                            <option value="{{ $hotel->h_id }}"
+                                {{ request('hotel') == $hotel->h_id ? 'selected' : '' }}>{{ $hotel->h_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label for="search-by-star" class="form-label">Lượt sao</label>
+                    <select name="star" class="form-select border-secondary" id="search-by-star">
+                        <option value="0">Xem tất cả</option>
+                        @for ($sao = 1; $sao < 6; $sao++)
+                            <option value="{{ $sao }}" {{ request('star') == $sao ? 'selected' : '' }}>
+                                {{ $sao }} sao</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-2 d-flex align-items-end"><button type="submit" class="btn btn-primary">Xem</button>
+                </div>
             </div>
-            <div class="col-5">
-                <label for="search-by-month" class="form-label">Lượt sao</label>
-                <select class="form-select border-secondary" id="search-by-month">
-                    <option value="allstar">Xem tất cả</option>
-                    @for($sao = 1; $sao < 6; $sao++)
-                        <option value="sao{{$sao}}">{{$sao}} sao</option>
-                    @endfor
-                </select>
-            </div>
-            <div class="col-2 d-flex align-items-end"><button class="btn btn-primary">Xem</button></div>
-        </div>
+        </form>
         <div class="row mt-4">
-            @for ($i = 0; $i < 10; $i++)
-                <div class="col-12 p-2">
-                    <div class="h-100 border rounded-4 border-secondary-subtle">
-                        <div class="p-3">
-                            <h4 class="card-title">Nhà Bà Tư Boutique Hotel</h4>
-                            <div>Phòng Tiêu Chuẩn Hướng Núi (Standard)</div>
-                            <div class="star">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
+            @if ($listdetail->isEmpty())
+                <div class="d-flex flex-column align-items-center">
+                    <img src="/images/other/find.png" style="width:300px; height:300px">
+                    <h3>Không có đánh giá nào phù hợp tiêu chí</h3>
+                </div>
+            @else
+                @foreach ($listdetail as $dt)
+                    <div class="col-12 p-2">
+                        <div class="h-100 border rounded-4 border-secondary-subtle">
+                            <div class="p-3">
+                                <h4 class="card-title star">{{ $dt->dondatphong->hotel->h_name }} <i
+                                        class="bi bi-star-fill"></i>
+                                    {{ $dt->danhgia->dg_star }}</h4>
+                                <div>{{ $dt->room->r_name }}</div>
+                                <small>{{ date('d/m/Y', strtotime($dt->danhgia->dg_ngaydg)) }}</small>
+                                <div class="card-text">{{ $dt->danhgia->dg_nhanxet }}</div>
                             </div>
-                            <div class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe, illo eaque minus perferendis, porro, non doloremque sed dolores accusantium blanditiis nesciunt! Repellendus esse laborum aliquid? Earum modi accusamus sed consequatur.</div>
                         </div>
                     </div>
-                </div>
-            @endfor
+                @endforeach
+            @endif
         </div>
     </section>
 
-@vite('resources/js/owner.js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
+    @include('footer')
+    @vite('resources/js/owner.js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

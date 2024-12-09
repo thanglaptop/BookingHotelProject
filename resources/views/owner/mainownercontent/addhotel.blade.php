@@ -47,29 +47,29 @@
                     </div>
                     <div class="col-4">
                         <label for="add-hotel-phone" class="form-label">Số Điện Thoại</label>
-                        <input type="text" name="sdt" class="form-control border-secondary" id="add-hotel-phone" required>
-                        <div class="invalid-feedback">
+                        <input type="text" name="sdt" class="form-control border-secondary hotel-phone-input" id="add-hotel-phone" required>
+                        <div class="invalid-feedback hotel-phone-feedback">
                             hãy nhập số điện thoại
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-name" class="form-label">Tên Khách Sạn</label>
-                        <input type="text" name="hname" class="form-control border-secondary" id="add-hotel-name" required>
-                        <div class="invalid-feedback">
+                        <input type="text" name="hname" class="form-control border-secondary hotel-name-input" id="add-hotel-name" required>
+                        <div class="invalid-feedback hotel-name-feedback">
                             hãy nhập tên khách sạn
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-address" class="form-label">Địa Chỉ</label>
-                        <input type="text" name="hdchi" class="form-control border-secondary" id="add-hotel-address" required>
-                        <div class="invalid-feedback">
+                        <input type="text" name="hdchi" class="form-control border-secondary hotel-dchi-input" id="add-hotel-address" required>
+                        <div class="invalid-feedback hotel-dchi-feedback">
                             hãy nhập địa chỉ
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-describe" class="form-label">Mô tả khách sạn</label>
-                        <textarea name="hmota" class="form-control border-secondary" id="add-hotel-describe" style="height: 120px;" required></textarea>
-                        <div class="invalid-feedback">
+                        <textarea name="hmota" class="form-control border-secondary hotel-mota-input" id="add-hotel-describe" style="height: 120px;" required></textarea>
+                        <div class="invalid-feedback hotel-mota-feedback">
                             hãy nhập mô tả khách sạn
                         </div>
                     </div>

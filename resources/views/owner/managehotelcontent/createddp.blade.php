@@ -27,15 +27,19 @@
 
     <section class="container p-4">
         @if (Auth::guard('owner')->check()) 
-            <a href="{{ route('owner.managehotel', ['id' => $hotel->h_id]) }}">
-            @elseif(Auth::guard('employee')->check())
-                <a href="{{ route('employee.managehotel', ['id' => $hotel->h_id]) }}">
-        @endif
+        <a href="{{ session('previous_url',route('owner.managehotel', ['id' => $hotel->h_id, 'tab' => 'don-dat-phong'])) }}">
+        @elseif(Auth::guard('employee')->check())
+            <a href="{{ session('previous_url',route('employee.managehotel', ['id' => $hotel->h_id, 'tab' => 'don-dat-phong'])) }}">
+    @endif
         <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
         <h1 class="text-center">Tạo Chi Tiết Đơn Đặt Phòng</h1>
         <hr>
         <form class="needs-validation"
-            action="{{ route('taoddp') }}"
+        @if(Auth::guard('owner')->check())
+        action="{{ route('owner.taodetailddp') }}"
+        @elseif(Auth::guard('employee')->check())
+        action="{{ route('employee.taodetailddp') }}"
+        @endif
             method="POST" novalidate>
             @csrf
             <input type="hidden" name="hid" value="{{ $hotel->h_id }}">
@@ -110,18 +114,19 @@
                         $allow = $room['r_maxperson'] . ' người lớn và trẻ em';
                     }
                 @endphp
-                <div class="p-1 col-lg-3 col-md-4 col-6"><button @if($room['remaining_quantity'] == 0) disabled @endif
+                <div class="p-1 col-lg-3 col-md-4 col-6"><button @if($room['r_conlai'] == 0) disabled @endif
                         class="btn btn-light border border-warning h-100 w-100 adddetail"
-                        onclick="addRoomToTable('{{ $room['r_id'] }}','{{ $room['r_name'] }}', 1, {{ $room['r_price'] }}, {{ $room['remaining_quantity'] }}, this)">
+                        onclick="addRoomToTable('{{ $room['r_id'] }}','{{ $room['r_name'] }}', 1, {{ $room['r_price'] }}, {{ $room['r_conlai'] }}, this)">
                         <h6>{{ $room['r_name'] }}</h6>
                         <div>diện tích: {{ $room['r_dientich'] }}m<sup>2</sup></div>
                         <div>cho phép: {{ $allow }}</div>
-                        <div>còn lại: <span class="room-quantity">{{ $room['remaining_quantity'] }}</span></div>
+                        <div>còn lại: <span class="room-quantity">{{ $room['r_conlai'] }}</span></div>
                     </button></div>
             @endforeach
         </div>
     </section>
 
+    @include('footer')
     @vite('resources/js/owner.js')
     @vite('resources/js/ddp.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

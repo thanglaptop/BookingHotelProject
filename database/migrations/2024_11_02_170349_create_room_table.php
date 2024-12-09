@@ -17,6 +17,9 @@ return new class extends Migration
             $table->float('r_price')->unsigned();
             $table->tinyInteger('r_soluong', false, true);
             $table->string('r_mota', 400);
+            $table->boolean('r_isclose')->default(false);
+            $table->date('r_dateclose')->nullable();
+            $table->date('r_dateopen')->nullable();
             $table->tinyInteger('r_maxadult')->unsigned();
             $table->tinyInteger('r_maxkid')->unsigned();
             $table->tinyInteger('r_maxperson')->unsigned();

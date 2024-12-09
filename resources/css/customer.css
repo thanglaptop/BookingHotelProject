@@ -200,10 +200,10 @@ footer {
     box-shadow: 0px 0px 8px 0px #404146;
 }
 
-.weather-forecast{
-    position: sticky;
-    top: 20px;
-    z-index: 1; 
+.weather-card{
+    background-image: linear-gradient(to right, rgb(253, 211, 72), rgb(247, 177, 46));
+    color:antiquewhite;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Viền chữ */
 }
 
 .searchbar{
@@ -246,6 +246,9 @@ footer {
     }
 }
 
+#dangerToast{
+    animation: checkmarkAnimation 0.6s ease-out forwards;
+}
 #successToast {
     animation: checkmarkAnimation 0.6s ease-out forwards;
 }
@@ -256,3 +259,10 @@ footer {
     object-fit: cover;
 }
 
+.btn-orange {
+    background-color: orangered !important;
+    color: white !important;
+  }
+  .btn-orange:hover {
+    background-color: rgb(255, 30, 0) !important; 
+  }

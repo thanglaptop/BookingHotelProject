@@ -16,34 +16,34 @@
 
 <body>
     <div class="loginPage">
-        <img src="{{ asset('images/other/logoAGOBEE.png') }}" alt="ảnh không tồn tại">
+        <a href="{{route('index')}}"><img src="{{ asset('images/other/logoAGOBEE.png') }}" alt="ảnh không tồn tại"></a>
         <div class="tabLogin">
             <button class="chuyenTab active" onclick="moLogin(event,'KhachHang')">Khách Hàng</button>
-            <button class="chuyenTab" onclick="moLogin(event,'ChuKhachSan')">Chủ Khách Sạn</button>
+            <button class="chuyenTab" onclick="moLogin(event,'ChuKhachSan')">Khách Sạn</button>
         </div>
         <div class="tabContent">
 
-            {{--tab login cho khách hàng--}}
+            {{-- tab login cho khách hàng --}}
             @include('tablogin/loginKH')
 
-            {{--tab login cho chủ khách sạn--}}
+            {{-- tab login cho chủ khách sạn --}}
             @include('tablogin/loginOwner')
 
-            {{--tab signup cho khách hàng--}}
+            {{-- tab signup cho khách hàng --}}
             @include('tablogin/signupKH')
 
-            {{--tab quên mật khẩu cho khách hàng--}}
+            {{-- tab quên mật khẩu cho khách hàng --}}
             @include('tablogin/FPKH')
 
-            
+
         </div>
         <div style="height: 5rem;"></div>
     </div>
 
     @vite('resources/js/loginPage.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

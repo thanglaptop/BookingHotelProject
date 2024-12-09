@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('ddp_sdt', 10);
             $table->float('ddp_total')->unsigned();
             $table->enum('ddp_pttt',['tt','momo', 'bank']);
-            $table->enum('ddp_status', ['pending', 'confirmed', 'checkedin', 'completed', 'canceled'])->default('pending');
+            $table->enum('ddp_status', ['pending', 'confirmed', 'checkedin', 'completed', 'rated', 'canceled'])->default('pending');
             $table->tinyInteger('c_id')->unsigned()->nullable();
             $table->tinyInteger('h_id')->unsigned()->nullable();
             $table->foreign('c_id')->references('c_id')->on('customer')->onUpdate('cascade')->onDelete('cascade');

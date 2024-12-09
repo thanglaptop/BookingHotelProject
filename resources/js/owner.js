@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+  let Alert = document.querySelectorAll('.alert[role="alert"]');
+  Alert.forEach(function (alertElement) {
+    setTimeout(() => {
+      let alert = new bootstrap.Alert(alertElement);
+      alert.close();
+    }, 2000); // 2 giây
+  });
   checkImageLimit();
 
   //hàm reset form khi đóng
@@ -78,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     selectedFiles = selectedFiles.filter(file => file.name !== fileName);
 
     // Cập nhật lại giá trị cho input hidden sau khi xóa ảnh
-    
+
     updateFileInput();
 
     imageDiv.remove(); // Xóa ảnh khỏi DOM
@@ -156,6 +163,64 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+
+  // Hàm cập nhật giá và thành tiền khi ngày thay đổi
+  window.updatePricesByDateChange = function () {
+    const tbody = document.querySelector('.dgvDDP table tbody');
+    const rows = tbody.querySelectorAll('tr');
+    const checkin = document.getElementById("inputCin").value;
+    const checkout = document.getElementById("inputCout").value;
+    const songay = getDaysDifference(checkin, checkout);
+
+    rows.forEach(row => {
+      const quantityCell = row.querySelector('td:nth-child(3)');
+      const unitPriceCell = row.querySelector('td:nth-child(5)');
+      const totalCell = row.querySelector('td:nth-child(6)');
+
+      const quantity = parseInt(quantityCell.textContent);
+      const unitPrice = parseInt(unitPriceCell.textContent.replace(/\D/g, '')); // Lấy giá mỗi ngày
+      const newTotal = unitPrice * quantity * songay;
+      totalCell.innerHTML = '<input type="hidden" value="' + newTotal + '" name="thanhtien[]">' + newTotal.toLocaleString('vi-VN') + ' VNĐ';
+    });
+
+    updateTotalPrice();
+    console.log("duoc goi");
+  }
+
+  // // Lắng nghe sự kiện thay đổi ngày check-in và check-out
+  // document.getElementById("inputCin").addEventListener('change', updatePricesByDateChange);
+  // document.getElementById("inputCout").addEventListener('change', updatePricesByDateChange);
+
+
+  window.handleDateChange = function () {
+    const checkinInput = document.getElementById("inputCin");
+    const checkoutInput = document.getElementById("inputCout");
+
+    const checkinDateStr = checkinInput.value;
+    const checkoutDateStr = checkoutInput.value; 
+
+    const checkinDate = new Date(checkinDateStr);
+    const checkoutDate = new Date(checkoutDateStr);
+
+    // Kiểm tra nếu ngày check-out < ngày check-in
+    if (checkoutDateStr && checkoutDate <= checkinDate) {
+      // alert("Ngày check-out không được nhỏ hơn hoặc bằng ngày check-in.");
+      checkoutInput.value = ""; // Reset ngày check-out
+      return;
+    }
+
+    // Nếu ngày check-in > ngày check-out
+    if (checkinDateStr && checkoutDateStr && checkinDate >= checkoutDate) {
+      // alert("Ngày check-in không được lớn hơn hoặc bằng ngày check-out.");
+      checkoutInput.value = ""; // Reset ngày check-out
+      return;
+    }
+  };
+
+  // Lắng nghe sự kiện thay đổi ngày check-in và check-out
+  document.getElementById("inputCin").addEventListener('change', handleDateChange);
+  document.getElementById("inputCout").addEventListener('change', handleDateChange);
+
 });
 
 //xác thực các ô nhập liệu không được bỏ trống
@@ -178,121 +243,26 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })()
 
-  // Hàm kiểm tra và cập nhật trạng thái nút thêm ảnh
-  function checkImageLimit() {
-    const maxImages = 5;
-    const currentImagesCount = document.querySelectorAll('#displayImage .image-container').length;
+// Hàm kiểm tra và cập nhật trạng thái nút thêm ảnh
+function checkImageLimit() {
+  const maxImages = 5;
+  const currentImagesCount = document.querySelectorAll('#displayImage .image-container').length;
 
-    // Kiểm tra nếu số lượng ảnh đã đạt 5
-    const addButton = document.getElementById('btnAddImage');
-    // const fileInput = document.getElementById('nutThemAnh');
+  // Kiểm tra nếu số lượng ảnh đã đạt 5
+  const addButton = document.getElementById('btnAddImage');
+  // const fileInput = document.getElementById('nutThemAnh');
 
-    if (currentImagesCount >= maxImages) {
-      // Ẩn nút thêm ảnh nếu số lượng ảnh đạt tối đa
-      addButton.style.display = 'none';
-      console.log("ko cho them");
-    } else {
-      // Hiển thị nút thêm ảnh nếu số lượng ảnh chưa đủ
-      addButton.style.display = 'block';
-      console.log("cho them");
-    }
+  if (currentImagesCount >= maxImages) {
+    // Ẩn nút thêm ảnh nếu số lượng ảnh đạt tối đa
+    addButton.style.display = 'none';
+    console.log("ko cho them");
+  } else {
+    // Hiển thị nút thêm ảnh nếu số lượng ảnh chưa đủ
+    addButton.style.display = 'block';
+    console.log("cho them");
   }
+}
 
 
 
 
-
-// Lấy tất cả các mục trong dropdown
-const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-// Gắn sự kiện click vào từng mục dropdown
-dropdownItems.forEach(item => {
-  item.addEventListener('click', function (e) {
-    e.preventDefault(); // Ngăn không cho chuyển hướng nếu có href="#"
-
-    // Lấy nút dropdown chứa mục đã chọn
-    const dropdown = this.closest('.dropdown');
-    const dropdownButton = dropdown.querySelector('.dropdown-toggle');
-
-    // Lấy nội dung của mục được chọn
-    const selectedText = this.textContent.trim();
-
-    // Đổi nội dung của nút thành nội dung mục được chọn
-    dropdownButton.textContent = selectedText;
-
-    // Đổi màu nút dựa trên mục được chọn
-    switch (selectedText) {
-      case 'Chờ Duyệt':
-        dropdownButton.className = 'btn btn-danger dropdown-toggle btn-sm';
-        break;
-      case 'Confirmed':
-        dropdownButton.className = 'btn btn-info dropdown-toggle btn-sm';
-        break;
-      case 'Đã Nhận':
-        dropdownButton.className = 'btn btn-primary dropdown-toggle btn-sm';
-        break;
-      case 'Hoàn Thành':
-        dropdownButton.className = 'btn btn-success dropdown-toggle btn-sm';
-        break;
-      default:
-        break;
-    }
-  });
-
-      // Hàm cập nhật giá và thành tiền khi ngày thay đổi
-      window.updatePricesByDateChange = function () {
-        const tbody = document.querySelector('.dgvDDP table tbody');
-        const rows = tbody.querySelectorAll('tr');
-        const checkin = document.getElementById("inputCin").value;
-        const checkout = document.getElementById("inputCout").value;
-        const songay = getDaysDifference(checkin, checkout);
-
-        rows.forEach(row => {
-            const quantityCell = row.querySelector('td:nth-child(3)');
-            const unitPriceCell = row.querySelector('td:nth-child(5)');
-            const totalCell = row.querySelector('td:nth-child(6)');
-
-            const quantity = parseInt(quantityCell.textContent);
-            const unitPrice = parseInt(unitPriceCell.textContent.replace(/\D/g, '')); // Lấy giá mỗi ngày
-            const newTotal = unitPrice * quantity * songay;
-            totalCell.innerHTML = '<input type="hidden" value="' + newTotal + '" name="thanhtien[]">' + newTotal.toLocaleString('vi-VN') + ' VNĐ';
-        });
-
-        updateTotalPrice();
-        console.log("duoc goi");
-    }
-
-    // Lắng nghe sự kiện thay đổi ngày check-in và check-out
-    document.getElementById("inputCin").addEventListener('change', updatePricesByDateChange);
-    document.getElementById("inputCout").addEventListener('change', updatePricesByDateChange);
-
-
-    window.handleDateChange = function () {
-        const checkinInput = document.getElementById("inputCin");
-        const checkoutInput = document.getElementById("inputCout");
-
-        const checkinDateStr = checkinInput.value;
-        const checkoutDateStr = checkoutInput.value;
-
-        const checkinDate = new Date(checkinDateStr);
-        const checkoutDate = new Date(checkoutDateStr);
-
-        // Kiểm tra nếu ngày check-out < ngày check-in
-        if (checkoutDateStr && checkoutDate <= checkinDate) {
-            // alert("Ngày check-out không được nhỏ hơn hoặc bằng ngày check-in.");
-            checkoutInput.value = ""; // Reset ngày check-out
-            return;
-        }
-
-        // Nếu ngày check-in > ngày check-out
-        if (checkinDateStr && checkoutDateStr && checkinDate >= checkoutDate) {
-            // alert("Ngày check-in không được lớn hơn hoặc bằng ngày check-out.");
-            checkoutInput.value = ""; // Reset ngày check-out
-            return;
-        }
-    };
-
-    // Lắng nghe sự kiện thay đổi ngày check-in và check-out
-    document.getElementById("inputCin").addEventListener('change', handleDateChange);
-    document.getElementById("inputCout").addEventListener('change', handleDateChange);
-});

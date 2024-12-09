@@ -188,7 +188,7 @@ html, body {
   color: white !important;
 }
 
-.star i{
+.star i, .star a{
   color: goldenrod;
 }
 
@@ -200,4 +200,36 @@ html, body {
 
 .dgvDDP{
   height: 240px;
+}
+
+footer {
+  background-image: linear-gradient(to right, rgb(253, 211, 72), rgb(247, 177, 46));
+  padding: 20px 0;
+}
+
+.footer-section h4 {
+  margin-bottom: 10px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: orangered;
+}
+
+.social-icons i {
+  color: black;
 }

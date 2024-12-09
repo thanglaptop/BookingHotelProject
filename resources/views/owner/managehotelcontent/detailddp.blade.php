@@ -26,12 +26,12 @@
     @include('header')
 
     <section class="container p-4">
-        @if (Auth::guard('owner')->check()) 
-        <a href="{{ route('owner.managehotel', ['id' => $ddp->h_id]) }}">
-        @elseif(Auth::guard('employee')->check())
-            <a href="{{ route('employee.managehotel', ['id' => $ddp->h_id]) }}">
-    @endif
-    <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
+        @if (Auth::guard('owner')->check())
+            <a href="{{ session('previous_url', route('owner.managehotel', ['id' => $ddp->h_id, 'tab' => 'don-dat-phong'])) }}">
+            @elseif(Auth::guard('employee')->check())
+                <a href="{{ session('previous_url', route('employee.managehotel', ['id' => $ddp->h_id, 'tab' => 'don-dat-phong'])) }}">
+        @endif
+        <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
         <h1 class="text-center">Chi Tiết Đơn Đặt Phòng</h1>
         <hr>
         <div class="row">
@@ -55,8 +55,10 @@
             <div class="col-lg-2 col-6"><strong>Ngày đặt: </strong>{{ date('d/m/Y', strtotime($ddp->ddp_ngaydat)) }}
             </div>
             <div class="col-lg-4 col-6"><strong>Phương thức thanh toán: </strong>{{ $pttt }}</div>
-            <div class="col-lg-3 col-6"><strong>Check-in: </strong>{{ date('d/m/Y', strtotime($day->detail_checkin)) }}</div>
-            <div class="col-lg-3 col-6"><strong>Check-out: </strong>{{ date('d/m/Y', strtotime($day->detail_checkout)) }}</div>
+            <div class="col-lg-3 col-6"><strong>Check-in: </strong>{{ date('d/m/Y', strtotime($day->detail_checkin)) }}
+            </div>
+            <div class="col-lg-3 col-6"><strong>Check-out:
+                </strong>{{ date('d/m/Y', strtotime($day->detail_checkout)) }}</div>
         </div>
         <div class="border-table scroll-1 p-2">
             <table class="table table-hover ">
@@ -85,7 +87,7 @@
                             $thanhtien = number_format($detail->detail_thanhtien, 0, ',', '.');
                         @endphp
                         <tr>
-                            <td>{{$stt++}}</td>
+                            <td>{{ $stt++ }}</td>
                             <td>{{ $tenphong }}</td>
                             <td>{{ $detail->detail_soluong }}</td>
                             <td>{{ $sodem }}</td>
@@ -107,55 +109,70 @@
         </div>
         @php
             $status = [
-        'pending' => ['label' => 'Chờ duyệt', 'color' => 'bg-info'],
-        'confirmed' => ['label' => 'Xác nhận', 'color' => 'bg-primary'],
-        'checkedin' => ['label' => 'Đã checkin', 'color' => 'bg-warning'],
-        'completed' => ['label' => 'Hoàn thành', 'color' => 'bg-success'],
-        'canceled' => ['label' => 'Đã hủy', 'color' => 'bg-danger'],
-    ];
+                'pending' => ['label' => 'Chờ duyệt', 'color' => 'bg-info'],
+                'confirmed' => ['label' => 'Xác nhận', 'color' => 'bg-primary'],
+                'checkedin' => ['label' => 'Đã checkin', 'color' => 'bg-warning'],
+                'completed' => ['label' => 'Hoàn thành', 'color' => 'bg-success'],
+                'rated' => ['label' => 'Đã đánh giá', 'color' => 'bg-success'],
+                'canceled' => ['label' => 'Đã hủy', 'color' => 'bg-danger'],
+            ];
         @endphp
         <div class="row mt-2">
-            <form action="{{route('updateddp')}}" method="POST">
+            <form
+                @if (Auth::guard('owner')->check()) action="{{ route('owner.updateddp') }}"
+            @elseif(Auth::guard('employee')->check())
+            action="{{ route('employee.updateddp') }}" @endif
+                method="POST">
                 @method('PUT')
                 @csrf
-                <input type="hidden" name="ddpid" value="{{$ddp->ddp_id}}">
+                <input type="hidden" name="ddpid" value="{{ $ddp->ddp_id }}">
                 <div class="col-lg-6 col-12 d-flex justify-content-between align-items-center text-nowrap">
-                    <strong>Trạng thái:</strong>
-                    <select class="form-select bg-primary text-white mx-2" id="statusddp" name="status">
-                        @foreach ($status as $key => $value)
-                            <option class="bg-light text-dark" data-color="{{ $value['color'] }}" value="{{ $key }}" @if ($key == $ddp->ddp_status) selected @endif>
-                                {{ $value['label'] }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    @if ($ddp->ddp_status == 'completed' || $ddp->ddp_status == 'rated' || $ddp->ddp_status == 'canceled')
+                        <strong>Trạng thái: 
+                        <span @if($ddp->ddp_status == 'canceled') class="text-danger" @else class="text-success" @endif>{{ $status[$ddp->ddp_status]['label'] }}</span>
+                        </strong>
+                    @else
+                        <strong>Trạng thái:</strong>
+                        <select class="form-select bg-primary text-white mx-2" id="statusddp" name="status">
+                            @foreach ($status as $key => $value)
+                            @if($key != 'rated')
+                                <option class="bg-light text-dark" data-color="{{ $value['color'] }}"
+                                    value="{{ $key }}" @if ($key == $ddp->ddp_status) selected @endif>
+                                    {{ $value['label'] }}
+                                </option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    @endif
                 </div>
             </form>
         </div>
-        
+
     </section>
     <script>
-        document.getElementById('statusddp').addEventListener('change', function () {
+        document.getElementById('statusddp').addEventListener('change', function() {
             // Lấy option được chọn
             const selectedOption = this.options[this.selectedIndex];
             const colorClass = selectedOption.getAttribute('data-color');
-    
+
             // Xóa tất cả các lớp màu cũ khỏi select
             this.className = 'form-select border-secondary text-white mx-2';
-    
+
             // Thêm lớp màu mới
             this.classList.add(colorClass);
         });
-    
+
         // Thiết lập màu ban đầu
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const select = document.getElementById('statusddp');
             const selectedOption = select.options[select.selectedIndex];
             const colorClass = selectedOption.getAttribute('data-color');
             select.classList.add(colorClass);
         });
     </script>
-    
+
+@include('footer')
     @vite('resources/js/owner.js')
     @vite('resources/js/ddp.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

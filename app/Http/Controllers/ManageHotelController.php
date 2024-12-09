@@ -6,9 +6,13 @@ use App\Models\Hotel;
 use App\Models\Hotel_Img;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\myHelper;
+use Illuminate\Support\Facades\Hash;
 
 class ManageHotelController
 {
+    use myHelper;
+
     public function addHotel(Request $request)
     {
             $validated = $request->validate([
@@ -24,19 +28,6 @@ class ManageHotelController
                 'tttt' => 'required|integer',
                 'tiennghi' => 'nullable|array', // Tiện ích phòng là mảng (có thể không chọn gì)
                 'tiennghi.*' => 'integer',
-            ], [
-                // Các thông báo lỗi
-                'hinh.required' => 'Hãy thêm ít nhất một ảnh cho khách sạn',
-                'hinh.*.image' => 'File tải lên phải là ảnh',
-                'hinh.*.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg hoặc gif',
-                'loaihinh.required' => 'Hãy chọn loại hình khách sạn.',
-                'city.required' => 'Hãy chọn thành phố',
-                'sdt.required' => 'Hãy nhập số điện thoại',
-                'sdt.regex' => 'Số điện thoại phải có từ 10 chữ số và bắt đâu bằng 0',
-                'hname.required' => 'Hãy nhập tên khách sạn',
-                'hdchi.required' => 'Hãy nhập địa chỉ khách sạn',
-                'hmota.required' => 'Hãy nhập mô tả khách sạn',
-                'tttt.required' => 'Hãy chọn thông tin thanh toán',
             ]);
        
 
@@ -99,19 +90,6 @@ class ManageHotelController
             'tttt' => 'required|integer',
             'tiennghi' => 'nullable|array', // Tiện ích phòng là mảng (có thể không chọn gì)
             'tiennghi.*' => 'integer',
-        ], [
-            // Các thông báo lỗi
-            'hinh.required' => 'Hãy thêm ít nhất một ảnh cho khách sạn',
-            'hinh.*.image' => 'File tải lên phải là ảnh',
-            'hinh.*.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg hoặc gif',
-            'loaihinh.required' => 'Hãy chọn loại hình khách sạn.',
-            'city.required' => 'Hãy chọn thành phố',
-            'sdt.required' => 'Hãy nhập số điện thoại',
-            'sdt.regex' => 'Số điện thoại phải có từ 10 chữ số và bắt đâu bằng 0',
-            'hname.required' => 'Hãy nhập tên khách sạn',
-            'hdchi.required' => 'Hãy nhập địa chỉ khách sạn',
-            'hmota.required' => 'Hãy nhập mô tả khách sạn',
-            'tttt.required' => 'Hãy chọn thông tin thanh toán',
         ]);
 
         // Lấy thông tin phòng hiện tại
@@ -190,5 +168,52 @@ class ManageHotelController
 
         // 3. Chuyển hướng về trang quản lý khách sạn
         return redirect()->route('mainowner');
+    }
+
+    public function showCloseHotel($hid){
+        $hotel = Hotel::firstWhere('h_id', $this->hotelOfOwner($hid));
+        return view('owner/closehotel', ['hotel'=> $hotel]);
+    }
+
+    public function closeHotel($hid, Request $request){
+        $owner = Auth::guard('owner')->user();
+        $ngaydong = $request->input('dayclose');
+        $ngaymo = $request->input('dayopen');
+
+        if(!$ngaymo || !$ngaydong){
+            return back()->with('error', 'không được bỏ trống ngày đóng và ngày mở');
+        }
+
+        $pass = $request->input('pw');
+
+        if(!Hash::check($pass, $owner->o_pass)){
+            return redirect()->back()->with('error', 'mật khẩu không chính xác');
+        }
+
+        $closeAvailable = $this->returnResultAvailableClose($hid, $ngaydong, $ngaymo);
+        if(!$closeAvailable){
+            return redirect()->back()->with('error', 'không thể đóng cửa trong khoảng thời gian có đơn đặt phòng');
+        }else{
+            Hotel::where('h_id', $hid)->update([
+                'h_isclose' => 1,
+                'h_dateclose' => $ngaydong,
+                'h_dateopen' => $ngaymo
+            ]);
+            return redirect()->route('mainowner')->with('success', 'đóng cửa khách sạn thành công');
+        }
+    }
+
+    public function openHotel($hid, Request $request){
+        $owner = Auth::guard('owner')->user();
+        $pass = $request->input('pw');
+        if(!Hash::check($pass, $owner->o_pass)){
+            return redirect()->back()->with('error', 'mật khẩu không chính xác');
+        }
+        Hotel::where('h_id', $hid)->update([
+            'h_isclose' => 0,
+            'h_dateclose' => null,
+            'h_dateopen' => null
+        ]);
+        return redirect()->route('mainowner')->with('success', 'mở cửa khách sạn thành công');
     }
 }

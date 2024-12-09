@@ -81,32 +81,32 @@
                     </div>
                     <div class="col-4">
                         <label for="add-hotel-phone" class="form-label">Số Điện Thoại</label>
-                        <input type="text" name="sdt" class="form-control border-secondary" id="add-hotel-phone"
+                        <input type="text" name="sdt" class="form-control border-secondary hotel-phone-input" id="add-hotel-phone"
                             value="{{ $hotel->h_sdt }}" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback hotel-phone-feedback">
                             hãy nhập số điện thoại
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-name" class="form-label">Tên Khách Sạn</label>
-                        <input type="text" name="hname" class="form-control border-secondary" id="add-hotel-name"
+                        <input type="text" name="hname" class="form-control border-secondary hotel-name-input" id="add-hotel-name"
                             value="{{ $hotel->h_name }}" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback hotel-name-feedback">
                             hãy nhập tên khách sạn
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control border-secondary" name="hdchi" id="add-hotel-address"
+                        <input type="text" class="form-control border-secondary hotel-dchi-input" name="hdchi" id="add-hotel-address"
                             value="{{ $hotel->h_dchi }}" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback hotel-dchi-feedback">
                             hãy nhập địa chỉ
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-hotel-describe" class="form-label">Mô tả khách sạn</label>
-                        <textarea name="hmota" class="form-control border-secondary" id="add-hotel-describe" style="height: 120px;" required>{{ $hotel->h_mota }}</textarea>
-                        <div class="invalid-feedback">
+                        <textarea name="hmota" class="form-control border-secondary hotel-mota-input" id="add-hotel-describe" style="height: 120px;" required>{{ $hotel->h_mota }}</textarea>
+                        <div class="invalid-feedback hotel-mota-feedback">
                             hãy nhập mô tả khách sạn
                         </div>
                     </div>
@@ -148,6 +148,8 @@
         </div>
     </section>
 
+    @include('footer')
+    @vite('resources/js/validateinputhotel.js')
     @vite('resources/js/owner.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

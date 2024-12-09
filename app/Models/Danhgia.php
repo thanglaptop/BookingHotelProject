@@ -10,7 +10,7 @@ class Danhgia extends Model
     use HasFactory;
 
     protected $table = 'danhgia';
-
+    public $timestamps = false;
     protected $primaryKey = 'dg_id'; // Đặt khóa chính nếu không phải là 'id'
 
     protected $fillable = [

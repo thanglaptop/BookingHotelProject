@@ -5,23 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Customer;
 use App\Models\Detail_Ddp;
+use App\Models\Dondatphong;
 use App\Models\Employee;
 use App\Models\Hotel;
 use App\Models\Loaihinh;
 use App\Models\Owner;
 use App\Models\Paymnet_Info;
 use App\Models\Room;
-use App\Models\Room_Img;
 use App\Models\Tiennghi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\myHelper;
-use Exception;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class OwnerController
 {
@@ -63,7 +61,7 @@ class OwnerController
         ]);
 
         Auth::guard('customer')->login($customer);
-        return redirect()->route('index')->with('successlogin', 'Đăng ký thành công!');
+        return redirect()->route('index')->with('success', 'Đăng ký thành công!');
     }
 
     public function ForgetPassword(Request $request)
@@ -120,7 +118,7 @@ class OwnerController
             return redirect()->route('mainowner');
         } else if ($employee && Hash::check($logininfo['txtOPass'], $employee->e_pass)) {
             Auth::guard('employee')->login($employee);
-            return redirect()->route('employee.managehotel', ['id' => $employee->h_id]);
+            return redirect()->route('employee.managehotel', ['id' => $employee->h_id, 'tab' => 'don-dat-phong']);
         }
         return back()->withErrors(['message' => 'Đăng nhập thất bại!']);
     }
@@ -154,27 +152,36 @@ class OwnerController
         ]);
     }
 
-    public function showManageHotel($id, $daystart, $dayend)
+    public function showManageHotel($id, $tab, Request $request)
     {
-        $ownerId = $this->ownerId(); // Lấy ID của chủ sở hữu
-        $employee = $this->Employee(); // Lấy ID của nhân viên
-        if ($ownerId) {
-            $hotel = Hotel::where('h_id', $id)->where('o_id', $ownerId)->first();
-        }
-
-        if ($employee) {
-            $hotel = Hotel::join('employee', 'hotel.h_id', '=', 'employee.h_id')
-                ->where('hotel.h_id', $id)
-                ->where('employee.e_id', $employee->e_id)
-                ->select('hotel.*') // Chỉ chọn cột từ bảng hotels (nếu cần)
-                ->first();
-        }
-        if(!$hotel){
+        $hotel = $this->returnHotelBelong($id);
+        if (!$hotel) {
             return redirect()->back();
         }
-        $listddp = $hotel->dondatphongs()->whereBetween('ddp_ngaydat', [$daystart, $dayend])->get();
+        $ngaybd = $request->input('daystart') ?? date('Y-m-d');
+        $ngaykt = $request->input('dayend') ?? date('Y-m-d', strtotime('+1 day'));
+
+        if($ngaykt < $ngaybd){
+            return back()->with('error', 'ngày kết thúc không được nhỏ hơn ngày bắt đầu');
+        }
+        $sdt = $request->input('sdttim') . trim("");
+
+        if ($ngaybd && $ngaykt && $sdt) {
+            // dd($ngaybd, $ngaykt, $sdt);
+            $listddp = $hotel->dondatphongs()
+                ->whereBetween('ddp_ngaydat', [$ngaybd, $ngaykt])
+                ->where('ddp_sdt', $sdt)->get();
+        } else if ($ngaybd && $ngaykt) {
+            // dd($ngaybd, $ngaykt, $sdt);
+            $listddp = $hotel->dondatphongs()->whereBetween('ddp_ngaydat', [$ngaybd, $ngaykt])->get();
+        } else {
+            $listddp = $hotel->dondatphongs()->whereBetween('ddp_ngaydat', [date('Y-m-d'), date('Y-m-d')])->get();
+        }
+        $listroom = $this->returnListRoomWithRemainQuantity($hotel->h_id, date('Y-m-d'), date('Y-m-d'));
         $listtiennghi = Tiennghi::all()->where('tn_ofhotel', 0);
-        return view('owner/managehotel', ['hotel' => $hotel, 'listtiennghi' => $listtiennghi, 'listddp' => $listddp]);
+        // Lưu URL hiện tại vào session
+        session(['previous_url' => $request->fullUrl()]);
+        return view('owner/managehotel', ['hotel' => $hotel, 'listtiennghi' => $listtiennghi, 'listddp' => $listddp, 'listroom' => $listroom, 'tab' => $tab]);
     }
 
 
@@ -183,7 +190,7 @@ class OwnerController
     {
         //owner chỉ có thể truy cập ks của mình không truy cập ks của người khác thông qua url 
         $hotel = Hotel::where('h_id', $id)->where('o_id', $this->ownerId())->first();
-        if(!$hotel){
+        if (!$hotel) {
             return redirect()->back();
         }
         $cities = City::all();
@@ -206,7 +213,7 @@ class OwnerController
     {
         //trả về phòng thuộc khách sạn thuộc owner đang đăng nhập
         $room = Room::where('r_id', $rid)->where('h_id', $this->hotelOfOwner($hid))->first();
-        if(!$room){
+        if (!$room) {
             return redirect()->back();
         }
         $tiennghiroom = Tiennghi::all()->where('tn_ofhotel', 0);
@@ -222,7 +229,6 @@ class OwnerController
         $hotel = null;
         if ($this->ownerId()) {
             $hotel = Hotel::where('h_id', $this->hotelOfOwner($hid))->first();
-            // dd($hotel);
         } else if ($this->Employee()) {
             $hotel = Hotel::where('h_id', $this->Employee()->h_id)->first();
         }
@@ -237,37 +243,16 @@ class OwnerController
             'checkout' => 'required|date',
         ]);
         // Lấy danh sách phòng của khách sạn
-        $listroom = Room::where('h_id', $hotel->h_id)->get();
         $checkin = $validated['checkin'];
         $checkout = $validated['checkout'];
+        if(!$checkin || !$checkout){
+            return back()->with('error', 'không được bỏ trống ngày checkin và ngày checkout');
+        }
+        if($checkout < $checkin){
+            return back()->with('error', 'ngày checkout không được nhỏ hơn ngày checkin');
+        }
+        $Listroom = $this->returnListRoomWithRemainQuantity($hotel->h_id, $checkin, $checkout);
 
-        $roomsWithRemainingQuantity = $listroom->map(function ($room) use ($checkin, $checkout) {
-
-            $bookedQuantity = Detail_Ddp::where('r_id', $room->r_id)
-                ->where(function ($query) use ($checkin, $checkout) {
-                    $query->where(function ($subquery) use ($checkin, $checkout) {
-                        // Điều kiện khoảng ngày đặt phòng trùng với khoảng ngày tìm kiếm
-                        $subquery->where('detail_checkin', '<', $checkout)
-                            ->where('detail_checkout', '>', $checkin);
-                    });
-                })
-                ->sum('detail_soluong');
-            // Tính số lượng phòng còn lại
-            $remainingQuantity = max(0, $room->r_soluong - $bookedQuantity);
-
-            // Trả về thông tin phòng và số lượng còn lại
-            return [
-                'r_id' => $room->r_id,
-                'r_name' => $room->r_name,
-                'r_price' => $room->r_price,
-                'r_soluong' => $room->r_soluong,
-                'remaining_quantity' => $remainingQuantity,
-                'r_maxadult' => $room->r_maxadult,
-                'r_maxkid' => $room->r_maxkid,
-                'r_maxperson' => $room->r_maxperson,
-                'r_dientich' => $room->r_dientich,
-            ];
-        });
 
         // Trả về view với dữ liệu
         return view('owner/managehotelcontent/createddp', [
@@ -276,7 +261,7 @@ class OwnerController
             'sdt' => $validated['sdt'],
             'checkin' => $checkin,
             'checkout' => $checkout,
-            'listroom' => $roomsWithRemainingQuantity,
+            'listroom' => $Listroom,
             'checkin' => $checkin,
             'checkout' => $checkout
         ]);
@@ -287,5 +272,88 @@ class OwnerController
     {
         $pm = Paymnet_Info::where('pm_id', $pmid)->firstOrFail();
         return view('owner/mainownercontent/pminfocontent/editpm', ['pm' => $pm]);
+    }
+
+    public function showDanhThuPage(Request $request)
+    {
+
+        $ownerId = $this->ownerId();
+        $ngaybd = $request->input('daystart') ?? date('Y-m-d');
+        $ngaykt = $request->input('dayend') ?? date('Y-m-d');
+        if($ngaykt < $ngaybd){
+            return back();
+        }
+        $thang = $request->input('thang');
+        $year = Carbon::now()->year;
+        if ($ngaybd && $ngaykt) {
+            $listhotelwithrevenue = $this->returnListHotelWithRevenue($ownerId, $ngaybd, $ngaykt);
+        } else if ($thang != 0) {
+            $ngaybd = Carbon::create($year, $thang, 1)->startOfMonth()->toDateString();
+            $ngaykt = Carbon::create($year, $thang, 1)->endOfMonth()->toDateString();
+            $listhotelwithrevenue = $this->returnListHotelWithRevenue($ownerId, $ngaybd, $ngaykt);
+        } else {
+            $ngaybd = date('Y-m-d');
+            $ngaykt = date('Y-m-d');
+            $listhotelwithrevenue = $this->returnListHotelWithRevenue($ownerId, $ngaybd, $ngaykt);
+        }
+        $totalrevenue = 0;
+        $totalddp = 0;
+        foreach ($listhotelwithrevenue as $hotel) {
+            $totalrevenue += $hotel['h_doanhthu'];
+            $totalddp += $hotel['h_ddp'];
+        }
+        return view('owner/mainownercontent/doanhthu', ['listhotelwithrevenue' => $listhotelwithrevenue, 'ngaybd' => $ngaybd, 'ngaykt' => $ngaykt, 'totalrevenue' => $totalrevenue, 'totalddp' => $totalddp]);
+    }
+
+    public function changeOwnerPassWord(Request $request)
+    {
+        $owner = Auth::guard('owner')->user();
+        $mkcu = $request->input('oldpass');
+        $mkmoi = $request->input('newpass');
+        $retypepass = $request->input('retypepass');
+
+        if (!Hash::check($mkcu, $owner->o_pass)) {
+            return redirect()->back()->with('error', 'mật khẩu cũ không chính xác');
+        }
+
+        if ($retypepass != $mkmoi) {
+            return redirect()->back()->with('error', 'mật khẩu nhập lại không chính xác');
+        }
+
+        Owner::where('o_id', $owner->o_id)->update([
+            'o_pass' => Hash::make($mkmoi)
+        ]);
+        return redirect()->back()->with('success', 'đổi mật khẩu thành công');
+    }
+
+    public function showDanhGiaForOwner(Request $request)
+    {
+        $hotelId = $request->input('hotel');
+        $star = $request->input('star');
+
+        if(($hotelId == 0 && $star == 0) || ($hotelId == 0 && $star != 0)){
+        $owner = Auth::guard('owner')->user();
+        $listhotelId = $owner->hotels->pluck('h_id');
+        }
+        // dd($hotelId, $star);
+        if ($hotelId != 0 && $star != 0) {
+            $listddpId = Dondatphong::where('h_id', $hotelId)->where('ddp_status', 'rated')->pluck('ddp_id');
+            $listdetail = Detail_Ddp::whereIn('ddp_id', $listddpId)->whereHas('danhgia', function ($query) use ($star) {
+                $query->where('dg_star', $star);
+            })->get();
+        } else if($hotelId != 0 && $star == 0){
+            $listddpId = Dondatphong::where('h_id', $hotelId)->where('ddp_status', 'rated')->pluck('ddp_id');
+            $listdetail = Detail_Ddp::whereIn('ddp_id', $listddpId)->get();
+        }else if($hotelId == 0 && $star != 0){
+            $listddpId = Dondatphong::whereIn('h_id', $listhotelId)->where('ddp_status', 'rated')->pluck('ddp_id');
+            $listdetail = Detail_Ddp::whereIn('ddp_id', $listddpId)->whereHas('danhgia', function ($query) use ($star) {
+                $query->where('dg_star', $star);
+            })->get();
+        }else{
+            $listddpId = Dondatphong::whereIn('h_id', $listhotelId)->where('ddp_status', 'rated')->pluck('ddp_id');
+            $listdetail = Detail_Ddp::whereIn('ddp_id', $listddpId)->get();
+        }
+       
+        return view('owner/mainownercontent/danhgia', ['listdetail' => $listdetail]);
     }
 }

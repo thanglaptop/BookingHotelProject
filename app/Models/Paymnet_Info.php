@@ -27,4 +27,9 @@ class Paymnet_Info extends Model
     {
         return $this->belongsTo(Owner::class, 'o_id', 'o_id');
     }
+
+    public function hotels()
+    {
+        return $this->hasMany(Hotel::class, 'pm_id', 'pm_id'); //class, foreignkey, localkey
+    }
 }

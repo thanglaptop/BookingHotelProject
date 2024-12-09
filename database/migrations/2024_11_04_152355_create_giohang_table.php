@@ -19,7 +19,6 @@ return new class extends Migration
             $table->tinyInteger('g_soluong')->unsigned();
             $table->foreign('C_ID')->references('c_id')->on('customer')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('R_ID')->references('r_id')->on('room')->onUpdate('cascade')->onDelete('cascade');
-            $table->primary(['C_ID', 'R_ID']);
             $table->index('C_ID', 'giohang_c_id_foreign');
         });
     }

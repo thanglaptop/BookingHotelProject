@@ -25,15 +25,11 @@
 
     <section class="noidung">
         <div class="container p-4">
-            @if (Auth::guard('owner')->check())
-                <a href="{{ route('owner.managehotel', ['id' => $room->h_id]) }}">
-                @elseif(Auth::guard('employee')->check())
-                    <a href="{{ route('employee.managehotel', ['id' => $room->h_id]) }}">
-            @endif
-            <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
+            <a href="{{ route('owner.managehotel', ['id' => $room->h_id, 'tab' => 'manage-phong']) }}">
+                <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i> trở về</button></a>
             <div class="row">
                 <h1 class="text-center">Sửa Thông Tin Phòng</h1>
-                <form id="formAddHotel" class="row g-3 needs-validation" novalidate
+                <form id="formAddHotel" class="row g-3 needs-validation"
                     action="{{ route('updateroom', ['rid' => $room->r_id]) }}" method="POST" novalidate
                     enctype="multipart/form-data">
                     @csrf
@@ -80,67 +76,67 @@
                         <div class="invalid-feedback">
                             hãy thêm ảnh cho phòng
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-12">
                         <label for="add-room-name" class="form-label">Tên phòng</label>
-                        <input type="text" class="form-control border-secondary" id="add-room-name"
+                        <input type="text" class="form-control border-secondary room-name-input" id="add-room-name"
                             value="{{ $room->r_name }}" name="rname" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback room-name-feedback">
                             hãy nhập tên phòng
                         </div>
                     </div>
                     <div class="col-8">
                         <label for="add-room-price" class="form-label">Giá phòng</label>
-                        <input type="text" class="form-control border-secondary" id="add-room-price"
+                        <input type="text" class="form-control border-secondary room-price-input" id="add-room-price"
                             value="{{ $room->r_price }}" name="rprice" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback room-price-feedback">
                             hãy nhập giá phòng
                         </div>
                     </div>
                     <div class="col-4">
                         <label for="add-room-quantity" class="form-label">Số lượng phòng</label>
-                        <input type="number" class="form-control border-secondary" id="add-room-quantity"
+                        <input type="number" class="form-control border-secondary room-sl-input" id="add-room-quantity"
                             value="{{ $room->r_soluong }}" name="rsoluong" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback room-sl-feedback">
                             hãy nhập số lượng phòng
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="add-room-describe" class="form-label">Mô tả phòng</label>
-                        <textarea name="rmota" class="form-control border-secondary" id="add-room-describe" style="height: 120px;" required>{{ $room->r_mota }}</textarea>
-                        <div class="invalid-feedback">
+                        <textarea name="rmota" class="form-control border-secondary room-mota-input" id="add-room-describe" style="height: 120px;" required>{{ $room->r_mota }}</textarea>
+                        <div class="invalid-feedback room-mota-feedback">
                             hãy nhập mô tả phòng
                         </div>
                     </div>
                     <div class="col-3">
                         <label for="add-room-dientich" class="form-label">Diện tích</label>
-                        <input type="number" class="form-control border-secondary" id="add-room-dientich"
+                        <input type="number" class="form-control border-secondary  room-dt-input" id="add-room-dientich"
                             value="{{ $room->r_dientich }}" name="rdientich" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback room-dt-feedback">
                             hãy nhập số diện tích phòng
                         </div>
                     </div>
                     <div class="col-3">
                         <label for="add-room-adult" class="form-label">người lớn</label>
-                        <input type="number" class="form-control border-secondary" id="add-room-adult"
+                        <input type="number" class="form-control border-secondary adult-input" id="add-room-adult"
                             value="{{ $room->r_maxadult }}" name="rmaxadult" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback adult-feedback">
                             hãy nhập số người lớn tối đa
                         </div>
                     </div>
                     <div class="col-3">
                         <label for="add-room-kid" class="form-label">trẻ em</label>
-                        <input type="number" class="form-control border-secondary" id="add-room-kid"
+                        <input type="number" class="form-control border-secondary kid-input" id="add-room-kid"
                             value="{{ $room->r_maxkid }}" name="rmaxkid" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback kid-feedback">
                             hãy nhập số trẻ em tối đa
                         </div>
                     </div>
                     <div class="col-3">
                         <label for="add-room-maxperson" class="form-label">cả người lớn và trẻ em</label>
-                        <input type="number" class="form-control border-secondary" id="add-room-maxperson"
+                        <input type="number" class="form-control border-secondary all-input" id="add-room-maxperson"
                             value="{{ $room->r_maxperson }}" name="rmaxperson" required>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback all-feedback">
                             hãy nhập số người lớn và trẻ em tối đa
                         </div>
                     </div>
@@ -171,6 +167,8 @@
         </div>
     </section>
 
+    @include('footer')
+    @vite('resources/js/validateinput.js')
     @vite('resources/js/owner.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

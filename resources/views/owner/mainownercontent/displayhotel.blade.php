@@ -2,7 +2,7 @@
     @php
         $hotels = Auth::guard('owner')->user()->hotels;
     @endphp
-    @if ($hotels != null) 
+    @if ($hotels != null)
         @foreach ($hotels as $hotel)
             @php
                 $firstImage = $hotel->hotel_imgs->firstWhere('hi_vitri', 1);
@@ -16,13 +16,20 @@
                     <div class="card-body">
                         <h4 class="title">{{ $hotel->h_name }}</h4>
                         <div class="nhom-button">
-                            <a href="{{ route('owner.managehotel', ['id' => $hotel->h_id, 'daystart' => date('Y-m-d') , 'dayend' => date('Y-m-d', strtotime('+1 day')) ]) }}"> <button type="button" class="btn btn-primary btn-sm">Quản
+                            <a href="{{ route('owner.managehotel', ['id' => $hotel->h_id, 'tab' => 'don-dat-phong']) }}">
+                                <button type="button" class="btn btn-primary btn-sm">Quản
                                     Lý</button>
                             </a>
 
                             <a href="{{ route('edithotel', ['id' => $hotel->h_id]) }}"><button type="button"
                                     class="btn btn-secondary btn-sm">Sửa</button></a>
-                            <button type="button" class="btn btn-danger btn-sm">Đóng Cửa</button>
+                            <a href="{{ route('showclosehotel', ['hid' => $hotel->h_id]) }}">
+                                @if ($hotel->h_isclose == 1 && date('Y-m-d') >= $hotel->h_dateclose && date('Y-m-d') < $hotel->h_dateopen)
+                                    <button type="button" class="btn btn-danger btn-sm">Đóng Cửa</button>
+                                @else
+                                    <button type="button" class="btn btn-success btn-sm">Hoạt động</button>
+                                @endif
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -60,24 +60,26 @@
 
         <hr class="mt-4">
         <h1 class="text-center mt-4">Đổi mật khẩu</h1>
-        <form action="" class="row g-3 needs-validation" novalidate>
+        <form action="{{route('changepass')}}" class="row g-3 needs-validation" method="POST" novalidate>
+            @method('PUT')
+            @csrf
             <div class="col-12">
                 <label for="owner-oldpass" class="form-label">Mật khẩu cũ</label>
-                <input type="text" class="form-control border-secondary" id="owner-oldpass" required>
+                <input type="password" name="oldpass" class="form-control border-secondary" id="owner-oldpass" required>
                 <div class="invalid-feedback">
                     mật khẩu cũ không được bỏ trống
                 </div>
             </div>
             <div class="col-12">
                 <label for="owner-oldpass" class="form-label">Mật khẩu mới</label>
-                <input type="text" class="form-control border-secondary" id="owner-oldpass" required>
+                <input type="password" name="newpass" class="form-control border-secondary" id="owner-oldpass" required>
                 <div class="invalid-feedback">
                     mật khẩu mới không được bỏ trống
                 </div>
             </div>
             <div class="col-12">
                 <label for="owner-newpass" class="form-label">Nhập lại mật khẩu mới</label>
-                <input type="text" class="form-control border-secondary" id="owner-newpass" required>
+                <input type="password" name="retypepass" class="form-control border-secondary" id="owner-newpass" required>
                 <div class="invalid-feedback">
                     nhập lại mật khẩu không được bỏ trống
                 </div>
@@ -86,6 +88,7 @@
         </form>
     </section>
 
+    @include('footer')
     @vite('resources/js/owner.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

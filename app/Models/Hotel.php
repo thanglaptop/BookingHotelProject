@@ -27,6 +27,7 @@ class Hotel extends Model
         'pm_id'
     ];
 
+
     // Quan hệ với model Owner
     public function owner()
     {
@@ -45,10 +46,10 @@ class Hotel extends Model
         return $this->belongsTo(City::class, 'ct_id', 'ct_id');
     }
 
-    // public function paymentinfo()
-    // {
-    //     return $this->belongsTo(Paymnet_Info::class, 'pm_id', 'pm_id');
-    // }
+    public function paymentinfo()
+    {
+        return $this->belongsTo(Paymnet_Info::class, 'pm_id', 'pm_id');
+    }
 
     public function hotel_imgs()
     {
@@ -65,12 +66,36 @@ class Hotel extends Model
         return $this->belongsToMany(Tiennghi::class, 'hotel_tiennghi', 'H_ID', 'TN_ID'); //class, foreignkey, localkey
     }
 
-    public function employees(){
+    public function employees()
+    {
         return $this->hasMany(Employee::class, 'h_id', 'h_id');
     }
 
     public function dondatphongs()
     {
         return $this->hasMany(Dondatphong::class, 'h_id', 'h_id'); //class, foreignkey, localkey
+    }
+
+    // Định nghĩa Accessor để tính sao trung bình
+    public function getAverageStarAttribute()
+    {
+        // Lấy tất cả đánh giá của khách sạn này
+        $ratings = Danhgia::whereHas('detail_ddp.dondatphong.hotel', function ($query) {
+            $query->where('h_id', $this->h_id);
+        })->get();
+
+        // Kiểm tra nếu có đánh giá
+        if ($ratings->count() > 0) {
+            $totalStars = 0;
+            foreach ($ratings as $rating) {
+                // Lấy ký tự đầu tiên của dg_star và chuyển nó thành số
+                $star = (int) substr($rating->dg_star, 0, 1); // Lấy ký tự đầu tiên và ép kiểu sang số
+                $totalStars += $star;
+            }
+            return round($totalStars / $ratings->count(), 1); // Trả về sao trung bình
+        }
+
+        // Nếu không có đánh giá, trả về 0 sao
+        return 0;
     }
 }
