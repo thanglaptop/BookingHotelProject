@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <input type="range" class="form-range mx-2" id="customRange1" value="100">
                 <div class="ms-2">10000</div>
             </div>
-            <div class="d-flex align-items-center justify-content-between"> 
+            <div class="d-flex align-items-center justify-content-between">
             <span>Max: 500.000 VNĐ</span>
             <button class="btn btn-primary btn-sm">Tìm</button>
             </div>`}

@@ -271,4 +271,10 @@ class CustomerController
         Dondatphong::where('ddp_id', $detail->ddp_id)->update(['ddp_status' => 'rated']);
         return redirect()->route('seedanhgia', ['hid' => $hotelId])->with('success', 'Đánh giá thành công!');
     }
+
+    public function edit()
+    {
+        $customer = Auth::guard('customer')->user(); // Lấy thông tin khách hàng đang đăng nhập
+        return view('customer.updatecustomerinfo', compact('customer'));
+    }
 }

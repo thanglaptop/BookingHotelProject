@@ -17,7 +17,7 @@ use App\Models\Employee;
 Route::get('/', [DisplayContentController::class, 'displayContent'])->middleware('guest:owner')->name('index');
 Route::get('/loginpage', function () {
     return view('login');
-})->name('loginpage'); 
+})->name('loginpage');
 Route::post('/signup', [OwnerController::class, 'dangKy'])->name('signup');
 Route::post('/forgetpw', [OwnerController::class, 'ForgetPassword'])->name('forgetpw');
 Route::get('/listhotel/city{id}', [DisplayContentController::class, 'showHotelOfCity'])->middleware('guest:owner')->name('showlisthotel');
@@ -77,6 +77,14 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
 });
  
 Route::middleware([CustomerMiddleware::class])->group(function () {
+
+    Route::get('/customerinfo', function(){
+        return view("customer/customerinfo");
+    })->name('customerinfo');
+
+    Route::get('cart', function(){
+        return view('customer/cart');
+    })->name('cart');
     Route::get('/cart', [CustomerController::class, 'showCart'])->name('cart');
     Route::get('/checkout', [CustomerController::class, 'showCheckOut'])->name('checkout');
     Route::get('/checkoutbooknow', [CustomerController::class, 'showBookNow'])->name('booknow');
@@ -85,6 +93,15 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
     Route::post('/decreasetocart', [CustomerController::class, 'decreaseQuantityCart'])->name('decreasetocart');
     Route::post('/removefromcart', [CustomerController::class, 'removeFromCart'])->name('removefromcart');
     Route::get('/header', [CustomerController::class, 'refreshHeader'])->name('refreshheader');
+    Route::get('/update-customer-info', [CustomerController::class, 'edit'])->name('updatecustomerinfo');
+
+
+
+
+
+    // Route::middleware('auth:customer')->group(function () {
+    // }
+
     Route::get('/dondatphong', [CustomerController::class, 'showDDP'])->name('showddp');
     Route::get('/cancelddp{ddpid}', [CustomerController::class, 'cancelDDP'])->name('cancelddp');
     Route::get('/danhgia{ddpid}', [CustomerController::class, 'showDanhGia'])->name('showdanhgia');

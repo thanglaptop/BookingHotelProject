@@ -3,10 +3,11 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-brand">
-                    <a style="text-decoration:none;"
-                        @if (Auth::guard('owner')->check()) href="{{ route('mainowner') }}"
-                        @else href="{{ route('index') }}" @endif>
-                        <img src="/images/other/Logo.png">
+                    <a style="text-decoration:none;" @if(Auth::guard('owner')->check())
+                        href="{{ route('mainowner') }}"
+                        @else href="{{ route('index') }}"
+                        @endif>
+                    <img src="/images/other/Logo.png">
                     </a>
                     AGOBEE
                 </div>
@@ -61,12 +62,10 @@
                                         href="{{ route('personalinfo') }}">Thông Tin Cá Nhân</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'doanhthu' ? 'active' : '' }}"
-                                        href="{{ route('doanhthu') }}">Doanh Thu</a>
+                                    <a class="nav-link" href="#">Doanh Thu</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteName() == 'danhgia' ? 'active' : '' }}"
-                                        href="{{ route('danhgia') }}">Đánh Giá</a>
+                                    <a class="nav-link" href="#">Đánh Giá</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('customerlogout') }}">Đăng Xuất</a>
@@ -74,6 +73,7 @@
                             </ul>
                         </div>
                     </div>
+
                 @elseif(Auth::guard('customer')->check())
                     @php
                         $customer = Auth::guard('customer')->user();
@@ -111,12 +111,14 @@
                                     </a>
 
                                 </li>
+
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::currentRouteName() == 'showddp' ? 'active' : '' }}"
                                         href="{{ route('showddp') }}">Đơn đặt phòng</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Thông Tin Cá Nhân</a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'customerinfo' ? 'active' : '' }}
+                                    " href="{{ route('customerinfo') }}">Thông Tin Cá Nhân</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('customerlogout') }}">Đăng Xuất</a>
