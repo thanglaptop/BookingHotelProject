@@ -26,10 +26,6 @@
     @php
     $customer = Auth::guard('customer')->user();
 
-
-    $dondatphongs = \App\Models\Dondatphong::where('c_id', $customer->c_id)
-                            ->orderBy('ddp_ngaydat', 'desc')
-                            ->get();
     @endphp
 
 <!-- MAIN CONTENT -->
@@ -44,14 +40,12 @@
 
     <!-- Customer Info -->
     <div class="row">
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-6 mx-auto mb-3">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title fw-bold text-primary text-center">Thông Tin Cá Nhân</h5>
-                    <form id="updateForm" action="/customer/update" method="POST">
-                        <!-- Laravel CSRF Token -->
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                    <form id="updateForm" action="{{route('updateinfo')}}" method="POST">
+                        @csrf
                         <!-- Name -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên khách hàng</label>
@@ -69,34 +63,65 @@
                         <!-- Phone -->
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
+                            <input type="tel" class="form-control" id="phone" name="phone"
                                    value="{{ $customer->c_sdt }}" required readonly>
                         </div>
 
                         <!-- Date of Birth -->
                         <div class="mb-3">
                             <label for="dob" class="form-label">Ngày sinh</label>
-                            <input type="date" class="form-control" id="dob" name="dob"
+                            <input type="date" class="form-control" id="dob" name="ngaysinh"
                                    value="{{ $customer->c_nsinh }}" required readonly>
                         </div>
 
                         <!-- Password -->
                         <div class="mb-3">
-                            <label for="password" class="form-label">Mật khẩu mới (nếu muốn thay đổi)</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Để trống nếu không muốn thay đổi" readonly>
+                            <label for="password" class="form-label">Xác nhận mật khẩu</label>
+                            <input type="password" class="form-control" id="password" name="password" readonly>
                         </div>
 
                         <!-- Buttons -->
-                        <div class="d-flex justify-content-between">
+                        <div class="text-center">
                             <button type="button" id="editBtn" class="btn btn-secondary">Chỉnh sửa</button>
-                            <button type="button" id="confirmBtn" class="btn btn-success d-none">Lưu thay đổi</button>
+                            <button type="submit" id="confirmBtn" class="btn btn-success d-none">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-primary text-center">Đổi mật khẩu</h5>
+                    <form action="{{route('updatecustomerpass')}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="oldpass" class="form-label">Nhập mật khẩu cũ</label>
+                            <input type="text" class="form-control" id="oldpass" name="oldpass" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newpass" class="form-label">Nhập mật khẩu mới</label>
+                            <input type="text" class="form-control" id="newpass" name="newpass" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newpass2" class="form-label">Nhập lại mật khẩu mới</label>
+                            <input type="text" class="form-control" id="newpass2" name="newpass2" required>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    
 </section>
 
 
@@ -130,11 +155,11 @@
         });
 
         // Hiển thị thông báo xác nhận khi nhấn nút "Lưu thay đổi"
-        confirmBtn.addEventListener('click', () => {
-            if (confirm('Bạn có chắc chắn muốn lưu thay đổi không?')) {
-                form.submit();
-            }
-        });
+        //confirmBtn.addEventListener('click', () => {
+          //  if (confirm('Bạn có chắc chắn muốn lưu thay đổi không?')) {
+          //      form.submit();
+           // }
+       // });
 
         // Đặt ban đầu các trường chỉ đọc
         window.onload = () => {

@@ -5,20 +5,21 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm thông tin thanh toán</h1>
             </div>
             <div class="modal-body">
-                <form id="formDatPhong" class="row g-3 needs-validation" novalidate>
+                <form id="formDatPhong" action="{{ route('addpaymentinfo') }}" class="row g-3 needs-validation"
+                    method="POST" novalidate enctype="multipart/form-data">
+                    @csrf
                     <div class="col-12">
                         <label for="add-pm_name" class="form-label">Tên thông tin thanh toán</label>
-                        <input type="text" class="form-control border-secondary" id="add-pm_name" value="{{-- $hotel->paymentinfo->pm_momo --}}"
-                            required>
-                        <div class="invalid-feedback">
+                        <input type="text" name="namepm" class="form-control border-secondary pm-name"
+                            id="add-pm_name" required>
+                        <div class="invalid-feedback pm-name-feedback">
                             hãy nhập tên thông tin thanh toán
                         </div>
                     </div>
                     <div class="col-12">
-                        {{-- <label for="add-hotel-pm1" class="form-label">Phương thức thanh toán</label> --}}
                         <div class="form-check form-switch">
-                            <input class="form-check-input border-secondary" type="checkbox" role="switch" id="add-pm-athotel"
-                                {{-- @if ($hotel->paymentinfo->pm_athotel == 1) checked @endif --}}>
+                            <input class="form-check-input border-secondary" name="allowpayathotel" type="checkbox"
+                                role="switch" id="add-pm-athotel">
                             <label class="form-check-label" for="add-pm-athotel">Cho phép thanh toán
                                 tại khách sạn</label>
                         </div>
@@ -29,9 +30,9 @@
 
                             <div class="col-md-7 col-12">
                                 <label for="add-pm-momo" class="form-label">Số momo</label>
-                                <input type="text" class="form-control border-secondary" id="add-pm-momo"
-                                    value="{{-- $hotel->paymentinfo->pm_momo --}}" required>
-                                <div class="invalid-feedback">
+                                <input type="text" name="momonumber"
+                                    class="form-control border-secondary momo-number" id="add-pm-momo" required>
+                                <div class="invalid-feedback momo-number-feedback">
                                     hãy nhập số momo
                                 </div>
                             </div>
@@ -44,8 +45,11 @@
                                 <div class="d-flex justify-content-center">
                                     <div data-mdb-ripple-init class="btn btn-info btn-sm">
                                         <label class="form-label text-white m-1" for="QRMomo">QR Momo</label>
-                                        <input type="file" class="form-control d-none" id="QRMomo"
-                                            onchange="displaySelectedImage(event, 'selectedMomo')" />
+                                        <input type="file" name="momoQR" class="form-control d-none" id="QRMomo"
+                                            onchange="displaySelectedImage(event, 'selectedMomo')" required />
+                                            <div class="invalid-feedback">
+                                                hãy thêm ảnh QR momo
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +61,10 @@
                         <div class="row d-flex align-items-center">
                             <div class="col-md-7 col-12">
                                 <label for="add-pm-bank" class="form-label">Số ngân hàng</label>
-                                <input type="text" class="form-control border-secondary" id="add-pm-bank"
-                                    value="{{-- $hotel->paymentinfo->pm_bank --}}" required>
-                                <div class="invalid-feedback">
-                                    hãy nhập số momo
+                                <input type="text" name="banknumber"
+                                    class="form-control border-secondary bank-number" id="add-pm-bank" required>
+                                <div class="invalid-feedback bank-number-feedback">
+                                    hãy nhập số ngân hàng
                                 </div>
                             </div>
 
@@ -72,11 +76,22 @@
                                 <div class="d-flex justify-content-center">
                                     <div data-mdb-ripple-init class="btn btn-info btn-sm">
                                         <label class="form-label text-white m-1" for="QRBank">QR Bank</label>
-                                        <input type="file" class="form-control d-none" id="QRBank"
-                                            onchange="displaySelectedImage(event, 'selectedBank')" />
+                                        <input type="file" name="bankQR" class="form-control d-none" id="QRBank"
+                                            onchange="displaySelectedImage(event, 'selectedBank')" required />
+                                            <div class="invalid-feedback">
+                                                hãy thêm ảnh QR ngân hàng
+                                            </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="add-pm-describe" class="form-label">Mô tả thông tin thanh toán</label>
+                        <textarea name="mota" class="form-control border-secondary pm-mota-input" id="add-pm-describe" style="height: 120px;"
+                            required></textarea>
+                        <div class="invalid-feedback pm-mota-feedback">
+                            hãy nhập mô tả thông tin thanh toán
                         </div>
                     </div>
                     <div class="col-12">

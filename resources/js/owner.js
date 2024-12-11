@@ -187,10 +187,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("duoc goi");
   }
 
-  // // Lắng nghe sự kiện thay đổi ngày check-in và check-out
-  // document.getElementById("inputCin").addEventListener('change', updatePricesByDateChange);
-  // document.getElementById("inputCout").addEventListener('change', updatePricesByDateChange);
-
 
   window.handleDateChange = function () {
     const checkinInput = document.getElementById("inputCin");
@@ -202,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const checkinDate = new Date(checkinDateStr);
     const checkoutDate = new Date(checkoutDateStr);
 
-    // Kiểm tra nếu ngày check-out < ngày check-in
+    // Kiểm tra nếu ngày check-out < ngày check-in 
     if (checkoutDateStr && checkoutDate <= checkinDate) {
       // alert("Ngày check-out không được nhỏ hơn hoặc bằng ngày check-in.");
       checkoutInput.value = ""; // Reset ngày check-out
@@ -222,26 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById("inputCout").addEventListener('change', handleDateChange);
 
 });
-
-//xác thực các ô nhập liệu không được bỏ trống
-(() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
 
 // Hàm kiểm tra và cập nhật trạng thái nút thêm ảnh
 function checkImageLimit() {

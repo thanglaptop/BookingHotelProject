@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ManageEmployeeController;
 use App\Http\Controllers\ManageRoomController;
 use App\Http\Controllers\ManageHotelController;
+use App\Http\Controllers\ManagePaymentInfoController;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\EmployeeMiddleware;
 use App\Http\Middleware\OwnerMiddleware;
@@ -62,6 +63,8 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/editnv{nvid}', [ManageEmployeeController::class, 'showEditEmployee'])->name('showeditnv');
     Route::put('/updateemployee', [ManageEmployeeController::class, 'updateEmployee'])->name('updatenv');
     Route::put('/updatepasswordemployee', [ManageEmployeeController::class, 'updateEmployeePassword'])->name('updatemknv');
+    Route::get('/deleteemployee{eid}', [ManageEmployeeController::class, 'deleteEmployee'])->name('deleteemployee');
+
     Route::post('/owner/createdetailddp', [CreateDDPController::class, 'taoDDP'])->name('owner.taodetailddp');
     Route::get('owner/detailddp{ddpid}/{hid}', [CreateDDPController::class, 'showDetailDDP'])->name('owner.detailddp');
     Route::put('/owner/updateddp', [CreateDDPController::class, 'updateStatusDDP'])->name('owner.updateddp');
@@ -73,7 +76,11 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
 
     Route::get('/closeroom{rid}/{hid}', [ManageRoomController::class, 'showCloseRoom'])->name('showcloseroom');
     Route::put('/updatecloseroom{rid}', [ManageRoomController::class, 'closeRoom'])->name('closeroom');
-    Route::put('/updateopenroom{rid}', [ManageRoomController::class, 'openRoom'])->name('openroom');
+    Route::put('/updateopenroom{rid}', [ManageRoomController::class, 'openRoom'])->name('openroom'); 
+
+    Route::post('/addpaymentinfo', [ManagePaymentInfoController::class, 'addPaymentInfo'])->name('addpaymentinfo');
+    Route::put('/updatepaymentinfo', [ManagePaymentInfoController::class, 'updatePaymentInfo'])->name('updatepaymentinfo');
+    Route::get('/deletepaymentinfo{pmid}', [ManagePaymentInfoController::class, 'deletePaymentInfo'])->name('deletepaymentinfo');
 });
  
 Route::middleware([CustomerMiddleware::class])->group(function () {
@@ -94,6 +101,8 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
     Route::post('/removefromcart', [CustomerController::class, 'removeFromCart'])->name('removefromcart');
     Route::get('/header', [CustomerController::class, 'refreshHeader'])->name('refreshheader');
     Route::get('/update-customer-info', [CustomerController::class, 'edit'])->name('updatecustomerinfo');
+    Route::post('/updateinfo', [CustomerController::class, 'updateCustomerInfo'])->name('updateinfo');
+    Route::put('/updatepassword', [CustomerController::class, 'updateCustomerPass'])->name('updatecustomerpass');
 
 
 

@@ -123,15 +123,15 @@
                                         <div class=" row">
                                             <div class="col-lg-2 col-6 d-flex flex-column align-items-center">
                                                 <div><strong>Momo</strong></div>
-                                                <img src="/images/other/placeholder-image.png" alt=""
+                                                <img src="/images/QRmomo/{{$paymentinfo->pm_QRmomo}}"
                                                     style="width:100px; heigh:100px;">
                                                 <div>{{ $paymentinfo->pm_momo }}</div>
                                             </div>
                                             <div class="col-lg-2 col-6 d-flex flex-column align-items-center">
                                                 <div><strong>Ngân hàng</strong></div>
-                                                <img src="/images/other/placeholder-image.png" alt=""
+                                                <img src="/images/QRbank/{{$paymentinfo->pm_QRbank}}"
                                                     style="width:100px; heigh:100px;">
-                                                <div>{{ $paymentinfo->pm_momo }}</div>
+                                                <div>{{ $paymentinfo->pm_bank }}</div>
                                             </div>
                                             <div class="col-lg-8 col-12">
                                                 <div class="text-center"><strong>mô tả</strong></div>
@@ -234,15 +234,15 @@
                                     <div class=" row">
                                         <div class="col-lg-2 col-6 d-flex flex-column align-items-center">
                                             <div><strong>Momo</strong></div>
-                                            <img src="/images/other/placeholder-image.png" alt=""
+                                            <img src="/images/QRmomo/{{$paymentinfo->pm_QRmomo}}"
                                                 style="width:100px; heigh:100px;">
                                             <div>{{ $paymentinfo->pm_momo }}</div>
                                         </div>
                                         <div class="col-lg-2 col-6 d-flex flex-column align-items-center">
                                             <div><strong>Ngân hàng</strong></div>
-                                            <img src="/images/other/placeholder-image.png" alt=""
+                                            <img src="/images/QRbank/{{$paymentinfo->pm_QRbank}}"
                                                 style="width:100px; heigh:100px;">
-                                            <div>{{ $paymentinfo->pm_momo }}</div>
+                                            <div>{{ $paymentinfo->pm_bank }}</div>
                                         </div>
                                         <div class="col-lg-8 col-12">
                                             <div class="text-center"><strong>mô tả</strong></div>

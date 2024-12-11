@@ -29,7 +29,7 @@
                         class="bi bi-caret-left-fill"></i> trở về</button></a>
             <div class="row">
                 <h1 class="text-center">Sửa Thông Tin Khách Sạn</h1>
-                <form id="formAddHotel" class="row g-3 needs-validation"action="{{ route('updatehotel', ['hid' => $hotel->h_id]) }}" method="POST" novalidate
+                <form id="formAddHotel" class="row g-3 needs-validation" action="{{ route('updatehotel', ['hid' => $hotel->h_id]) }}" method="POST" novalidate
                     enctype="multipart/form-data"> 
                     @csrf
                     @method('PUT')

@@ -278,8 +278,8 @@ class OwnerController
     {
 
         $ownerId = $this->ownerId();
-        $ngaybd = $request->input('daystart') ?? date('Y-m-d');
-        $ngaykt = $request->input('dayend') ?? date('Y-m-d');
+        $ngaybd = $request->input('daystart');
+        $ngaykt = $request->input('dayend');
         if($ngaykt < $ngaybd){
             return back();
         }

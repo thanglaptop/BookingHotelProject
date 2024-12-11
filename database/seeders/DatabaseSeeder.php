@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
             'c_sdt' => '0123456789',
             'c_nsinh' => '2000-01-01',
             'c_email' => 'test@gmail.com',
-            'c_avatar' => 'admin.jpg'
         ]);
         Owner::factory()->count(4)->create();
 
@@ -145,8 +144,8 @@ class DatabaseSeeder extends Seeder
                 'pm_athotel' => 1,
                 'pm_momo' => $this->vnPhone(),
                 'pm_bank' => $this->vnPhone(),
-                'pm_QRmomo' => $this->vnPhone(),
-                'pm_QRbank' => $this->vnPhone(),
+                'pm_QRmomo' => "momo".($i+1).".jpg",
+                'pm_QRbank' => "bank".($i+1).".jpg",
                 'pm_mota' => $pm_mota,
                 'o_id' => $oId,
             ]);

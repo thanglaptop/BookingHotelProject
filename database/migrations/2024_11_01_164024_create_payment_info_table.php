@@ -17,8 +17,8 @@ return new class extends Migration
             $table->boolean('pm_athotel')->default(false);
             $table->char('pm_momo', 15);
             $table->char('pm_bank', 15);
-            $table->char('pm_QRmomo', 15);
-            $table->char('pm_QRbank', 15);
+            $table->char('pm_QRmomo', 20);
+            $table->char('pm_QRbank', 20);
             $table->string('pm_mota', 400);
             $table->tinyInteger('o_id')->unsigned();
             $table->foreign('o_id')->references('o_id')->on('owner')->onUpdate('cascade')->onDelete('cascade');

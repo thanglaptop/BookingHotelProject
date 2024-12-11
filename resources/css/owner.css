@@ -42,7 +42,6 @@ html, body {
 }
 
 .card {
-  /* background-image: linear-gradient(to bottom, rgb(243, 243, 169), rgb(250, 203, 116)); */
   background-color: rgb(252, 198, 99) !important;
   border: none;
 }
@@ -73,8 +72,6 @@ html, body {
 .scroll-2{
   overflow-x: hidden;
   overflow-y: scroll;
-  /* white-space: nowrap;
-  text-align: center; */
 }
 
 .scroll-2::-webkit-scrollbar {
@@ -90,7 +87,6 @@ html, body {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  /* text-align: center; */
 }
 
 .scroll-1::-webkit-scrollbar {
@@ -133,16 +129,8 @@ html, body {
 /* important */
 .image-container {
   position: relative;
-  /* display: flex;
-  gap: 10px;
-  cursor: pointer; */
 }
 
-/* .image-container img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-} */
 
 /* important */
 .btn-close {

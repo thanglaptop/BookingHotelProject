@@ -103,4 +103,9 @@ class ManageEmployeeController
         return redirect()->back()
             ->with('successpw', 'Đổi mật khẩu nhân viên thành công');
     }
+
+    public function deleteEmployee($eid){
+        Employee::where('e_id', $eid)->delete();
+        return back()->with('success', 'xóa nhân viên thành công');
+    }
 }

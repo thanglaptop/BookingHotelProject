@@ -171,46 +171,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  var popoverpriceTrigger = document.getElementById('popover-toggle-price');
-  //trả về giá trị luôn cập nhật
-  function getpopoverpriceContent() {
-    return `<div class="d-flex">
-                <div class="me-2">100</div>
-                <input type="range" class="form-range mx-2" id="customRange1" value="100">
-                <div class="ms-2">10000</div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between">
-            <span>Max: 500.000 VNĐ</span>
-            <button class="btn btn-primary btn-sm">Tìm</button>
-            </div>`}
-  var popoverprice = new bootstrap.Popover(popoverpriceTrigger, {
-    html: true,
-    content: getpopoverpriceContent,
-    placement: 'bottom',
-    template: '<div class="popover custom-popover" role="tooltip"><div class="popover-arrow"></div><div class="popover-header"></div><div class="popover-body"></div></div>',
-    sanitize: false // bỏ kiểm tra bảo mật cho HTML
-  });
-
-
-  var popoverfilterTrigger = document.getElementById('popover-toggle-filter');
-  //trả về giá trị luôn cập nhật
-  function getpopoverfilterContent() {
-    return `<div class="d-flex">
-                <div class="me-2">100</div>
-                <input type="range" class="form-range mx-2" id="customRange1" value="100">
-                <div class="ms-2">10000</div>
-            </div>
-            <div class="d-flex align-items-center justify-content-between">
-            <span>Max: 500.000 VNĐ</span>
-            <button class="btn btn-primary btn-sm">Tìm</button>
-            </div>`}
-  var popoverfilter = new bootstrap.Popover(popoverfilterTrigger, {
-    html: true,
-    content: getpopoverfilterContent,
-    placement: 'bottom',
-    template: '<div class="popover custom-popover" role="tooltip"><div class="popover-arrow"></div><div class="popover-header"></div><div class="popover-body"></div></div>',
-    sanitize: false // bỏ kiểm tra bảo mật cho HTML
-  });
-
 });
 

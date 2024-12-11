@@ -53,7 +53,7 @@
                                 <div
                                     class="col-6 col-md-3 p-2 gap-2 d-flex align-items-center justify-content-center flex-column">
                                     <div style="font-weight: 600;">Momo</div>
-                                    <img src="/images/other/placeholder-image.png" class="rounded"
+                                    <img src="/images/QRmomo/{{$pm->pm_QRmomo}}" class="rounded"
                                         style="width: 120px; height: 120px; object-fit: cover;" />
                                     <div>{{ $pm->pm_momo }}</div>
                                 </div>
@@ -61,7 +61,7 @@
                                 <div
                                     class="col-6 col-md-3 p-2 gap-2 d-flex align-items-center justify-content-center flex-column">
                                     <div style="font-weight: 600;">Ngân hàng</div>
-                                    <img src="/images/other/placeholder-image.png" class="rounded"
+                                    <img src="/images/QRbank/{{$pm->pm_QRbank}}" class="rounded"
                                         style="width: 120px; height: 120px; object-fit: cover;" />
                                     <div>{{ $pm->pm_bank }}</div>
                                 </div>
@@ -69,7 +69,9 @@
                                 <div class="nhom-button col-12">
                                     <a href="{{route('editpm', ['pmid' => $pm->pm_id])}}"><button type="button"
                                             class="btn btn-primary">Sửa</button></a>
-                                    <button type="button" class="btn btn-danger">Xóa</button>
+                                            <a href="{{route('deletepaymentinfo', ['pmid' => $pm->pm_id])}}">
+                                                <button type="button" class="btn btn-danger">Xóa</button>
+                                            </a>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +82,7 @@
     </section>
 
     @include('footer')
+    @vite('resources/js/managepaymentinfo.js')
     @vite('resources/js/owner.js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

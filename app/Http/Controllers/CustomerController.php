@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\myHelper;
+use Hamcrest\Type\IsNumeric;
 
 class CustomerController
 {
@@ -263,12 +264,66 @@ class CustomerController
                 'dg_nhanxet' => $nhanxet,
                 'dg_ngaydg' => date('Y-m-d'),
                 'c_id' => $customerID,
-                'detail_id' => $listdetailid[$i],
+                'detail_id' => $listdetailid[$i], 
             ]);
         }
         $detail = Detail_Ddp::firstWhere('detail_id', $listdetailid[0]);
         $hotelId = $detail->dondatphong->hotel->h_id;
         Dondatphong::where('ddp_id', $detail->ddp_id)->update(['ddp_status' => 'rated']);
         return redirect()->route('seedanhgia', ['hid' => $hotelId])->with('success', 'Đánh giá thành công!');
+    }
+
+    public function edit()
+    {
+        $customer = Auth::guard('customer')->user(); // Lấy thông tin khách hàng đang đăng nhập
+        return view('customer.updatecustomerinfo', compact('customer'));
+    }
+
+    public function updateCustomerInfo(Request $request){
+        $name = trim($request->input('name'));
+        $email = trim($request->input('email'));
+        $phone = trim($request->input('phone'));
+        $ngaysinh = $request->input('ngaysinh');
+        $passwordconfirm = $request->input('password');
+
+        if(strlen($name) < 3 || strlen($name) > 30){
+            return back()->with('error', 'tên phải từ 3 - 50 ký tự');
+        }
+        if(!is_numeric($phone) || strlen($phone) < 10 || strlen($phone) >10){
+            return back()->with('error', 'số điện thoại không hợp lệ');
+        }
+        $customer = Auth::guard('customer')->user();
+        if(!Hash::check($passwordconfirm, $customer->c_pass)){
+            return back()->with('error', 'mật khẩu xác nhận không chính xác');
+        }
+        $existEmail = Customer::where('c_email', '!=',$customer->c_email)->where('c_email', $email)->exists();
+        if($existEmail){
+            return back()->with('error', 'email đã tồn tại');
+        }
+        Customer::where('c_id', $customer->c_id)->update([
+            'c_name' => $name,
+            'c_email' => $email,
+            'c_sdt' => $phone,
+            'c_nsinh' => $ngaysinh
+        ]);
+        return back()->with('success', 'cập nhật thông tin thành công');
+    }
+
+    public function updateCustomerPass(Request $request){
+        $oldpass = $request->input('oldpass');
+        $newpass = $request->input('newpass');
+        $retypepass = $request->input('newpass2');
+        $customer = Auth::guard('customer')->user();
+        if(!Hash::check($oldpass, $customer->c_pass)){
+            return back()->with('error', 'mật khẩu cũ không chính xác');
+        }
+        if($retypepass != $newpass){
+            return back()->with('error', 'mật khẩu nhập lại không chính xác');
+        }
+
+        Customer::where('c_id', $customer->c_id)->update([
+            'c_pass' => Hash::make($retypepass)
+        ]);
+        return back()->with('success', 'cập nhật mật khẩu thành công');
     }
 }

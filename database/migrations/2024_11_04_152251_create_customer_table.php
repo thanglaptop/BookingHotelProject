@@ -19,7 +19,6 @@ return new class extends Migration
             $table->char('c_sdt', 10);
             $table->date('c_nsinh');
             $table->char('c_email',30)->unique();
-            $table->char('c_avatar',15)->nullable()->unique();
         });
     }
 

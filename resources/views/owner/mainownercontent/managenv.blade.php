@@ -99,8 +99,8 @@
                     <td>{{$nv->e_username}}</td>
                     <td>{{ $hotelname }}</td>
                     <td>
-                        <a href="{{route('showeditnv', ['nvid' => $nv->e_id])}}"><button class="btn btn-info">Sửa</button></a>
-                        <a href="#Xoa"><button class="btn btn-danger">Xóa</button></a>
+                        <a href="{{route('showeditnv', ['nvid' => $nv->e_id])}}"><button class="btn btn-info btn-sm">Sửa</button></a>
+                        <a href="{{route('deleteemployee', ['eid' => $nv->e_id])}}"><button class="btn btn-danger btn-sm">Xóa</button></a>
                     </td>
                 </tr>
             @endforeach

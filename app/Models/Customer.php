@@ -21,7 +21,6 @@ class Customer extends Authenticatable
         'c_sdt',
         'c_nsinh',
         'c_email',
-        'c_avatar',
     ]; 
 
     protected $hidden = [

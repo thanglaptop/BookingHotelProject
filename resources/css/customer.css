@@ -40,7 +40,6 @@
 
 .background {
     position: relative;
-    /* padding-bottom: 6rem; */
 }
 
 .background img {
@@ -123,7 +122,6 @@ footer {
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-    /* text-align: center; */
 }
 
 .scroll-1::-webkit-scrollbar {
@@ -170,13 +168,8 @@ footer {
 }
 
 .btn-cc{
-    /* display: flex !important;
-    justify-content: center !important;
-    align-items: center !important; */
     width: 32px !important;
     height: 32px !important;
-    /* padding: 0 !important;
-    margin: 0 !important; */
 }
 
 .custom-popover {
@@ -254,8 +247,6 @@ footer {
 }
 
 .imgcart{
-    /* width: 120px;
-    height: 120px; */
     object-fit: cover;
 }
 
