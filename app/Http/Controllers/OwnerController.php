@@ -313,17 +313,17 @@ class OwnerController
         $retypepass = $request->input('retypepass');
 
         if (!Hash::check($mkcu, $owner->o_pass)) {
-            return redirect()->back()->with('error', 'mật khẩu cũ không chính xác');
+            return back()->with('error', 'mật khẩu cũ không chính xác');
         }
 
         if ($retypepass != $mkmoi) {
-            return redirect()->back()->with('error', 'mật khẩu nhập lại không chính xác');
+            return back()->with('error', 'mật khẩu nhập lại không chính xác');
         }
 
         Owner::where('o_id', $owner->o_id)->update([
             'o_pass' => Hash::make($mkmoi)
         ]);
-        return redirect()->back()->with('success', 'đổi mật khẩu thành công');
+        return back()->with('success', 'đổi mật khẩu thành công');
     }
 
     public function showDanhGiaForOwner(Request $request)

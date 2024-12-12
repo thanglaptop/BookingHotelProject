@@ -12,8 +12,6 @@ use App\Http\Controllers\ManagePaymentInfoController;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\EmployeeMiddleware;
 use App\Http\Middleware\OwnerMiddleware;
-use App\Models\Customer;
-use App\Models\Employee;
 
 Route::get('/', [DisplayContentController::class, 'displayContent'])->middleware('guest:owner')->name('index');
 Route::get('/loginpage', function () {
@@ -55,6 +53,8 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/doanhthu', [OwnerController::class, 'showDanhThuPage'])->name('doanhthu');
     Route::get('/owner/createddp{hid}', [OwnerController::class, 'showPageCreateDDP'])->name('owner.taoddp');
     Route::get('/editPM{pmid}', [OwnerController::class, 'showEditPM'])->name('editpm');
+    Route::put('/owner/updatepassword', [OwnerController::class, 'changeOwnerPassWord'])->name('owner.changepass');
+
     Route::post('/addnewroom', [ManageRoomController::class, 'addRoom'])->name('addroom');
     Route::put('/updateroom{rid}', [ManageRoomController::class, 'updateRoom'])->name('updateroom');
     Route::post('/addnewhotel', [ManageHotelController::class, 'addHotel'])->name('addhotel');
@@ -66,10 +66,9 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
     Route::get('/deleteemployee{eid}', [ManageEmployeeController::class, 'deleteEmployee'])->name('deleteemployee');
 
     Route::post('/owner/createdetailddp', [CreateDDPController::class, 'taoDDP'])->name('owner.taodetailddp');
-    Route::get('owner/detailddp{ddpid}/{hid}', [CreateDDPController::class, 'showDetailDDP'])->name('owner.detailddp');
+    Route::get('/owner/detailddp{ddpid}/{hid}', [CreateDDPController::class, 'showDetailDDP'])->name('owner.detailddp');
     Route::put('/owner/updateddp', [CreateDDPController::class, 'updateStatusDDP'])->name('owner.updateddp');
-    Route::put('updatepassword', [OwnerController::class, 'changeOwnerPassWord'])->name('changepass');
-    
+        
     Route::get('/closehotel{hid}', [ManageHotelController::class, 'showCloseHotel'])->name('showclosehotel');
     Route::put('/updateclosehotel{hid}', [ManageHotelController::class, 'closeHotel'])->name('closehotel');
     Route::put('/updateopenhotel{hid}', [ManageHotelController::class, 'openHotel'])->name('openhotel');
@@ -103,13 +102,6 @@ Route::middleware([CustomerMiddleware::class])->group(function () {
     Route::get('/update-customer-info', [CustomerController::class, 'edit'])->name('updatecustomerinfo');
     Route::post('/updateinfo', [CustomerController::class, 'updateCustomerInfo'])->name('updateinfo');
     Route::put('/updatepassword', [CustomerController::class, 'updateCustomerPass'])->name('updatecustomerpass');
-
-
-
-
-
-    // Route::middleware('auth:customer')->group(function () {
-    // }
 
     Route::get('/dondatphong', [CustomerController::class, 'showDDP'])->name('showddp');
     Route::get('/cancelddp{ddpid}', [CustomerController::class, 'cancelDDP'])->name('cancelddp');

@@ -60,7 +60,7 @@
 
         <hr class="mt-4">
         <h1 class="text-center mt-4">Đổi mật khẩu</h1>
-        <form action="{{route('changepass')}}" class="row g-3 needs-validation" method="POST" novalidate>
+        <form action="{{ route('owner.changepass') }}" class="row g-3 needs-validation" method="POST" novalidate>
             @method('PUT')
             @csrf
             <div class="col-12">
