@@ -245,6 +245,7 @@
                             @endif
                         @endforeach
                     @endfor
+                    <div style="height: 120px;"></div>
                 @endif
             </div>
     </form>
