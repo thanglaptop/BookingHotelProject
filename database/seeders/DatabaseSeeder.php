@@ -16,7 +16,6 @@ use App\Models\Room_Img;
 use Illuminate\Database\Seeder;
 use App\Traits\myHelper;
 use Illuminate\Support\Facades\Hash;
-use Pest\ArchPresets\Custom;
 
 class DatabaseSeeder extends Seeder
 {

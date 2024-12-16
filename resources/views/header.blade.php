@@ -3,10 +3,7 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-brand">
-                    <a style="text-decoration:none;" @if(Auth::guard('owner')->check())
-                        href="{{ route('mainowner') }}"
-                        @else href="{{ route('index') }}"
-                        @endif>
+                    <a style="text-decoration:none;" @if(Auth::guard('owner')->check()) href="{{ route('mainowner') }}" @elseif(!Auth::guard('employee')->check()) href="{{ route('index') }}" @endif>
                     <img src="/images/other/Logo.png">
                     </a>
                     AGOBEE

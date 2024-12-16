@@ -15,7 +15,6 @@ class CreateDDPController
     use myHelper;
     public function taoDDP(Request $request)
     {
-        // dd($request->input('room'), $request->input('soluong'));
         $validated = $request->validate([
             'name' => 'required|string||min:3|max:30',
             'sdt' => 'required|string|regex:/^0[0-9]{9}$/',

@@ -62,7 +62,7 @@
 
         <div class="container p-4">
             <div class="row">
-                @if ($forecast == [])
+                @if ($forecast == null)
                     <div class="d-flex flex-column align-items-center col-lg-3">
                         <img src="/images/other/find.png" style="width:100px; height:100px">
                         <h4 class="text-center">Chưa có dự báo thời tiết vào khoảng thời gian này</h4>
@@ -97,6 +97,7 @@
                             <div class="container">
                                 <form action="{{ route('searchwithfilter') }}" method="GET">
                                     <input type="hidden" name="search" value="{{ $keyword ?? $city->ct_name }}">
+                                    <input type="hidden" name="listhotelid" value="{{$listhotelid}}">
                                     <input type="hidden" name="checkin" value="{{ $checkin ?? date('Y-m-d') }}">
                                     <input type="hidden" name="checkout"
                                         value="{{ $checkout ?? date('Y-m-d', strtotime('+1 day')) }}">

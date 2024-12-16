@@ -49,7 +49,6 @@ class CustomerController
 
         $cart = Giohang::where('C_ID', $customerID)->where('R_ID', $roomID)->where('g_checkin', $checkin)->where('g_checkout', $checkout)->first();
 
-        //cập nhật nếu có
         if ($cart && $cart->g_soluong >= $conlai) {
             $cartCount = Giohang::where('C_ID', $customerID)->count();
             return response()->json([
@@ -105,7 +104,6 @@ class CustomerController
                 'message' => 'Cập nhật số lượng phòng thành công',
                 'newquantity' => $newquantiy
             ]);
-            //thêm nếu không có
         }
     }
 
@@ -293,13 +291,16 @@ class CustomerController
             return back()->with('error', 'số điện thoại không hợp lệ');
         }
         $customer = Auth::guard('customer')->user();
-        if(!Hash::check($passwordconfirm, $customer->c_pass)){
-            return back()->with('error', 'mật khẩu xác nhận không chính xác');
-        }
+
         $existEmail = Customer::where('c_email', '!=',$customer->c_email)->where('c_email', $email)->exists();
         if($existEmail){
             return back()->with('error', 'email đã tồn tại');
         }
+
+        if(!Hash::check($passwordconfirm, $customer->c_pass)){
+            return back()->with('error', 'mật khẩu xác nhận không chính xác');
+        }
+        
         Customer::where('c_id', $customer->c_id)->update([
             'c_name' => $name,
             'c_email' => $email,

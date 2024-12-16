@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
-use App\Models\Customer;
 use App\Models\Detail_Ddp;
 use App\Models\Dondatphong;
 use App\Models\Employee;
@@ -17,94 +16,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\myHelper;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+
 use Carbon\Carbon;
 
 class OwnerController
 {
     use myHelper;
-
-    public function dangKy(Request $request)
-    {
-        $validated = $request->validate([
-            'fullname' => 'required|string||min:3|max:30',
-            'sdt' => 'required|string|regex:/^0[0-9]{9}$/',
-            'email' => 'required|email',
-            'birthday' => 'required|date',
-            'username' => 'required|string|min:15|max:30',
-            'password' => 'required|string|min:8|max:20',
-        ]);
-
-
-        // Kiểm tra xem username đã tồn tại hay chưa
-        $existingCus = Customer::where('c_username', $validated['username'])->first();
-        if ($existingCus) {
-            return redirect()->back()
-                ->with('error', 'Tên đăng nhập đã tồn tại trong hệ thống!');
-        }
-
-        $existingEmail = Customer::where('c_email', $validated['email'])->first();
-        if ($existingEmail) {
-            return redirect()->back()
-                ->with('error', 'Email đã tồn tại trong hệ thống!');
-        }
-
-        // Lưu người dùng vào cơ sở dữ liệu
-        $customer = Customer::create([
-            'c_name' => $validated['fullname'],
-            'c_sdt' => $validated['sdt'],
-            'c_email' => $validated['email'],
-            'c_nsinh' => $validated['birthday'],
-            'c_username' => $validated['username'],
-            'c_pass' => Hash::make($validated['password']),
-        ]);
-
-        Auth::guard('customer')->login($customer);
-        return redirect()->route('index')->with('success', 'Đăng ký thành công!');
-    }
-
-    public function ForgetPassword(Request $request)
-    {
-        $request->validate([
-            'username' => 'required|string',
-            'email' => 'required|email',
-        ]);
-        // Kiểm tra email có tồn tại không
-        $customer = Customer::where('c_username', $request->username)->where('c_email', $request->email)->first();
-        $owner = Owner::where('o_username', $request->username)->where('o_email', $request->email)->first();
-        if ($customer) {
-            $newPassword = Str::random(10);
-
-            Customer::where('c_id', $customer->c_id)->update([
-                'c_pass' => Hash::make($newPassword)
-            ]);
-            $name = $customer->c_name;
-            // Gửi email
-            Mail::send('tablogin/reset_password', ['name' => $name, 'newPassword' => $newPassword], function ($message) use ($request) {
-                $message->to($request->email)
-                    ->subject('Khôi phục mật khẩu khách hàng');
-            });
-
-            return back()->with('success', 'Mật khẩu mới đã được gửi đến email của bạn!');
-        } else if ($owner) {
-            $newPassword = Str::random(10);
-            Owner::where('o_id', $owner->o_id)->update([
-                'o_pass' => Hash::make($newPassword)
-            ]);
-            $name = $owner->o_name;
-            // Gửi email
-            Mail::send('tablogin/reset_password', ['name' => $name, 'newPassword' => $newPassword], function ($message) use ($request) {
-                $message->to($request->email)
-                    ->subject('Khôi phục mật khẩu chủ khách sạn');
-            });
-
-            return back()->with('success', 'Mật khẩu mới đã được gửi đến email của bạn!');
-        }
-        return back()->with('error', 'Tên đăng nhập hoặc email không tồn tại trong hệ thống');
-    }
-
-
 
     public function checkOwnerLogin(Request $req)
     {
@@ -274,7 +191,7 @@ class OwnerController
         return view('owner/mainownercontent/pminfocontent/editpm', ['pm' => $pm]);
     }
 
-    public function showDanhThuPage(Request $request)
+    public function showDoanhThuPage(Request $request)
     {
 
         $ownerId = $this->ownerId();

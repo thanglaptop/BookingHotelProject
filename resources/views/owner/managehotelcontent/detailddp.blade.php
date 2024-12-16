@@ -74,12 +74,12 @@
                 <tbody>
                     @foreach ($ddp->detail_ddps as $detail)
                         @php
-                            $tenphong = $listroom->where('r_id', $detail->detail_id)->first()->r_name;
+                            $tenphong = $listroom->where('r_id', $detail->r_id)->first()->r_name;
                             $sodem =
                                 (strtotime($detail->detail_checkout) - strtotime($detail->detail_checkin)) /
                                 (60 * 60 * 24);
                             $giaphong = number_format(
-                                $listroom->where('r_id', $detail->detail_id)->first()->r_price,
+                                $listroom->where('r_id', $detail->r_id)->first()->r_price,
                                 0,
                                 ',',
                                 '.',

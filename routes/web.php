@@ -17,8 +17,8 @@ Route::get('/', [DisplayContentController::class, 'displayContent'])->middleware
 Route::get('/loginpage', function () {
     return view('login');
 })->name('loginpage');
-Route::post('/signup', [OwnerController::class, 'dangKy'])->name('signup');
-Route::post('/forgetpw', [OwnerController::class, 'ForgetPassword'])->name('forgetpw');
+Route::post('/signup', [DisplayContentController::class, 'dangKy'])->name('signup');
+Route::post('/forgetpw', [DisplayContentController::class, 'ForgetPassword'])->name('forgetpw');
 Route::get('/listhotel/city{id}', [DisplayContentController::class, 'showHotelOfCity'])->middleware('guest:owner')->name('showlisthotel');
 
 Route::get('/detailhotel{id}', [DisplayContentController::class, 'showDetailHotel'])->middleware('guest:owner')->name('showdetailhotel');
@@ -50,7 +50,7 @@ Route::middleware([OwnerMiddleware::class])->group(function () {
         return view('owner/mainownercontent/personalinfo');
     })->name('personalinfo');
     Route::get('/danhgia', [OwnerController::class, 'showDanhGiaForOwner'])->name('danhgia');
-    Route::get('/doanhthu', [OwnerController::class, 'showDanhThuPage'])->name('doanhthu');
+    Route::get('/doanhthu', [OwnerController::class, 'showDoanhThuPage'])->name('doanhthu');
     Route::get('/owner/createddp{hid}', [OwnerController::class, 'showPageCreateDDP'])->name('owner.taoddp');
     Route::get('/editPM{pmid}', [OwnerController::class, 'showEditPM'])->name('editpm');
     Route::put('/owner/updatepassword', [OwnerController::class, 'changeOwnerPassWord'])->name('owner.changepass');

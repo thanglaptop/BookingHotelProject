@@ -82,46 +82,46 @@ trait myHelper
     }
 
     public function returnListRoomWithRemainQuantity($hid, $checkin, $checkout)
-{
-    $listroom = Room::where('h_id', $hid)->get();
+    {
+        $listroom = Room::where('h_id', $hid)->get();
 
-    $roomsWithRemainingQuantity = $listroom->map(function ($room) use ($checkin, $checkout) {
-        $bookedQuantity = Detail_Ddp::where('r_id', $room->r_id)
-            ->whereHas('dondatphong', function ($query) {
-                $query->whereIn('ddp_status', ['pending', 'confirmed', 'checkedin']);
-            })
-            ->where(function ($query) use ($checkin, $checkout) {
-                $query->where(function ($subquery) use ($checkin, $checkout) {
-                    // Điều kiện khoảng ngày đặt phòng trùng với khoảng ngày tìm kiếm
-                    $subquery->where('detail_checkin', '<', $checkout)
-                        ->where('detail_checkout', '>', $checkin);
-                });
-            })
-            ->sum('detail_soluong');
+        $roomsWithRemainingQuantity = $listroom->map(function ($room) use ($checkin, $checkout) {
+            $bookedQuantity = Detail_Ddp::where('r_id', $room->r_id)
+                ->whereHas('dondatphong', function ($query) {
+                    $query->whereIn('ddp_status', ['pending', 'confirmed', 'checkedin']);
+                })
+                ->where(function ($query) use ($checkin, $checkout) {
+                    $query->where(function ($subquery) use ($checkin, $checkout) {
+                        // Điều kiện khoảng ngày đặt phòng trùng với khoảng ngày tìm kiếm
+                        $subquery->where('detail_checkin', '<', $checkout)
+                            ->where('detail_checkout', '>', $checkin);
+                    });
+                })
+                ->sum('detail_soluong');
 
-        // Tính số lượng phòng còn lại
-        $remainingQuantity = max(0, $room->r_soluong - $bookedQuantity);
+            // Tính số lượng phòng còn lại
+            $remainingQuantity = max(0, $room->r_soluong - $bookedQuantity);
 
-        // Trả về thông tin phòng và số lượng còn lại
-        return [
-            'r_id' => $room->r_id,
-            'r_name' => $room->r_name,
-            'r_price' => $room->r_price,
-            'r_soluong' => $room->r_soluong,
-            'r_mota' => $room->r_mota,
-            'r_maxadult' => $room->r_maxadult,
-            'r_maxkid' => $room->r_maxkid,
-            'r_maxperson' => $room->r_maxperson,
-            'r_dientich' => $room->r_dientich,
-            'h_id' => $room->h_id,
-            'r_conlai' => $remainingQuantity,
-            'checkin' => $checkin,
-            'checkout' => $checkout
-        ];
-    });
+            // Trả về thông tin phòng và số lượng còn lại
+            return [
+                'r_id' => $room->r_id,
+                'r_name' => $room->r_name,
+                'r_price' => $room->r_price,
+                'r_soluong' => $room->r_soluong,
+                'r_mota' => $room->r_mota,
+                'r_maxadult' => $room->r_maxadult,
+                'r_maxkid' => $room->r_maxkid,
+                'r_maxperson' => $room->r_maxperson,
+                'r_dientich' => $room->r_dientich,
+                'h_id' => $room->h_id,
+                'r_conlai' => $remainingQuantity,
+                'checkin' => $checkin,
+                'checkout' => $checkout
+            ];
+        });
 
-    return $roomsWithRemainingQuantity;
-}
+        return $roomsWithRemainingQuantity;
+    }
 
 
     public function returnListHotelWithRevenue($oid, $ngaybd, $ngaykt)
@@ -344,13 +344,15 @@ trait myHelper
         return $forecastData->toArray();
     }
 
-    public function filterHotel($keyword, $checkin, $checkout, $slphong, $adult, $kid, $priceFilter, $rateFilter){
-        $listhotel = $this->returnListHotelResult($keyword, $checkin, $checkout, $slphong, $adult, $kid);
+    public function filterHotel($listhotelma, $priceFilter, $rateFilter)
+    {
+        $listhotelid = explode(",", $listhotelma);
+        $listhotel = Hotel::whereIn('h_id', $listhotelid)->get(); // Lấy danh sách khách sạn
         // Lọc theo giá
         if ($priceFilter != '0') {
             $listhotel = $listhotel->map(function ($hotel) {
                 // Thêm thuộc tính giá phòng thấp nhất cho từng khách sạn
-                $hotel->average_price = ($hotel->rooms->pluck('r_price')->min() + ($hotel->rooms->pluck('r_price')->max()))/2; // Giá trung bình
+                $hotel->average_price = ($hotel->rooms->pluck('r_price')->min() + ($hotel->rooms->pluck('r_price')->max())) / 2; // Giá trung bình
                 return $hotel;
             });
 

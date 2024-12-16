@@ -38,7 +38,7 @@
     @endif
     <div class="col-lg-3 col-md-4 col-6 p-2">
         <div class="card h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#add-hotel-modal">
-            <img alt="" src="/images/other/plus-sign.png" class="card-img-top last-card p-4" />
+            <img alt="" src="/images/other/plus-sign.png" class="p-4" />
             <div class="card-body">
                 <h4 class="card-title scroll-1">
                     Thêm khách sạn mới

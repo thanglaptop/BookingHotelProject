@@ -167,7 +167,7 @@ html, body {
 }
 
 .last-card {
-  max-height: 261px;
+  max-height: 261px !important;
 }
 
 .btn-orange{
