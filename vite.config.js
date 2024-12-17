@@ -5,11 +5,17 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
-                'resources/css/login.css', // Thêm đường dẫn tệp CSS này
-                'resources/js/app.js',
+                'resources/css/customer.css', 
+                'resources/css/login.css', 
+                'resources/css/owner.css', 
                 'resources/js/loginPage.js',
-                'resources/css/customer.css',
+                'resources/js/customer.js',
+                'resources/js/ddp.js',
+                'resources/js/managepaymentinfo.js',
+                'resources/js/owner.js',
+                'resources/js/validatecustomerinfo.js',
+                'resources/js/validateinput.js',
+                'resources/js/validateinputhotel.js'
             ],
             refresh: true,
         }),
