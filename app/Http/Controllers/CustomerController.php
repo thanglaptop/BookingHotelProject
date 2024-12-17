@@ -29,7 +29,7 @@ class CustomerController
             Auth::guard('customer')->login($customer);
             return redirect()->route('index');
         }
-        return back()->withErrors(['message' => 'Đăng nhập thất bại!']);
+        return back()->with('error', 'Đăng nhập thất bại!');
     }
 
     public function customerLogout()

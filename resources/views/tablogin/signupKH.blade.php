@@ -32,20 +32,20 @@
         <div class="col-12">
             <label for="signUpUsername" class="form-label">tên đăng nhập</label>
             <input type="text" name="username" class="form-control username-input" id="signUpUsername" required>
-            <div class="invalid-feedback s">
+            <div class="invalid-feedback username-feedback">
                 vui lòng không bỏ trống tên đăng nhập
             </div>
         </div>
         <div class="col-12">
-            <label for="signUpPass" class="form-label">mật khẩu</label>
-            <input type="password" class="form-control pw1-input" id="signUpPass" required>
+            <label for="signUpPass1" class="form-label">mật khẩu</label>
+            <input type="password" class="form-control pw1-input" id="signUpPass1" required>
             <div class="invalid-feedback pw1-feedback">
                 vui lòng không bỏ trống mật khẩu
             </div>
         </div>
         <div class="col-12">
             <label for="signUpPass2" class="form-label">nhập lại mật khẩu</label>
-            <input type="password" name="password" class="form-control pw2-input" id="signUpPass" required>
+            <input type="password" name="password" class="form-control pw2-input" id="signUpPass2" required>
             <div class="invalid-feedback pw2-feedback">
                 vui lòng không bỏ trống nhập lại mật khẩu
             </div>

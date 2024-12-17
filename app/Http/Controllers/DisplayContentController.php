@@ -185,14 +185,12 @@ class DisplayContentController
         // Kiểm tra xem username đã tồn tại hay chưa
         $existingCus = Customer::where('c_username', $validated['username'])->first();
         if ($existingCus) {
-            return redirect()->back()
-                ->with('error', 'Tên đăng nhập đã tồn tại trong hệ thống!');
+            return back()->with('error', 'Tên đăng nhập đã tồn tại trong hệ thống!');
         }
 
         $existingEmail = Customer::where('c_email', $validated['email'])->first();
         if ($existingEmail) {
-            return redirect()->back()
-                ->with('error', 'Email đã tồn tại trong hệ thống!');
+            return back()->with('error', 'Email đã tồn tại trong hệ thống!');
         }
 
         // Lưu người dùng vào cơ sở dữ liệu

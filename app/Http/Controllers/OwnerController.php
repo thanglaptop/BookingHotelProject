@@ -37,7 +37,7 @@ class OwnerController
             Auth::guard('employee')->login($employee);
             return redirect()->route('employee.managehotel', ['id' => $employee->h_id, 'tab' => 'don-dat-phong']);
         }
-        return back()->withErrors(['message' => 'Đăng nhập thất bại!']);
+        return back()->with('error', 'Đăng nhập thất bại!');
     }
 
     public function ownerLogout()
