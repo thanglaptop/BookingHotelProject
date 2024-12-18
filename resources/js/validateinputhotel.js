@@ -46,7 +46,7 @@
             // Kiểm tra mô tả
             const hotelmota = form.querySelector('.hotel-mota-input');
             const hotelmotaFeedback = form.querySelector('.hotel-mota-feedback');
-            if (hotelmota.value.trim() === '' && (hotelmota.value.length < 10 || hotelname.value.length > 400)) {
+            if (hotelmota.value.trim().length > 400 || hotelmota.value.trim().length < 10) {
                 hotelmota.setCustomValidity('invalid');
                 hotelmotaFeedback.textContent = 'Mô tả phải từ 10 - 400 kí tự';
                 isFormValid = false; // Có lỗi

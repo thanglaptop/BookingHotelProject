@@ -18,7 +18,7 @@ class ManageRoomController
         $validated = $request->validate([
             'hid' => 'required|integer',
             'hinh' => 'required|array', // Dạng mảng vì có nhiều ảnh
-            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096', // Validation ảnh
+            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096', // Validation ảnh
             'newhinh' => 'nullable|array',
             'rname' => 'required|string|max:50',
             'rprice' => 'required|numeric|min:50000',
@@ -84,7 +84,7 @@ class ManageRoomController
     {
         $validated = $request->validate([
             'hinh' => 'nullable|array', // Hình ảnh là tùy chọn
-            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096', // Validation ảnh
+            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096', // Validation ảnh
             'newhinh' => 'nullable|array',
             'rname' => 'required|string|max:50',
             'rprice' => 'required|numeric',

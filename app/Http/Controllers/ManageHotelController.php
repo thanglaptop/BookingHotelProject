@@ -15,21 +15,22 @@ class ManageHotelController
 
     public function addHotel(Request $request)
     {
-            $validated = $request->validate([
-                'hinh' => 'required|array|min:1', // Đảm bảo ít nhất có 1 ảnh
-                'hinh.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Kiểm tra từng ảnh
-                'newhinh' => 'nullable|array',
-                'loaihinh' => 'required|integer',
-                'city' => 'required|integer',
-                'sdt' => 'required|string|regex:/^0[0-9]{9}$/', // Số điện thoại bắt đầu bằng 0 và có đúng 10 chữ số
-                'hname' => 'required|string|max:50', // Tên khách sạn tối đa 255 ký tự
-                'hdchi' => 'required|string|max:100', // Địa chỉ tối đa 255 ký tự
-                'hmota' => 'required|string|max:400', // Mô tả tối đa 1000 ký tự
-                'tttt' => 'required|integer',
-                'tiennghi' => 'nullable|array', // Tiện ích phòng là mảng (có thể không chọn gì)
-                'tiennghi.*' => 'integer',
-            ]);
+        $validated = $request->validate([
+            'hinh' => 'required|array|min:1', // Đảm bảo ít nhất có 1 ảnh
+            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Kiểm tra từng ảnh
+            'newhinh' => 'nullable|array',
+            'loaihinh' => 'required|integer',
+            'city' => 'required|integer',
+            'sdt' => 'required|string|regex:/^0[0-9]{9}$/', // Số điện thoại bắt đầu bằng 0 và có đúng 10 chữ số
+            'hname' => 'required|string|max:50', // Tên khách sạn tối đa 255 ký tự
+            'hdchi' => 'required|string|max:100', // Địa chỉ tối đa 255 ký tự
+            'hmota' => 'required|string|max:400', // Mô tả tối đa 1000 ký tự
+            'tttt' => 'required|integer',
+            'tiennghi' => 'nullable|array', // Tiện ích phòng là mảng (có thể không chọn gì)
+            'tiennghi.*' => 'integer',
+        ]);
        
+
 
         // Insert data into the database
         $hotel = Hotel::create([
@@ -79,7 +80,7 @@ class ManageHotelController
     {
         $validated = $request->validate([
             'hinh' => 'nullable|array', // Đảm bảo ít nhất có 1 ảnh
-            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096', // Kiểm tra từng ảnh
+            'hinh.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096', // Kiểm tra từng ảnh
             'newhinh' => 'nullable|array',
             'loaihinh' => 'required|integer',
             'city' => 'required|integer',
