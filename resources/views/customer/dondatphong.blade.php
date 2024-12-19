@@ -96,7 +96,7 @@
                                                 <div class="me-2"><small><i class="bi bi-calendar2-check"></i>
                                                         {{ date('d/m/Y', strtotime($detail->detail_checkin)) }}
                                                     </small><i class="bi bi-arrow-right"></i>
-                                                    {{ date('d/m/Y', strtotime($detail->detail_checkin)) }}</div>
+                                                    {{ date('d/m/Y', strtotime($detail->detail_checkout)) }}</div>
                                                 <div class="me-2"><small><i class="bi bi-person"></i> tối đa:
                                                         {{ $allow }}/phòng || số lượng:
                                                         {{ $detail->detail_soluong }}phòng</small>

@@ -30,17 +30,6 @@
         <form class="row g-3 needs-validation border border-secondary rounded-3 p-2 mt-3" action="{{route('addemployee')}}" method="POST"
             novalidate>
             @csrf
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @elseif(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
             <div class="col-6">
                 <label for="nvname" class="form-label">Họ và tên</label>
                 <input type="text" name="fullname" class="form-control border-secondary" id="nvname" required>
@@ -65,7 +54,7 @@
             </div>
             <div class="col-6">
                 <label for="nvpassword" class="form-label">Mật khẩu</label>
-                <input type="text" name="password" class="form-control border-secondary" id="nvpassword" required>
+                <input type="password" name="password" class="form-control border-secondary" id="nvpassword" required>
                 <div class="invalid-feedback">
                     hãy nhập mật khẩu
                 </div>

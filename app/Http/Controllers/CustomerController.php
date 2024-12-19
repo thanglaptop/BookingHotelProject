@@ -208,6 +208,9 @@ class CustomerController
         $room = Room::firstWhere('r_id', $request->input('room'));
         $checkin = $request->input('checkin');
         $checkout = $request->input('checkout');
+        if($checkout <= $checkin){
+            return back();
+        }
         $booknow = true;
         return view('customer/checkout', ['hotel' => $hotel, 'room' => $room, 'checkin' => $checkin, 'checkout' => $checkout, 'booknow' => $booknow]);
     }
